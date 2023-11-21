@@ -9,7 +9,8 @@
 <body>
 
 <script>
-    location.href="main2"
+
+location.href="main2"
 </script>
 
 </body>
