@@ -9,8 +9,7 @@
 <body>
 
 <script>
-
-location.href="main2"
+	location.href="loginform"
 </script>
 
 </body>
