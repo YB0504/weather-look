@@ -1,4 +1,8 @@
+<<<<<<< HEAD:src/main/java/com/ootd/weatherlook/configuration/DatabaseConfiguration.java
 package com.ootd.weatherlook.configuration;
+=======
+package com.weatherlook.ootd.configuration;
+>>>>>>> 5449789146faa30870e96ab67f91696c8f5632cd:src/main/java/com/weatherlook/ootd/configuration/DatabaseConfiguration.java
 
 import javax.sql.DataSource;
 
