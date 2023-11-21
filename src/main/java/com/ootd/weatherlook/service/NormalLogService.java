@@ -9,7 +9,15 @@ import com.ootd.weatherlook.dao.NormalLogDao;
 public class NormalLogService {
 
 	@Autowired
-	private NormalLogDao dao;
+	private NormalLogDao memberDao;
+
+	public int idcheck(String id) {
+		return memberDao.idcheck(id);
+	}
+
+	public int nickcheck(String nick) {
+		return memberDao.nickcheck(nick);
+	}
 	
 	
 }
