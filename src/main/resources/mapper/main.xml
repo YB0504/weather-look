@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="main">
+
+	<select id="main_recentlist" parameterType="map"
+		resultType="main">
+		select r2.*, nvl(likes_count,0)likes from
+		(select type_id, post_id, reg_date, title, nick from(
+		select rownum rnum, r1.* from(
+		select type_id, post_id, reg_date, title, nick from daily
+		union
+		select type_id, post_id, reg_date, title, nick from review
+		order by reg_date desc) r1
+		) where rnum &gt;= (1+(#{page}-1) * #{numberSet}) and rnum &lt;= (#{page} * #{numberSet}) ) r2
+		left join
+		(select type_id, post_id, count(*) likes_count from likes group by type_id,
+		post_id) l1
+		on
+		r2.type_id = l1.type_id and r2.post_id = l1.post_id
+	</select>
+
+</mapper>
+
+
+
+
+
+
+

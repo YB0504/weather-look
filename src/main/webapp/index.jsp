@@ -10,7 +10,7 @@
 
 <script>
 
-location.href="main2"
+location.href="main"
 </script>
 
 </body>
