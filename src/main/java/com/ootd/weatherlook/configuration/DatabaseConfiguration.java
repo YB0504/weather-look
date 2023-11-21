@@ -1,4 +1,4 @@
-package com.example.demo.configuration;
+package com.ootd.weatherlook.configuration;
 
 import javax.sql.DataSource;
 
@@ -46,7 +46,7 @@ public class DatabaseConfiguration {
 		sqlSessionFactoryBean.setDataSource(dataSource);
 		sqlSessionFactoryBean.setMapperLocations(applicationContext.getResources("classpath:/mapper/*.xml"));
 		sqlSessionFactoryBean.setConfiguration(mybatisConfig());
-		sqlSessionFactoryBean.setTypeAliasesPackage("com.weatherlook.ootd.model");
+		sqlSessionFactoryBean.setTypeAliasesPackage("com.ootd.weatherlook.model");
 		return sqlSessionFactoryBean.getObject();
 	}
 

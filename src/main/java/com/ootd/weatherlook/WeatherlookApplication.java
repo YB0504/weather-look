@@ -1,11 +1,13 @@
-package com.weatherlook.ootd;
+package com.ootd.weatherlook;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class OotdApplication {
+public class WeatherlookApplication {
+
 	public static void main(String[] args) {
-		SpringApplication.run(OotdApplication.class, args);
+		SpringApplication.run(WeatherlookApplication.class, args);
 	}
+
 }

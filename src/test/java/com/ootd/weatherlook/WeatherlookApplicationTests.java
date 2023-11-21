@@ -1,10 +1,10 @@
-package com.weatherlook.ootd;
+package com.ootd.weatherlook;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class OotdApplicationTests {
+class WeatherlookApplicationTests {
 
 	@Test
 	void contextLoads() {
