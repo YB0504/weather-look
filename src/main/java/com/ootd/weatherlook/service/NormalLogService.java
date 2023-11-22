@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ootd.weatherlook.dao.NormalLogDao;
+import com.ootd.weatherlook.model.MemberDTO;
 
 @Service
 public class NormalLogService {
@@ -17,6 +18,14 @@ public class NormalLogService {
 
 	public int nickcheck(String nick) {
 		return memberDao.nickcheck(nick);
+	}
+
+	public void insertMember(MemberDTO member) {
+		memberDao.insertMember(member);
+	}
+
+	public MemberDTO login(String id) {
+		return memberDao.login(id);
 	}
 	
 	

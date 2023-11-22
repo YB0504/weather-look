@@ -39,7 +39,7 @@
 	<tr>
 		<th>프로필 사진</th>
 		<td>
-			<input type="file" name="profile_image">
+			<input type="file" name="profile_image_form">
 		</td>
 	</tr>
 	<tr>
@@ -51,11 +51,10 @@
 	<tr>
 		<th>주소</th>
 		<td>
-			<%@ include file="../memberinclude/address.jsp" %>
-			<select name="address">
-				<option value="">지역선택</option>
+			<%@ include file="../include/address.jsp" %>
+			<select name="address" id="address">
 				<c:forEach var="ad" items="${address }">
-					<option value="ad">${ad }</option>
+					<option value="${ad}">${ad }</option>
 				</c:forEach>
 			</select>
 		</td>

@@ -12,5 +12,22 @@
 	<select id="nickcheck" parameterType="String" resultType="member">
 		select * from member where nick = #{nick}
 	</select>
+	
+	<!-- 일반회원 가입 -->
+	<insert id="insertmember" parameterType="member">
+		insert into member(nick, id, passwd, profile_image, address, phone, oauth_token, admin_role)
+		values(#{nick}, #{id}, #{passwd}, #{profile_image, jdbcType=VARCHAR}, #{address} ,#{phone}, #{oauth_token, jdbcType=VARCHAR},
+		<if test="id == 'master'">
+			'y'
+		</if>
+		<if test="id != 'master'">
+			'n'
+		</if>)
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="String" resultType="member">
+		select * from member where id = #{id}
+	</select>
 
 </mapper>

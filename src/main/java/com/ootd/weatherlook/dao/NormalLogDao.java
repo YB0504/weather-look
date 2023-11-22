@@ -34,4 +34,12 @@ public class NormalLogDao {
 		return re;
 	}
 
+	public void insertMember(MemberDTO member) {
+		session.insert("insertmember", member);
+	}
+
+	public MemberDTO login(String id) {
+		return session.selectOne("login", id);
+	}
+
 }

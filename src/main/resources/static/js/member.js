@@ -20,9 +20,8 @@
 		 $("#phone").val("").focus();
 		 return false;
 	 }
-	 if($.trim($("#address").val())==""){
-		 alert("주소를 입력하세요!");
-		 $("#address").val("").focus();
+	 if($("#address").val()=="지역선택"){
+		 alert("주소를 선택하세요!");
 		 return false;
 	 } 	 
  }
@@ -35,7 +34,7 @@ function idcheck() {
     if($.trim($("#id").val())==""){
 		 alert("회원아이디를 입력하세요!");
 		 $("#id").val("").focus();
-		 return false;		 
+		 return false;
 	 } 
     
     // 올바른 이메일 형식
