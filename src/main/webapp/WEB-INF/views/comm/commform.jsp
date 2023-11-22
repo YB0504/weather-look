@@ -12,10 +12,10 @@
 <form method=post action="commwrite">
 <table border=1 width=400 align=center>
 	<caption>글 작성</caption>
-	<tr><th>머릿말</th>
+	<tr><th>머리말</th>
 		<td><select name = "category">		
 		<option value = "">카테고리 선택</option>
-		<option value = "question">질문하기</option>
+		<option value = "question" >질문하기</option>
 		<option value = "talk">토크</option>
 		</select> </td>
 	</tr>
@@ -30,7 +30,8 @@
 	</tr>
 	<tr><td colspan=2 align=center>
 			<input type=submit value="글 작성">
-			<input type=reset value="취소">
+			<input type=reset value="취소"
+>
 		</td>
 	</tr>
 </table>

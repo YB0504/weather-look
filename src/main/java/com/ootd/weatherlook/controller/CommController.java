@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -32,7 +33,7 @@ public class CommController {
 		if(result == 1) System.out.println("글 작성 성공");
 			model.addAttribute("result", result);
 	
-		return "comm/commlist";
+		return "comm/insertresult";
 	}
 	
 	@RequestMapping("commlist")
@@ -44,13 +45,13 @@ public class CommController {
 		int startRow = (page - 1) * limit + 1;
 		int endRow = page * limit;
 		
-		int listcount = service.getCount();
+		int listCount = service.getCount();
 		System.out.println("listcount");
 		
 		List<Community> commlist = service.getCommList(page);
 		System.out.println("commlist");
 		
-		int pageCount = listcount/limit+((listcount%10 == 0)?0:1);
+		int pageCount = listCount/limit+((listCount%10 == 0)?0:1);
 		
 		int startPage = ((page-1)/10) * limit + 1;	// 1, 11, 21...
 		int endPage = startPage + 10 - 1;			// 10, 20, 30...
@@ -59,7 +60,7 @@ public class CommController {
 			endPage = pageCount;
 		
 		model.addAttribute("page", page);
-		model.addAttribute("listcount", listcount);
+		model.addAttribute("listcount", listCount);
 		model.addAttribute("commlist", commlist);
 		model.addAttribute("pageCount", pageCount);
 		model.addAttribute("startPage", startPage);
@@ -68,8 +69,61 @@ public class CommController {
 		return "comm/commlist";
 	}
 	
+	@RequestMapping("commcontent")
+	public String commcontent(@RequestParam("post_id") int post_id,
+							  @RequestParam("page") String page,
+							  Model model) {
+		service.updatecount(post_id);
+		Community comm = service.getCommunity(post_id);
+		String content = comm.getContent().replace("\n","<br>");
+		
+		model.addAttribute("comm", comm);
+		model.addAttribute("content", content);
+		model.addAttribute("page", page);
+		
+		return "comm/commcontent";
+	}
+	
+	@RequestMapping("commupdateform")
+	public String commupdateform(@RequestParam("post_id") int post_id,
+								 @RequestParam("page") String page,
+								 Model model) {
+		
+		Community comm = service.getCommunity(post_id);
+		model.addAttribute("comm", comm);
+		model.addAttribute("page", page);
+		
+		return "comm/commupdateform";
+	}
+	
+	@RequestMapping("commupdate")
+	public String commupdate(@ModelAttribute Community comm,
+							 @RequestParam("page") String page,
+							 Model model) {
+		
+		int result = service.update(comm);
+		
+		model.addAttribute("result", result);
+		model.addAttribute("comm",comm);
+		model.addAttribute("page",page);
+		
+		
+		return "redirect:commlist";
+	}
 	
 	
+	@RequestMapping("commdelete")
+	public String commdelete(@ModelAttribute Community comm,
+							 @RequestParam("page") String page,
+							 Model model) {
+		
+		int result = service.delete(comm.getPost_id());
+		
+		model.addAttribute("result", result);
+		model.addAttribute("page", page);
+		
+		return"redirect:commlist";
+	}
 	
 	
 	

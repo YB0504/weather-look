@@ -29,5 +29,25 @@ public class CommService {
 		return dao.getCommList(page);
 	}
 
+	public void updatecount(int post_id) {
+		// TODO Auto-generated method stub
+		dao.updatecount(post_id);
+	}
+
+	public Community getCommunity(int post_id) {
+		// TODO Auto-generated method stub
+		return dao.getCommunity(post_id);
+	}
+
+	public int update(Community comm) {
+		// TODO Auto-generated method stub
+		return dao.update(comm);
+	}
+
+	public int delete(int post_id) {
+		// TODO Auto-generated method stub
+		return dao.delete(post_id);
+	}
+
 	
 }

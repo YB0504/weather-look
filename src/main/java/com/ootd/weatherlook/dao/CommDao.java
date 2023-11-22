@@ -29,5 +29,25 @@ public class CommDao {
 		return session.selectList("list", page);
 	}
 
+	public void updatecount(int post_id) {
+		// TODO Auto-generated method stub
+		session.update("hit", post_id);
+	}
+
+	public Community getCommunity(int post_id) {
+		// TODO Auto-generated method stub
+		return session.selectOne("content", post_id);
+	}
+
+	public int update(Community comm) {
+		// TODO Auto-generated method stub
+		return session.update("update", comm);
+	}
+
+	public int delete(int post_id) {
+		// TODO Auto-generated method stub
+		return session.delete("delete", post_id);
+	}
+
 	
 }
