@@ -40,3 +40,12 @@ left join
 on
 r2.type_id = l1.type_id and r2.post_id = l1.post_id
 ;
+
+-- 메인 출력 갯수 표시
+
+select count(*) listcount from
+            (select type_id, post_id, reg_date, title, nick from daily
+                union
+                select type_id, post_id, reg_date, title, nick from review
+                order by reg_date desc)
+;

@@ -79,3 +79,15 @@ left join
 on
 s2.type_id = scraps.type_id and s2.post_id = scraps.post_id
 ;
+
+
+-- 검색결과 출력 갯수
+
+select count(*) listcount from
+            (select type_id, post_id, reg_date, title, nick from daily
+                union
+                select type_id, post_id, reg_date, title, nick from review
+                union 
+                select type_id, post_id, reg_date, title, nick from community
+                order by reg_date desc)
+;
