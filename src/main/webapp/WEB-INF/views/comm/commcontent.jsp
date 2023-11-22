@@ -33,7 +33,7 @@
 	<tr>
 		<td>내용</td>
 		<td>
-			${comm.content }
+			<pre>${comm.content }</pre>
 		</td>
 	</tr>
 	<tr>
