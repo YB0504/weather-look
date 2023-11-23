@@ -75,7 +75,7 @@ public class NormalLoginController {
 		int result = 0;
 
 		String newfilename = null;
-
+		
 		if (size > 0) { // 첨부파일이 전송된 경우
 
 			// 파일 중복문제 해결
@@ -117,6 +117,10 @@ public class NormalLoginController {
 			// path값과 새로 만들어지 파일명을 실제 업로드 하는 코드
 			mf.transferTo(new File(path + "/" + newfilename));
 
+		}
+		
+		if(newfilename == null) {
+			newfilename = "default.jpeg";
 		}
 		
 		member.setProfile_image(newfilename);
