@@ -5,69 +5,154 @@
 
 	<select id="mainlist" parameterType="search"
 		resultType="mainboard">
-		select r2.*, nvl(likes_count,0)likes from
-		(select type_id, post_id, reg_date, title, nick from(
-		select rownum rnum, r1.* from(
-		select type_id, post_id, reg_date, title, nick from daily
+		select * from
+		(select rownum rnum, m1.* from
+		(select 'daily'
+		as type_name, post_id, title, reg_date from daily
 		union
-		select type_id, post_id, reg_date, title, nick from review
-		order by reg_date desc) r1
-		) where rnum &gt;= #{startrow} and rnum &lt;= #{endrow} ) r2
-		left join
-		(select type_id, post_id, count(*) likes_count from likes group by type_id,
-		post_id) l1
-		on
-		r2.type_id = l1.type_id and r2.post_id = l1.post_id
+		select 'review' as
+		type_name, post_id, title, reg_date from review
+		order by reg_date desc) m1)
+		where rnum &gt;= #{startrow} and rnum &lt;= #{endrow}
 	</select>
-	
+
 	<select id="maincount" parameterType="search" resultType="int">
-	select count(*) listcount from
-            (select type_id, post_id, reg_date, title, nick from daily
-                union
-                select type_id, post_id, reg_date, title, nick from review
-                order by reg_date desc)
-	</select>
-	
-	<select id="searchlist" parameterType="search" resultType="searchresult">
-		select s2.*, board_type.type_name type_name, nvl(likes.likes_count,0) likes, nvl(scraps.scraps_count,0) scraps from
-    (select type_id, post_id, reg_date, title, nick, read_count from
-        (select rownum rnum, s1.* from
-            (select type_id, post_id, reg_date, title, nick, read_count from daily
-                union
-                select type_id, post_id, reg_date, title, nick, read_count from review
-                union 
-                select type_id, post_id, reg_date, title, nick, read_count from community
-                order by reg_date desc) s1)
-            where rnum &gt;= #{startrow} and rnum &lt;= #{endrow} ) s2
-left join
-board_type
-on
-s2.type_id = board_type.type_id
-left join
-(select type_id, post_id, count(*) likes_count from likes group by type_id, post_id) likes
-on
-s2.type_id = likes.type_id and s2.post_id = likes.post_id
-left join
-(select type_id, post_id, count(*) scraps_count from scrap group by type_id, post_id) scraps
-on
-s2.type_id = scraps.type_id and s2.post_id = scraps.post_id
-	</select>
-	
-	<select id = "searchcount" parameterType="search" resultType = "int">
-	select count(*) listcount from
-            (select type_id, post_id, reg_date, title, nick from daily
-                union
-                select type_id, post_id, reg_date, title, nick from review
-                union 
-                select type_id, post_id, reg_date, title, nick from community
-                order by reg_date desc)
+		select
+		count(*) maincount from
+		(select 'daily' as type_name, post_id, title,
+		reg_date from daily
+		union
+		select 'review' as type_name, post_id, title,
+		reg_date from review
+		order by reg_date desc)
 	</select>
 
-<select id="weather" parameterType="search" resultType="mainboard">
+	<select id="searchlist" parameterType="search"
+		resultType="searchresult">
+		select 'daily' as type_name, title, post_id, nick, reg_date from daily
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
+				|| #{keyword}
+				|| '%' OR content LIKE '%' || #{keyword} || '%')
+			</if>
+		</where>
+		union
+		select 'review' as type_name, title, post_id, nick, reg_date from review
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
+				|| #{keyword}
+				|| '%' OR content LIKE '%' || #{keyword} || '%')
+			</if>
+		</where>
+		union
+		select 'community' as type_name, title, post_id, nick, reg_date from
+		community
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
+				|| #{keyword}
+				|| '%' OR content LIKE '%' || #{keyword} || '%')
+			</if>
+		</where>
+		order by reg_date
+	</select>
 
-select * from daily where temperature &gt;= (#{weather.temperature}-5) and temperature &lt;= (#{weather.temperature}+5)
+	<select id="searchcount" parameterType="search" resultType="int">
+		select count(*) searchcount from
+		(select 'daily' as type_name, title, post_id, nick, reg_date from daily
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
+				|| #{keyword}
+				|| '%' OR content LIKE '%' || #{keyword} || '%')
+			</if>
+		</where>
+		union
+		select 'review' as type_name, title, post_id, nick, reg_date from review
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
+				|| #{keyword}
+				|| '%' OR content LIKE '%' || #{keyword} || '%')
+			</if>
+		</where>
+		union
+		select 'community' as type_name, title, post_id, nick, reg_date from
+		community
+		<where>
+			<if test="keyword != null and keyword != ''">
+				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
+				|| #{keyword}
+				|| '%' OR content LIKE '%' || #{keyword} || '%')
+			</if>
+		</where>
+		order by reg_date)
+	</select>
 
-</select>
+<!-- 상위 복구 완료 지점 -->
+
+	<select id="weather" parameterType="search"
+		resultType="mainboard">
+
+		select * from daily where temperature &gt;=
+		(#{weather.temperature}-5) and
+		temperature &lt;=
+		(#{weather.temperature}+5)
+
+	</select>
+
+	<select id="reportlist" parameterType="search"
+		resultType="report">
+
+		select reports.* , board_type.type_name type_name from
+		(select report.report_id, report.reason, d.type_id, d.post_id, d.title
+		from
+		report, daily d
+		where d.type_id = report.type_id and d.post_id =
+		report.post_id
+		union
+		select report.report_id, report.reason, r.type_id,
+		r.post_id, r.title from
+		report, review r
+		where r.type_id =
+		report.type_id and r.post_id = report.post_id
+		union
+		select
+		report.report_id, report.reason, c.type_id, c.post_id, c.title from
+		report, community c
+		where c.type_id = report.type_id and c.post_id =
+		report.post_id
+		order by report_id desc) reports, board_type
+		where
+		reports.type_id = board_type.type_id
+		order by report_id desc
+
+	</select>
+
+	<select id="reportcount" parameterType="search" resultType="int">
+		select count(*) reports from
+		(select report.report_id,report.reason,
+		d.type_id, d.post_id, d.title from
+		report, daily d
+		where d.type_id =
+		report.type_id and d.post_id = report.post_id
+		union
+		select
+		report.report_id,report.reason, r.type_id, r.post_id, r.title from
+		report, review r
+		where r.type_id = report.type_id and r.post_id =
+		report.post_id
+		union
+		select report.report_id,report.reason, c.type_id,
+		c.post_id, c.title from
+		report, community c
+		where c.type_id =
+		report.type_id and c.post_id = report.post_id
+		order by report_id desc)
+	</select>
+
 
 </mapper>
 

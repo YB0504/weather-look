@@ -10,7 +10,15 @@
 <body>
 
 <h1>통합검색 페이지</h1>
-
+<table align = "center">
+<tr>
+<th>검색어</th>
+<td><input type = "text" name = "keyword" id = "keyword"></td>
+<td><input type="button" name="search" id="search" value="검색" 
+onClick="location.href='search?page=${page}&keyword=${keyword}'"
+></td>
+</tr>
+</table>
 
 <!-- 키워드가 있으면 검색결과 갯수 표시하는 줄 출력하기 -->
 
@@ -45,7 +53,7 @@
 			</c:if>
 			
 			<c:if test="${page > 1 }">
-				<a href="search?page=${page-1}">[이전]</a>&nbsp;
+				<a href="search?page=${page-1}?keyword=${keyword}">[이전]</a>&nbsp;
 			</c:if>			
 
 			<c:forEach var="a" begin="${startpage}" end="${endpage}">
@@ -53,7 +61,7 @@
 					[${a}]
 				</c:if>
 				<c:if test="${a != page }">
-					<a href="search?page=${a}">[${a}]</a>&nbsp;
+					<a href="search?page=${a}?keyword=${keyword}">[${a}]</a>&nbsp;
 				</c:if>
 			</c:forEach>			
 			
@@ -61,7 +69,7 @@
 				[다음] 
 			</c:if>
 			<c:if test="${page < maxpage }">
-				<a href="search?page=${page+1}">[다음]</a>
+				<a href="search?page=${page+1}?keyword=${keyword}">[다음]</a>
 			</c:if>			
 </div>
 </body>

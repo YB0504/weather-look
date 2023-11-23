@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ootd.weatherlook.model.MainBoard;
+import com.ootd.weatherlook.model.Report;
 import com.ootd.weatherlook.model.Search;
 import com.ootd.weatherlook.model.SearchResult;
 import com.ootd.weatherlook.model.Weather;
@@ -189,6 +190,7 @@ public class MainController {
 		}
 		
 		int numberset = 10;
+		int pageset = 10;
 		int startrow = 1 + (page - 1) * numberset;
 		int endrow = page*numberset;
 
@@ -203,12 +205,12 @@ public class MainController {
 		int listcount = mainpageservice.getSearchCount(search);
 		
 		int maxpage = listcount / numberset + ((listcount % numberset == 0) ? 0 : 1);
-
-		int startpage = ((page - 1) / 10) * numberset + 1; 
-		int endpage = startpage + 10 - 1; 
-
+		int startpage = ((page - 1) / pageset) * numberset + 1; 
+		int endpage = startpage + pageset - 1; 
 		if (endpage > maxpage)
 			endpage = maxpage;
+
+
 		
 
 		searchresult = mainpageservice.getSearchList(search);
@@ -222,7 +224,55 @@ public class MainController {
 		return "main/searchpage";
 	}
 	
+	// 관리자 페이지 -----------------------------------
 	
+	@RequestMapping("report")
+	public String reportPage(HttpServletRequest request, Model model) {
+		// 트래킹 ->
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		StackTraceElement caller = stackTrace[1];
+		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
+		// <- 트래킹
+
+
+		int page = 1;
+		
+		if (request.getParameter("page") != null) {
+			page = Integer.parseInt(request.getParameter("page"));
+		}
+		
+		int numberset = 10;
+		int pageset = 10;
+		int startrow = 1 + (page - 1) * numberset;
+		int endrow = page*numberset;
+
+		List<Report> reportlist = new ArrayList<Report>();
+
+		Search search = new Search();
+		search.setNumberset(numberset);
+		search.setStartrow(startrow);
+		search.setEndrow(endrow);
+		search.setPage(page);
+		
+		int listcount = mainpageservice.getReportCount(search);
+		
+		int maxpage = listcount / numberset + ((listcount % numberset == 0) ? 0 : 1);
+		int startpage = ((page - 1) / pageset) * numberset + 1; 
+		int endpage = startpage + pageset - 1; 
+		if (endpage > maxpage)
+			endpage = maxpage;
+		
+
+		reportlist = mainpageservice.getReportList(search);
+		System.out.println("reportlist : " + reportlist);
+		model.addAttribute("reportlist", reportlist);
+		model.addAttribute("startpage", startpage);
+		model.addAttribute("endpage", endpage);
+		model.addAttribute("listcount", listcount);
+		
+		
+		return "main/reportpage";
+	}
 
 	
 

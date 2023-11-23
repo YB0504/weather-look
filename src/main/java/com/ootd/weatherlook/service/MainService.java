@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.ootd.weatherlook.model.MainBoard;
+import com.ootd.weatherlook.model.Report;
 import com.ootd.weatherlook.model.Search;
 import com.ootd.weatherlook.model.SearchResult;
 
@@ -17,5 +18,8 @@ public interface MainService {
 	
 	
 	public List<MainBoard> getWeatherList(Search search);
+	
+	public List<Report> getReportList(Search search);
+	public int getReportCount(Search search);
  	
 }

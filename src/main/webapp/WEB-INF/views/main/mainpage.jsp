@@ -13,6 +13,7 @@
 
 <h2><a href = "apitest">api테스트</a></h2>
 <h2><a href = "weather">이중dto테스트</a></h2>
+<h2><a href = "report">신고글 관리페이지</a></h2>
 
 <h2>지역 드롭박스, 기온 드롭박스</h2>
 
