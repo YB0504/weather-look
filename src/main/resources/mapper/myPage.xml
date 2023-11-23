@@ -58,26 +58,20 @@
 
 	<!--좋아요 목록-->
 	<select id="like_list" parameterType="String" resultType="Like">
-		with myLike as (select *
-		                from LIKES
-		                where NICK = #{nick}),
-		     allLike as (select myLike.LIKE_ID, myLike.POST_ID, myLike.TYPE_ID, DAILY.TITLE, DAILY.NICK as writer_nick
-		                 from myLike,
-		                      DAILY
-		                 where myLike.POST_ID = DAILY.POST_ID
-			               and myLike.TYPE_ID = DAILY.TYPE_ID
+		with allLike as (select DL.LIKE_ID, DL.POST_ID, DAILY.TITLE, DAILY.NICK as writer_nick
+		                 from DAILY_LIKE DL, DAILY
+		                 where DL.POST_ID = DAILY.POST_ID and
+		                       DL.NICK = #{nick}
 		                 union
-		                 select myLike.LIKE_ID, myLike.POST_ID, myLike.TYPE_ID, REVIEW.TITLE, REVIEW.NICK as writer_nick
-		                 from myLike,
-		                      REVIEW
-		                 where myLike.POST_ID = REVIEW.POST_ID
-			               and myLike.TYPE_ID = REVIEW.TYPE_ID
+		                 select RL.LIKE_ID, RL.POST_ID, REVIEW.TITLE, REVIEW.NICK as writer_nick
+		                 from REVIEW_LIKE RL, REVIEW
+		                 where RL.POST_ID = REVIEW.POST_ID and
+		                       RL.NICK = #{nick}
 		                 union
-		                 select myLike.LIKE_ID, myLike.POST_ID, myLike.TYPE_ID, COMMUNITY.TITLE, COMMUNITY.NICK as writer_nick
-		                 from myLike,
-		                      COMMUNITY
-		                 where myLike.POST_ID = COMMUNITY.POST_ID
-			               and myLike.TYPE_ID = COMMUNITY.TYPE_ID)
+		                 select CL.LIKE_ID, CL.POST_ID, COMMUNITY.TITLE, COMMUNITY.NICK as writer_nick
+		                 from COMMUNITY_LIKE CL, COMMUNITY
+		                 where CL.POST_ID = COMMUNITY.POST_ID and
+		                       CL.NICK = #{nick})
 		select *
 		from allLike
 		order by LIKE_ID desc
@@ -85,30 +79,40 @@
 
 	<!--스크랩 목록-->
 	<select id="scrap_list" parameterType="String" resultType="Scrap">
-		with myScrap as (select *
-		                from SCRAP
-		                where NICK = #{nick}),
-		     allScrap as (select myScrap.SCRAP_ID, myScrap.POST_ID, myScrap.TYPE_ID, DAILY.TITLE, DAILY.NICK as writer_nick
-		                 from myScrap,
-		                      DAILY
-		                 where myScrap.POST_ID = DAILY.POST_ID
-			               and myScrap.TYPE_ID = DAILY.TYPE_ID
-		                 union
-		                 select myScrap.SCRAP_ID, myScrap.POST_ID, myScrap.TYPE_ID, REVIEW.TITLE, REVIEW.NICK as writer_nick
-		                 from myScrap,
-		                      REVIEW
-		                 where myScrap.POST_ID = REVIEW.POST_ID
-			               and myScrap.TYPE_ID = REVIEW.TYPE_ID
-		                 union
-		                 select myScrap.SCRAP_ID, myScrap.POST_ID, myScrap.TYPE_ID, COMMUNITY.TITLE, COMMUNITY.NICK as writer_nick
-		                 from myScrap,
-		                      COMMUNITY
-		                 where myScrap.POST_ID = COMMUNITY.POST_ID
-			               and myScrap.TYPE_ID = COMMUNITY.TYPE_ID)
+		with allScrap as (select DS.SCRAP_ID, DS.POST_ID, DAILY.TITLE, DAILY.NICK as writer_nick
+		                  from DAILY_SCRAP DS, DAILY
+		                  where DS.POST_ID = DAILY.POST_ID and
+		                        DS.NICK = #{nick}
+		                  union
+		                  select RS.SCRAP_ID, RS.POST_ID, REVIEW.TITLE, REVIEW.NICK as writer_nick
+		                  from REVIEW_SCRAP RS, REVIEW
+		                  where RS.POST_ID = REVIEW.POST_ID and
+		                        RS.NICK = #{nick}
+		                  union
+		                  select CS.SCRAP_ID, CS.POST_ID, COMMUNITY.TITLE, COMMUNITY.NICK as writer_nick
+		                  from COMMUNITY_SCRAP CS, COMMUNITY
+		                  where CS.POST_ID = COMMUNITY.POST_ID and
+		                        CS.NICK = #{nick})
 		select *
 		from allScrap
 		order by SCRAP_ID desc
 	</select>
+
+	<!--회원정보 수정-->
+	<update id="updateMember" parameterType="member">
+		update MEMBER
+		set PASSWD=#{passwd},
+		    PROFILE_IMAGE=#{profile_image, jdbcType=VARCHAR},
+		    ADDRESS=#{address},
+		    PHONE=#{phone},
+		    TOKEN=#{token, jdbcType=VARCHAR},
+		    ADMIN_ROLE=#{admin_role}
+		where NICK = #{nick}
+	</update>
+
+	<delete id="deleteMember" parameterType="String">
+		delete from MEMBER where NICK = #{nick}
+	</delete>
 </mapper>
 
 

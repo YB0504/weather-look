@@ -47,4 +47,16 @@ public class MyPageDaoImpl implements MyPageDao{
 		System.out.println("MyPageDaoImpl.getAllScrapList");
 		return session.selectList("myPage.scrap_list", nick);
 	}
+
+	@Override
+	public int updateMember(Member member) throws Exception {
+		System.out.println("MyPageDaoImpl.updateMember");
+		return session.update("myPage.updateMember", member);
+	}
+
+	@Override
+	public int deleteMember(String nick) throws Exception {
+		System.out.println("MyPageDaoImpl.deleteMember");
+		return session.delete("myPage.deleteMember", nick);
+	}
 }

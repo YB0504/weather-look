@@ -49,4 +49,15 @@ public class MyPageServiceImpl implements MyPageService{
 		return myPageDao.getAllScrapList(nick);
 	}
 
+	@Override
+	public int updateMember(Member member) throws Exception{
+		System.out.println("MyPageServiceImpl.updateMember");
+		return myPageDao.updateMember(member);
+	}
+
+	@Override
+	public int deleteMember(String nick) throws Exception {
+		System.out.println("MyPageServiceImpl.deleteMember");
+		return myPageDao.deleteMember(nick);
+	}
 }

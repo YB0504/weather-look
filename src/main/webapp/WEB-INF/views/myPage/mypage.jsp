@@ -4,13 +4,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
-<head>
-	<meta charset="UTF-8">
-
-
-	<title>마이페이지</title>
-</head>
-<body>
 <%@include file="header.jsp"%>
 <h1>마이페이지 출력 테스트</h1>
 <h3>내가 작성한 글</h3>
@@ -88,10 +81,10 @@
 			<div>좋아요 ID</div>
 		</td>
 		<td>
-			<div>제목</div>
+			<div>원문 글 제목</div>
 		</td>
 		<td>
-			<div>작성자</div>
+			<div>원문 글 작성자</div>
 		</td>
 		<td>
 			<div>원문 글 ID</div>
@@ -120,10 +113,10 @@
 			<div>스크랩 ID</div>
 		</td>
 		<td>
-			<div>제목</div>
+			<div>원문 글 제목</div>
 		</td>
 		<td>
-			<div>작성자</div>
+			<div>원문 글 작성자</div>
 		</td>
 		<td>
 			<div>원문 글 ID</div>

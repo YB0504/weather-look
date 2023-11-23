@@ -16,4 +16,8 @@ public interface MyPageService {
 	List<Like> getAllLikeList(String nick) throws Exception;
 
 	List<Scrap> getAllScrapList(String nick) throws Exception;
+
+	int updateMember(Member member) throws Exception;
+
+	int deleteMember(String nick) throws Exception;
 }
