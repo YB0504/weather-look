@@ -9,8 +9,8 @@
 <body>
 
 <script>
-
-location.href="main2"
+//	location.href="dailyform"
+	location.href="dailylist" 
 </script>
 
 </body>

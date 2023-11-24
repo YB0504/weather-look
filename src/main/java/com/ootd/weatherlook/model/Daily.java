@@ -18,7 +18,6 @@ public class Daily {
 	private double temperature;
 	private double latitude;
 	private double longitude;
-	private int type_id;
 	private String nick;
 	
 }

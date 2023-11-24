@@ -18,7 +18,7 @@ public class MainpageController {
 	private MainpageServiceImpl mainpageservice;
 	
 	
-	@RequestMapping("/")
+	@RequestMapping("/test")
 	public String test() {
 		
 		System.out.println("test컨트롤러 통과");
