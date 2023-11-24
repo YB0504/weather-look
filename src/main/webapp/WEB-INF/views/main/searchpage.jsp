@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Search Page</title>
+
+
 </head>
 <body>
 
@@ -13,9 +15,9 @@
 <table align = "center">
 <tr>
 <th>검색어</th>
-<td><input type = "text" name = "keyword" id = "keyword"></td>
+<td><input type = "text" name = "keyword" id = "keyword" value = "${keyword }"></td>
 <td><input type="button" name="search" id="search" value="검색" 
-onClick="location.href='search?page=${page}&keyword=${keyword}'"
+onClick="location.href='search?page=1&keyword='+document.getElementById('keyword').value"
 ></td>
 </tr>
 </table>
@@ -38,7 +40,11 @@ onClick="location.href='search?page=${page}&keyword=${keyword}'"
 <c:forEach var = "r" items = "${searchresult }">
 <tr>
 <td>${r.type_name }</td>
-<td>${r.title }</td>
+<td>
+<a href = main>
+${r.title }
+</a>
+</td>
 <td>${r.nick }</td>
 <td>${r.read_count }</td>
 <td>${r.reg_date }</td>
@@ -53,7 +59,7 @@ onClick="location.href='search?page=${page}&keyword=${keyword}'"
 			</c:if>
 			
 			<c:if test="${page > 1 }">
-				<a href="search?page=${page-1}?keyword=${keyword}">[이전]</a>&nbsp;
+				<a href="search?page=${page-1}&keyword=${keyword}">[이전]</a>&nbsp;
 			</c:if>			
 
 			<c:forEach var="a" begin="${startpage}" end="${endpage}">
@@ -61,7 +67,7 @@ onClick="location.href='search?page=${page}&keyword=${keyword}'"
 					[${a}]
 				</c:if>
 				<c:if test="${a != page }">
-					<a href="search?page=${a}?keyword=${keyword}">[${a}]</a>&nbsp;
+					<a href="search?page=${a}&keyword=${keyword}">[${a}]</a>&nbsp;
 				</c:if>
 			</c:forEach>			
 			
@@ -69,7 +75,7 @@ onClick="location.href='search?page=${page}&keyword=${keyword}'"
 				[다음] 
 			</c:if>
 			<c:if test="${page < maxpage }">
-				<a href="search?page=${page+1}?keyword=${keyword}">[다음]</a>
+				<a href="search?page=${page+1}&keyword=${keyword}">[다음]</a>
 			</c:if>			
 </div>
 </body>

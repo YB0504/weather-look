@@ -16,6 +16,8 @@ public class Search {
 	private int numberset;
 	private int startrow;
 	private int endrow;
+	private String type_name;
+	private int post_id;
 	
 	
 }

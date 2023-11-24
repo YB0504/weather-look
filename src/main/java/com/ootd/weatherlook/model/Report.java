@@ -1,5 +1,7 @@
 package com.ootd.weatherlook.model;
 
+import java.util.Date;
+
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -14,6 +16,7 @@ public class Report {
 	private int post_id;
 	private String title;
 	private String type_name;
+	private Date report_date;
 	
 	
 }

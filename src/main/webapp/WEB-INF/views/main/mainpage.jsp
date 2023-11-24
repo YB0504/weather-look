@@ -9,7 +9,7 @@
 </head>
 <body>
 
-<h1>메인페이지 제작중</h1>
+<h1><a href = "main">메인페이지 제작중</a></h1>
 
 <h2><a href = "apitest">api테스트</a></h2>
 <h2><a href = "weather">이중dto테스트</a></h2>

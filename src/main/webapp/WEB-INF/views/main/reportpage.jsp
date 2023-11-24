@@ -6,6 +6,8 @@
 <head>
 <meta charset="UTF-8">
 <title>Reports Board</title>
+<script src="https://code.jquery.com/jquery-latest.js"></script>
+<script src="/js/reported.js"></script>
 </head>
 <body>
 
@@ -16,22 +18,21 @@
 <table border = "1" align = "center">
 
 <tr>
-<th>신고 번호</th>
+<th>신고일자</th>
 <th>게시판</th>
 <th>제목</th>
 <th>신고사유</th>
 <th>조치</th>
 </tr>
 
-
-
 <c:forEach var = "r" items = "${reportlist }">
 <tr>
-<td>${r.report_id }</td>
+<td>${r.report_date }</td>
 <td>${r.type_name }</td>
 <td>${r.title}</td>
 <td>${r.reason }</td>
-<td><input type = "button" id = "delete" name = "delete" value = "삭제"/></td>
+<td><input type = "button" id = "delete" name = "delete" value = "삭제"
+onClick = "remove('${r.type_name}', '${r.post_id}', '${page}')"/></td>
 </tr>
 </c:forEach>
 

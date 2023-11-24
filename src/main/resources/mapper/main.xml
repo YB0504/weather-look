@@ -10,9 +10,11 @@
 		(select 'daily'
 		as type_name, post_id, title, reg_date from daily
 		union
-		select 'review' as
+		select 'review'
+		as
 		type_name, post_id, title, reg_date from review
-		order by reg_date desc) m1)
+		order by reg_date
+		desc) m1)
 		where rnum &gt;= #{startrow} and rnum &lt;= #{endrow}
 	</select>
 
@@ -38,7 +40,8 @@
 			</if>
 		</where>
 		union
-		select 'review' as type_name, title, post_id, nick, reg_date from review
+		select 'review' as type_name, title, post_id, nick, reg_date from
+		review
 		<where>
 			<if test="keyword != null and keyword != ''">
 				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
@@ -47,7 +50,8 @@
 			</if>
 		</where>
 		union
-		select 'community' as type_name, title, post_id, nick, reg_date from
+		select 'community' as type_name, title, post_id, nick, reg_date
+		from
 		community
 		<where>
 			<if test="keyword != null and keyword != ''">
@@ -61,7 +65,8 @@
 
 	<select id="searchcount" parameterType="search" resultType="int">
 		select count(*) searchcount from
-		(select 'daily' as type_name, title, post_id, nick, reg_date from daily
+		(select 'daily' as type_name, title,
+		post_id, nick, reg_date from daily
 		<where>
 			<if test="keyword != null and keyword != ''">
 				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
@@ -70,7 +75,8 @@
 			</if>
 		</where>
 		union
-		select 'review' as type_name, title, post_id, nick, reg_date from review
+		select 'review' as type_name, title, post_id, nick, reg_date from
+		review
 		<where>
 			<if test="keyword != null and keyword != ''">
 				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
@@ -79,7 +85,8 @@
 			</if>
 		</where>
 		union
-		select 'community' as type_name, title, post_id, nick, reg_date from
+		select 'community' as type_name, title, post_id, nick, reg_date
+		from
 		community
 		<where>
 			<if test="keyword != null and keyword != ''">
@@ -91,7 +98,7 @@
 		order by reg_date)
 	</select>
 
-<!-- 상위 복구 완료 지점 -->
+	<!-- 상위 복구 완료 지점 -->
 
 	<select id="weather" parameterType="search"
 		resultType="mainboard">
@@ -103,54 +110,57 @@
 
 	</select>
 
+
+
+
+	<!-- ========== reportpage ========== -->
+
 	<select id="reportlist" parameterType="search"
 		resultType="report">
 
-		select reports.* , board_type.type_name type_name from
-		(select report.report_id, report.reason, d.type_id, d.post_id, d.title
-		from
-		report, daily d
-		where d.type_id = report.type_id and d.post_id =
-		report.post_id
+		select * from (
+		select rownum rnum, re2.* from(
+		select re1.* from
+		(select daily_report.*, 'daily' as type_name, daily.title from daily_report
+		left join daily
+		on daily_report.post_id = daily.post_id
 		union
-		select report.report_id, report.reason, r.type_id,
-		r.post_id, r.title from
-		report, review r
-		where r.type_id =
-		report.type_id and r.post_id = report.post_id
+		select review_report.*, 'review' as type_name, review.title from
+		review_report
+		left join review
+		on review_report.post_id = review.post_id
 		union
-		select
-		report.report_id, report.reason, c.type_id, c.post_id, c.title from
-		report, community c
-		where c.type_id = report.type_id and c.post_id =
-		report.post_id
-		order by report_id desc) reports, board_type
-		where
-		reports.type_id = board_type.type_id
-		order by report_id desc
+		select community_report.*, 'community' as type_name, community.title from
+		community_report
+		left join community
+		on community_report.post_id = community.post_id) re1
+		order by report_date desc) re2)
+		where rnum &gt;= #{startrow} and rnum &lt;=
+		#{endrow}
 
 	</select>
 
 	<select id="reportcount" parameterType="search" resultType="int">
 		select count(*) reports from
-		(select report.report_id,report.reason,
-		d.type_id, d.post_id, d.title from
-		report, daily d
-		where d.type_id =
-		report.type_id and d.post_id = report.post_id
+		(select daily_report.*, 'daily' as
+		type_name, daily.title from daily_report
+		left join daily
+		on
+		daily_report.post_id = daily.post_id
+		union
+		select review_report.*,
+		'review' as type_name, review.title from
+		review_report
+		left join review
+		on review_report.post_id = review.post_id
 		union
 		select
-		report.report_id,report.reason, r.type_id, r.post_id, r.title from
-		report, review r
-		where r.type_id = report.type_id and r.post_id =
-		report.post_id
-		union
-		select report.report_id,report.reason, c.type_id,
-		c.post_id, c.title from
-		report, community c
-		where c.type_id =
-		report.type_id and c.post_id = report.post_id
-		order by report_id desc)
+		community_report.*, 'community' as type_name, community.title from
+		community_report
+		left join community
+		on community_report.post_id =
+		community.post_id)
+		order by report_date desc
 	</select>
 
 
