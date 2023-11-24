@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Alias("commre")
-public class Community_Re {
+public class CommunityRe {
 
 	private int re_id;
 	private String re_content;

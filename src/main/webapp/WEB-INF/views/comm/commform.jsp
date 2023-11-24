@@ -13,7 +13,7 @@
 <table border=1 width=400 align=center>
 	<caption>글 작성</caption>
 	<tr><th>머리말</th>
-		<td><select name = "category">		
+		<td><select name = "category" id = "category">		
 		<option value = "">카테고리 선택</option>
 		<option value = "question" >질문하기</option>
 		<option value = "talk">토크</option>

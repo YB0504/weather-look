@@ -113,7 +113,7 @@ public class CommController {
 		model.addAttribute("page",page);
 		
 		
-		return "redirect:commlist";
+		return "comm/updateresult";
 	}
 	
 	

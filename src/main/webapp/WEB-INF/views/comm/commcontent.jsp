@@ -8,8 +8,19 @@
 <title>상세 페이지</title>
 </head>
 <body>
-
-<table border=1 width=400 align="center">
+<script>
+function delcheck(){
+	var result = confirm("정말 삭제하시겠습니까?");
+	if(result){
+		location.href='commdelete?post_id=${comm.post_id}&page=${page}'	
+	
+		return false;
+	}
+	
+}
+	
+</script>
+<table border = "1" width = 400 align = center>
 	<caption>상세 페이지</caption>
 	<tr>
 		<td>작성자</td>
@@ -37,18 +48,19 @@
 		</td>
 	</tr>
 	<tr>
-		<td colspan=2 align=center>
+		<td colspan=2 align="center">
 			<input type="button" value="목록"
 onClick="location.href='commlist?page=${page}'"	>
  
 			<input type="button" value="수정"
 onClick="location.href='commupdateform?post_id=${comm.post_id}&page=${page}'">
 			 
-			<input type="button" value="삭제"
-onclick="location.href='commdelete?post_id=${comm.post_id}&page=${page }'"			> 
+			<input type="button" value="삭제" onClick="delcheck()"> 
 		</td>
 	</tr>
 </table>
+<table border = 1 align = "">
 
+</table>
 </body>
 </html>

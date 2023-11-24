@@ -9,5 +9,5 @@ import com.ootd.weatherlook.dao.CommReDao;
 public class CommReService {
 
 	@Autowired
-	private CommReDao dao;
+	private CommReDao rdao;
 }

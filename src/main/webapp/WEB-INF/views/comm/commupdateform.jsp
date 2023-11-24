@@ -18,9 +18,10 @@
 				value = "${comm.nick }"></td>
 	</tr>
 	<tr><th>머리말</th>
-		<td><select name = "category" value = "${comm.category }">		
-		<option value = "${comm.category }">카테고리 선택</option>
-		<option value = "question" >질문하기</option>
+		<td><select name = "category" id = "category" 
+		value = "${comm.category }">		
+		<option value = "">카테고리 선택</option>
+		<option value = "question" name = "질문">질문하기</option>
 		<option value = "talk">토크</option>
 		</select> </td>
 	</tr>
