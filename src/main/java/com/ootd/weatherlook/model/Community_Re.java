@@ -18,6 +18,6 @@ public class Community_Re {
 	private int re_level;
 	private int step;
 	private Date rd_regdate;
-	private int post_id;
 	private String nick;
+	private int post_id;
 }

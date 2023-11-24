@@ -17,7 +17,6 @@ public class Community {
 	private int read_count;
 	private Date reg_date;
 	private String content;
-	private int type_id;
 	private String nick;
 	private String category;
 }
