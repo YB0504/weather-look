@@ -34,23 +34,7 @@ public class DailyController {
 		return "daily/insertresult";
 	}
 	
-	 @RequestMapping(value="/writeAction", method=RequestMethod.POST)
-	    public String writeAction(
-	            HttpServletRequest req,@RequestParam("file") MultipartFile file,
-	            @RequestParam("title")String title, 
-	            @RequestParam("contents")String contents) throws IllegalStateException, IOException {
-	        String PATH = req.getSession().getServletContext().getRealPath("/") + "resources/";
-	        if (!file.getOriginalFilename().isEmpty()) {
-	            file.transferTo(new File(PATH + file.getOriginalFilename()));
-	        }
-	        s.addBoard(new Board(0, title, contents, file.getOriginalFilename()));
-	        return "board";
-	    }
-	
-	
-	
-	
-	
+
 	
 	@RequestMapping("dailylist")
 	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page,
