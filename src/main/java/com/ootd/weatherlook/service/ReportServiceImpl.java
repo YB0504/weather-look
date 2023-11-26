@@ -13,8 +13,15 @@ public class ReportServiceImpl implements ReportService {
 	
 	@Override
 	public void removeDaily(int post_id) {
-		// TODO Auto-generated method stub
 		reportDao.removeDaily(post_id);
+	}
+	@Override
+	public void removeReview(int post_id) {
+		reportDao.removeReview(post_id);
+	}
+	@Override
+	public void removeCommunity(int post_id) {
+		reportDao.removeCommunity(post_id);
 	}
 	
 }

@@ -9,6 +9,7 @@
 </head>
 <body>
 
+<h1><a href = "main">메인으로 가기</a></h1>
 <h1><a href = "main">메인페이지 제작중</a></h1>
 
 <h2><a href = "apitest">api테스트</a></h2>

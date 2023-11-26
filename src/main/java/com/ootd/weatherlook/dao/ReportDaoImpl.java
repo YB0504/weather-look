@@ -12,9 +12,15 @@ public class ReportDaoImpl implements ReportDao{
 	
 	@Override
 	public void removeDaily(int post_id) {
-		// TODO Auto-generated method stub
-		
 		session.delete("report.removedaily", post_id);
+	}
+	@Override
+	public void removeReview(int post_id) {
+		session.delete("report.removereview", post_id);
+	}
+	@Override
+	public void removeCommunity(int post_id) {
+		session.delete("report.removecommunity", post_id);
 	}
 	
 }

@@ -1,0 +1,354 @@
+@charset "UTF-8";
+
+*{margin: 0; padding: 0; box-sizing: border-box;}
+a{text-decoration: none; color: inherit;}
+ul, li, ol{list-style: none;}
+
+body{
+    background-color: #fff;
+    color: #222328;
+    font-size: 14px;
+    font-family: "돋움";
+}
+
+#wrap{width: 1200px; margin: 0 auto;}
+
+#header{
+    width: 100%;
+    height: 180px;
+    background-color: #a29f9f;
+} 
+
+.logo{
+    float: center;
+    width: 200px;
+    height: 80px;
+    padding-top: 10px;
+    padding-left: 500px;
+}
+
+.nav{
+    width: 100%; 
+    }
+.menu{}
+.main{padding-left: 130px;}
+.main > li{
+    float: left; 
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    }
+.main > li >a{
+    border-radius: 10px;
+    display: block;
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background: rgb(99, 97, 97);
+    font-size: 20px;
+    font-family: "엘리스 디지털배움체 OTF";
+    color: #fff;
+}
+
+.main > li:hover >a{
+    background-color: rgba(0,0,0,.5);
+    color: white;
+}
+
+.right > li{
+    float: right;
+    padding-top: 5px;}
+.right > li >a{
+    display: block;
+    width: 90px;
+    height: 50px;
+}
+
+.bottom{
+    padding-top: 60px;
+    padding-right: 10px;
+}
+
+.bottom > li{
+    float: right;
+    padding-right: 35px;
+}
+
+.bottom > li >a{
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: "굴림";
+    color: #292828;
+}
+
+#contents{
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    overflow: hidden;
+}
+
+.w_img{overflow: hidden;}
+.m_weather{
+    padding-left: 125px;
+    padding-top: 50px;
+    padding-bottom: 30px;
+    padding-right: 90px;
+}
+
+.m_weather > li{
+    float: left;
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-top: 5px;
+}
+
+.m_weather > li >a{
+    display: block;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "굴림";
+    color: black;
+}
+
+.m_weather > li > form{
+    padding-top: 55px;
+}
+
+.m_weather > li > form > select{
+    width: 148px;
+    height: 30px;
+    font-size: 20px;
+    border-radius: 10px;
+    border-color: #292828;
+    color: whitesmoke;
+    background-color: #292828;
+}
+
+.f_img{
+    padding-bottom: 30px;
+    overflow: hidden;
+}
+
+.zeus_classic_img {
+    padding-top: 100px;
+    padding-bottom: 50px;
+}
+
+.zeus_classic_img li {
+    width: 380px;
+    height: 400px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.zeus_classic_img li.img1 {
+    background: url("../images/z01.jpg") no-repeat center center;
+}
+
+.zeus_classic_img li.img2 {
+    background: url("../images/z02.jpg") no-repeat center center;
+    margin: 0 30px;
+}
+
+.zeus_classic_img li.img3 {
+    background: url("../images/z03.jpg") no-repeat center center;
+}
+
+.zeus_classic_img li .top {
+    position: absolute;
+    width: 60px;
+    height: 70px;
+    background-color: #000;
+    left: 50px;
+    top: 0;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+
+}
+
+.zeus_classic_img li .top span {
+    display: block;
+    font-size: 15px;
+}
+
+.zeus_classic_img li .txt {
+    width: 380px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+    color: white;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.zeus_classic_img li:hover .txt {
+    background: rgb(0, 0, 0);
+    color: #fff;
+    top: 250px;
+}
+
+
+.zeus_classic_img li .txt .p1 {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.8;
+    letter-spacing: -1px;
+    padding-bottom: 20px;
+
+}
+
+.zeus_classic_img li > .txt > .p1 > a > img{
+    float: right;
+    padding-right: 20px;
+}
+
+.zeus_classic_img li .txt .p2 {
+    font-size: 16px;
+    letter-spacing: -1px;
+    padding-bottom: 30px;
+}
+
+.s_img{
+    padding-top: 50px;
+}
+
+.zeus_second_img {
+    padding-top: 20px;
+}
+
+.zeus_second_img li {
+    width: 380px;
+    height: 400px;
+    float: left;
+    position: relative;
+    overflow: hidden;
+}
+
+.zeus_second_img li.img1 {
+    background: url("../images/z01.jpg") no-repeat center center;
+}
+
+.zeus_second_img li.img2 {
+    background: url("../images/z02.jpg") no-repeat center center;
+    margin: 0 30px;
+}
+
+.zeus_second_img li.img3 {
+    background: url("../images/z03.jpg") no-repeat center center;
+}
+
+.zeus_second_img li .top {
+    position: absolute;
+    width: 60px;
+    height: 70px;
+    background-color: #000;
+    left: 50px;
+    top: 0;
+    color: white;
+    font-size: 30px;
+    text-align: center;
+
+}
+
+.zeus_second_img li .top span {
+    display: block;
+    font-size: 15px;
+}
+
+.zeus_second_img li .txt {
+    width: 380px;
+    height: 250px;
+    background: rgba(255, 255, 255, 0);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 300px;
+    padding: 15px;
+    box-sizing: border-box;
+    color: white;
+    transition: all 0.5s;
+    cursor: pointer;
+}
+
+.zeus_second_img li:hover .txt {
+    background: rgb(0, 0, 0);
+    color: #fff;
+    top: 250px;
+}
+
+
+.zeus_second_img li .txt .p1 {
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 1.8;
+    letter-spacing: -1px;
+    padding-bottom: 20px;
+
+}
+
+.zeus_second_img li .txt .p2 {
+    font-size: 16px;
+    letter-spacing: -1px;
+    padding-bottom: 30px;
+}
+
+.zeus_second_img li> .txt > .p1 > a> img{
+    float: right;
+    padding-right: 20px;
+}
+
+#footer{
+    width: 100%;
+    height: 200px;
+    background-color: #a29f9f;
+}
+
+.foot{
+    height: 200px;
+    background-color: black;
+    color: white;
+    margin: 50px auto 0;
+    font-size: 20px;
+    text-align: center;
+    
+}
+.f_m{}
+.f_m li{
+    display: inline-block;
+    padding: 30px;
+}
+.f_m li a{
+    display: block;
+    /* border: 1px solid darkcyan; */
+}
+.foot p{
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+.foot .f_p{
+    font-size: 15px;
+    text-align: center;
+}
+.foot .f_p span{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+}
+.footf .f_p span img{
+    width: 100%;
+}

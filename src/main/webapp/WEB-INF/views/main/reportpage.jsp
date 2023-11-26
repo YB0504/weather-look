@@ -11,6 +11,7 @@
 </head>
 <body>
 
+<h1><a href = "main">메인으로 가기</a></h1>
 <h1 align = "center">신고된 게시글</h1>
 
 <br>

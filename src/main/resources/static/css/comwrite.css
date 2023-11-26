@@ -1,0 +1,186 @@
+@charset "UTF-8";
+
+*{margin: 0; padding: 0; box-sizing: border-box;}
+a{text-decoration: none; color: inherit;}
+ul, li, ol{list-style: none;}
+
+body{
+    background-color: #fff;
+    color: #222328;
+    font-size: 14px;
+    font-family: "돋움";
+}
+
+#wrap{width: 1200px; margin: 0 auto;}
+
+#header{
+    width: 100%;
+    height: 80px;
+    background-color: #a29f9f;
+} 
+
+.head{
+    overflow: hidden;
+}
+
+.my_head{
+    margin-left: 430px;   
+}
+
+.my_head >li{
+    float: left;
+    padding-left: 45px;
+    padding-right: 150px;
+
+}
+
+.my_head > li> a{
+}
+
+.my_head > li:first-child{
+    padding-top: 10px;
+}
+
+.title{
+    margin-top: 50px;
+    margin-left: 550px;
+    margin-bottom: 40px;
+}
+
+.title > a{
+    font-size: 25px;
+    font-weight: 600;
+    font-family: "맑은고딕";
+
+}
+
+.second{
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+.second > ul{
+    margin-left: 68px;
+}
+
+.second > ul > li > form > label{
+    font-size: 15px;
+    font-weight: 600px;
+    font-family: "맑은고딕";
+    padding-right: 10px;
+}
+
+.second > ul > li {
+    float: left;
+    padding-left: 180px;
+}
+
+.second > ul > li > form > select{
+    width: 180px;
+    height: 30px;
+    font-size: 15px;
+    text-align: center;
+    border-radius: 10px;
+    color: rgb(75, 75, 75);
+    background-color: white;
+}
+
+
+.third{
+    margin-bottom: 10px;
+    margin-left: 250px;
+}
+
+.third > label{
+    font-size: 15px;
+    font-weight: 600px;
+    font-family: "맑은고딕";
+    padding-right: 10px;
+}
+
+.third > input{
+    width: 610px;
+    height: 30px;
+}
+
+.fourth{
+    margin-left: 250px;
+}
+
+.fourth > input{
+    width: 650px;
+    height: 400px;
+}
+
+.last{
+    margin-left: 330px;
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+
+.last > ul{
+    overflow: hidden;
+}
+
+.last > ul > li{
+    width: 150px;
+    height: 50px;
+    float: left;
+    padding-right: 50px;
+    margin-right: 50px;
+
+}
+
+.last > ul > li > a{ 
+    display: block;
+    font-size: 30px;
+    font-weight: 600;
+    background-color: #a29f9f;
+    color: #fff;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 15px;
+
+    
+}
+
+#footer{
+    width: 100%;
+    height: 150px;
+    background-color: #a29f9f;
+}
+
+.foot{
+    height: 200px;
+    background-color: black;
+    color: white;
+    margin: 50px auto 0;
+    font-size: 20px;
+    text-align: center;
+    
+}
+.f_m{}
+.f_m li{
+    display: inline-block;
+    padding: 30px;
+}
+.f_m li a{
+    display: block;
+    /* border: 1px solid darkcyan; */
+}
+.foot p{
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+.foot .f_p{
+    font-size: 15px;
+    text-align: center;
+}
+.foot .f_p span{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+}
+.footf .f_p span img{
+    width: 100%;
+}

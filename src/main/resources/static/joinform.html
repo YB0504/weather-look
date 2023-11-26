@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웨더룩</title>
+    <link rel="stylesheet" href="css/joinform.css">
+    <script src="js/jquery-1.12.4.min.js"></script>
+    <script src="js/script.js"></script>
+    <script lang="javascript">
+        function showPopup() { window.open("search.html", "b", "width=700, height=400, left=200, top=200"); }
+    </script>
+</head>
+<body>
+    <div id="wrap">
+        <header id="header">
+            <h1 class="logo">
+                <a href="index.html"><img src="images/logo.png" alt="logo"></a>
+            </h1>
+            <nav class="nav">
+                <div class="menu">
+                <ul class="main">
+                    <li>
+                        <a href="dailylookmain.html">데일리룩</a>
+                    </li>
+                    <li>
+                        <a href="review.html">쇼핑후기</a>
+                    </li>
+                    <li>
+                        <a href="community.html">커뮤니티</a>
+                    </li>
+                </ul>
+                <ul class="right">
+                    <li>
+                        <a href="mypage.html"><img src="images/user.png" alt="search"></a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="showPopup();"><img src="images/search.png" alt="mypage"></a>
+                    </li>
+                </ul>
+                </div>
+            </nav>
+        </header>    
+        <section id="contents">
+            <div class="join">
+                <ul class="jf">
+                    <li class="a">
+                        <a href="#">회원가입</a>
+                    </li>
+                    <li class="b">
+                        <a href="#">이메일</a>
+                        <form action="search.php" method="post">
+                            <input type="email" class="email" title="이메일">
+                            <input type="submit" class="submit" value="이메일중복검사">
+                        </form>
+                    </li>
+                    <li class="c">
+                        <label for="passwd">비밀번호</label><br>
+                        <input type="password" id="passwd">
+                    </li>
+                    <li class="d"> 
+                        <label for="check">비밀번호확인</label><br>
+                        <input type="password" id="check">
+                    </li>
+                    <li class="e">
+                        <label for="username">이름</label><br>
+                        <input type="text" id="username">
+                    </li>
+                    <li class="f">
+                        <a href="#">닉네임</a>
+                        <form action="search.php" method="post">
+                            <input type="text" class="nick" title="닉네임">
+                            <input type="submit" class="jb" value="닉네임중복검사">
+                        </form>
+                    </li>
+                    <li class="j">
+                        <label for="tel">전화번호</label><br>
+                        <input type="tel" id="tel">
+                    </li>
+                    <li class="g">
+                        <a href="#">주소</a>
+                        <form action="search.php" method="post">
+                            <input type="text" class="add" title="주소">
+                            <input type="submit" class="addc" value="주소검색">
+                        </form>
+                    </li>
+                    <li class="h">
+                        <input type="reset" class="cancel" value="취소">
+                        <input type="submit" class="joinbt" value="회원가입">
+                    </li>
+                    <li class="i">
+                        <input type="button" value="카카오톡으로 회원가입" onclick="window.open()">
+                    </li>
+                </ul>
+            </div>
+            
+        </section><!-- contents -->
+
+        <footer id="footer">
+            <div class="foot">
+                <ul class="f_m">
+                    <li><a href="#">회사소개</a></li>
+                    <li><a href="#">이용약관</a></li>
+                    <li><a href="#">개인정보처리방침</a></li>
+                    <li><a href="#">입점문의</a></li>
+                    <li><a href="#">공지사항</a></li>
+                </ul>
+                <p>COPYRIGHT © <span>WeatherLook INC.</span> All RIGHTS RESERVED</p>
+                <div class="call">
+                    <p class="f_p"> <span><img src="images/icon.png" alt="img"> </span>1566-1566 평일 AM 9:00 - PM 6:00
+                    점심 PM 1:00 - PM 2:00
+                    주말 및 공휴일 휴무</p>
+                </div><!-- call -->
+            </div> <!-- f -->
+        </footer><!-- footer -->
+    </div><!-- wrap -->
+</body>
+</html>

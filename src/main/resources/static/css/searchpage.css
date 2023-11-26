@@ -1,0 +1,228 @@
+@charset "UTF-8";
+
+*{margin: 0; padding: 0; box-sizing: border-box;}
+a{text-decoration: none; color: inherit;}
+ul, li, ol{list-style: none;}
+
+body{
+    background-color: #fff;
+    color: #222328;
+    font-size: 14px;
+    font-family: "돋움";
+}
+
+#wrap{width: 1200px; margin: 0 auto;}
+
+#header{
+    width: 100%;
+    height: 180px;
+    background-color: #a29f9f;
+} 
+
+.logo{
+    float: center;
+    width: 200px;
+    height: 80px;
+    padding-top: 10px;
+    padding-left: 500px;
+}
+
+.nav{
+    width: 100%; 
+    }
+.menu{}
+.main{padding-left: 130px;}
+.main > li{
+    float: left; 
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    }
+.main > li >a{
+    border-radius: 10px;
+    display: block;
+    width: 250px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    background: rgb(99, 97, 97);
+    font-size: 20px;
+    font-weight: bold;
+    font-family: "굴림";
+    color: #fff;
+}
+
+.main > li:hover >a{
+    background-color: rgba(0,0,0,.5);
+    color: white;
+}
+
+.right > li{
+    float: right;
+    padding-top: 5px;}
+.right > li >a{
+    display: block;
+    width: 90px;
+    height: 50px;
+}
+
+.bottom{
+    padding-top: 60px;
+    padding-right: 10px;
+}
+
+.bottom > li{
+    float: right;
+    padding-right: 35px;
+}
+
+.bottom > li >a{
+    display: block;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: "굴림";
+    color: #292828;
+}
+
+#contents{
+    width: 100%;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    overflow: hidden;
+}
+
+.s_1{
+    margin-left: 200px;
+}
+
+.s_1 > ul{
+    overflow: hidden;
+}
+
+.s_1 > ul > li{
+    display: block;
+    float: left;
+    margin-left: 30px;
+    margin-top: 50px;
+
+}
+
+.s_1 > ul > li > img{
+
+}
+
+.s_1 > ul > li > input{
+    width: 600px;
+    height: 50px;
+
+}
+
+.w_img{overflow: hidden;}
+
+.m_weather{
+    padding-left: 220px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    padding-right: 90px;
+}
+
+.m_weather > li{
+    float: left;
+    padding-left: 45px;
+    padding-right: 45px;
+    padding-top: 5px;
+}
+
+.m_weather > li > form{
+    padding-top: 55px;
+}
+
+.m_weather > li > form > select{
+    width: 148px;
+    height: 40px;
+    font-size: 20px;
+    border-color: #292828;
+    color: whitesmoke;
+    background-color: #292828;
+}
+
+.s_2{
+    margin-top: 30px;
+    margin-left: 120px;
+}
+
+.s_2 > a{
+    font-size: 15px;
+    font-weight: bold;
+}
+
+.s_3{
+    overflow: hidden;
+    margin-left: 120px;
+    margin-top: 80px;
+}
+
+.s_3 > ul{
+    width: 1100px;
+}
+
+.s_3 > ul > li{
+    display: block;
+    float: left; 
+    padding-right: 130px;
+}
+
+.s_3 > ul > li > a{
+    font-size: 20px;
+    font-weight: 300;
+    font-family: "맑은고딕";
+    text-align: center;
+
+
+}
+
+
+
+
+
+#footer{
+    width: 100%;
+    height: 150px;
+    background-color: #a29f9f;
+}
+
+.foot{
+    height: 200px;
+    background-color: black;
+    color: white;
+    margin: 50px auto 0;
+    font-size: 20px;
+    text-align: center;
+    
+}
+.f_m{}
+.f_m li{
+    display: inline-block;
+    padding: 30px;
+}
+.f_m li a{
+    display: block;
+    /* border: 1px solid darkcyan; */
+}
+.foot p{
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+.foot .f_p{
+    font-size: 15px;
+    text-align: center;
+}
+.foot .f_p span{
+    width: 25px;
+    height: 25px;
+    display: inline-block;
+}
+.footf .f_p span img{
+    width: 100%;
+}

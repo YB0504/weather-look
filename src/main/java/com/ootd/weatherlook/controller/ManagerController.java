@@ -111,11 +111,19 @@ public class ManagerController {
 		
 		if(type_name.equals("daily")) {
 			reportservice.removeDaily(post_id);
-			System.out.println("[delete] : post_id : " + post_id + " from " + type_name + " table");
+			System.out.println("[delete] table : " + type_name + ", post_id : " + post_id);
+		}
+		if(type_name.equals("review")) {
+			reportservice.removeReview(post_id);
+			System.out.println("[delete] table : " + type_name + ", post_id : " + post_id);
+		}
+		if(type_name.equals("community")) {
+			reportservice.removeCommunity(post_id);
+			System.out.println("[delete] table : " + type_name + ", post_id : " + post_id);
 		}
 		model.addAttribute("page", page);
 		
-		return "redirect:report?page="+page;
+		return "redirect:report";
 	}
 	
 

@@ -30,7 +30,9 @@ community_report_seq.nextval, '테스트2', 2)
 ;
 
 -- 신고된 게시글 수집
-select * from
+select * from (
+select rownum rnum, re2.* from(
+select re1.* from
 (select daily_report.*, 'daily' as type_name, daily.title from daily_report
 left join daily
 on daily_report.post_id = daily.post_id
@@ -41,8 +43,9 @@ on review_report.post_id = review.post_id
 union
 select community_report.*, 'community' as type_name, community.title from community_report
 left join community
-on community_report.post_id = community.post_id)
-order by report_date desc;
+on community_report.post_id = community.post_id) re1
+order by report_date desc) re2)
+;
 
 -- 신고글 갯수
 select count(*) reports from
@@ -58,3 +61,6 @@ select community_report.*, 'community' as type_name, community.title from commun
 left join community
 on community_report.post_id = community.post_id)
 order by report_date desc;
+
+-- 신고글 삭제
+delete from daily where post_id = 0;
