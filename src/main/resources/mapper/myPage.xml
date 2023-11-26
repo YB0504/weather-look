@@ -2,118 +2,182 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="myPage">
-	<!--전체 글 개수-->
-	<select id="count" resultType="int">
-		with allpost as (select POST_ID, TITLE, READ_COUNT, REG_DATE, CONTENT, NICK
-		                 from DAILY
-		                 union
-		                 select POST_ID, TITLE, READ_COUNT, REG_DATE, CONTENT, NICK
-		                 from REVIEW
-		                 union
-		                 select POST_ID, TITLE, READ_COUNT, REG_DATE, CONTENT, NICK
-		                 from COMMUNITY)
-		select count(*)
-		from allpost
-		where NICK like '%준혁%'
-	</select>
+<!--회원 객체 얻어오기-->
+<select id="get_member" parameterType="String" resultType="memberVO">
+	select *
+	from MEMBER
+	where NICK = #{nick}
+</select>
 
-	<!--작성글 목록-->
-	<select id="post_list" parameterType="String" resultType="Board">
-		with allpost as (select POST_ID, TITLE, READ_COUNT, REG_DATE, CONTENT, NICK
-		                 from DAILY
-		                 union
-		                 select POST_ID, TITLE, READ_COUNT, REG_DATE, CONTENT, NICK
-		                 from REVIEW
-		                 union
-		                 select POST_ID, TITLE, READ_COUNT, REG_DATE, CONTENT, NICK
-		                 from COMMUNITY)
-		select *
-		from allpost
-		where NICK = #{nick}
-		order by REG_DATE desc
-	</select>
+<!--작성 글 개수-->
+<select id="postCount" parameterType="String" resultType="int">
+	with allpost as (select POST_ID, NICK from DAILY
+	                 union
+	                 select POST_ID, NICK from REVIEW
+	                 union
+	                 select POST_ID, NICK from COMMUNITY)
+	select count(*)
+	from allpost
+	where NICK=#{nick}
+</select>
 
-	<!--작성 댓글 목록-->
-	<select id="comment_list" parameterType="String" resultType="Comment">
-		with allcomment as (select *
-		                    from DAILY_REPLY
-		                    union
-		                    select *
-		                    from REVIEW_REPLY
-		                    union
-		                    select *
-		                    from COMMUNITY_REPLY)
-		select *
-		from allcomment
-		where NICK = #{nick}
-		order by RE_REGDATE desc
-	</select>
+<!--작성글 목록-->
+<select id="post_list" parameterType="listQueryVO" resultType="listVO">
+	with allpost as (select 'daily' as BOARD_TYPE, POST_ID, TITLE, NICK, REG_DATE, READ_COUNT
+	                 from DAILY
+	                 union
+	                 select 'review' as BOARD_TYPE, POST_ID, TITLE, NICK, REG_DATE, READ_COUNT
+	                 from REVIEW
+	                 union
+	                 select 'community' as BOARD_TYPE, POST_ID, TITLE, NICK, REG_DATE, READ_COUNT
+	                 from COMMUNITY),
+	     sortedpost as (
+		     select *
+		     from allpost
+		     where NICK = #{nick}
+		     order by REG_DATE desc),
+	     rownumpost as (
+		     select ROWNUM rnum, board_type, post_id, title, nick, reg_date, read_count
+		     from sortedpost
+	     )
+	select * from rownumpost where rnum between #{startRow} and #{endRow}
+</select>
 
-	<!--유저 객체 얻어오기-->
-	<select id="get_member" parameterType="String" resultType="Member">
-		select *
-		from MEMBER
-		where NICK = #{nick}
-	</select>
+<!--작성 댓글 개수-->
+<select id="replyCount" parameterType="String" resultType="int">
+	with allreply as (select * from DAILY_REPLY
+	                  union
+	                  select * from REVIEW_REPLY
+	                  union
+	                  select * from COMMUNITY_REPLY)
+	select count(*)
+	from allreply
+	where NICK=#{nick}
+</select>
 
-	<!--좋아요 목록-->
-	<select id="like_list" parameterType="String" resultType="Like">
-		with allLike as (select DL.LIKE_ID, DL.POST_ID, DAILY.TITLE, DAILY.NICK as writer_nick
-		                 from DAILY_LIKE DL, DAILY
-		                 where DL.POST_ID = DAILY.POST_ID and
-		                       DL.NICK = #{nick}
-		                 union
-		                 select RL.LIKE_ID, RL.POST_ID, REVIEW.TITLE, REVIEW.NICK as writer_nick
-		                 from REVIEW_LIKE RL, REVIEW
-		                 where RL.POST_ID = REVIEW.POST_ID and
-		                       RL.NICK = #{nick}
-		                 union
-		                 select CL.LIKE_ID, CL.POST_ID, COMMUNITY.TITLE, COMMUNITY.NICK as writer_nick
-		                 from COMMUNITY_LIKE CL, COMMUNITY
-		                 where CL.POST_ID = COMMUNITY.POST_ID and
-		                       CL.NICK = #{nick})
-		select *
-		from allLike
-		order by LIKE_ID desc
-	</select>
+<!--작성 댓글 목록-->
+<select id="reply_list" parameterType="listQueryVO" resultType="listVO">
+	with allreply as (select 'daily' as BOARD_TYPE, D.POST_ID, D.TITLE, D.NICK as NICK, D.REG_DATE as REG_DATE, D.READ_COUNT, RE_REGDATE
+	                  from DAILY D , DAILY_REPLY DR
+	                  where D.POST_ID=DR.POST_ID and
+		                  DR.NICK=#{nick}
+	                  union
+	                  select 'review' as BOARD_TYPE, R.POST_ID, R.TITLE, R.NICK as NICK, R.REG_DATE as REG_DATE, R.READ_COUNT, RE_REGDATE
+	                  from REVIEW R, REVIEW_REPLY RR
+	                  where R.POST_ID=RR.POST_ID and
+		                  RR.NICK=#{nick}
+	                  union
+	                  select 'community' as BOARD_TYPE, C.POST_ID, C.TITLE, C.NICK as NICK, C.REG_DATE as REG_DATE, C.READ_COUNT, RE_REGDATE
+	                  from COMMUNITY C, COMMUNITY_REPLY CR
+	                  where C.POST_ID=CR.POST_ID and
+		                  CR.NICK=#{nick}),
+	     sortedreply as (
+		     select board_type, post_id, title, nick, reg_date, read_count
+		     from allreply
+		     order by RE_REGDATE desc),
+	     rownumreply as (
+		     select ROWNUM rnum, sortedreply.*
+		     from sortedreply)
+	select * from rownumreply where rnum between #{startRow} and #{endRow}
+</select>
 
-	<!--스크랩 목록-->
-	<select id="scrap_list" parameterType="String" resultType="Scrap">
-		with allScrap as (select DS.SCRAP_ID, DS.POST_ID, DAILY.TITLE, DAILY.NICK as writer_nick
-		                  from DAILY_SCRAP DS, DAILY
-		                  where DS.POST_ID = DAILY.POST_ID and
-		                        DS.NICK = #{nick}
-		                  union
-		                  select RS.SCRAP_ID, RS.POST_ID, REVIEW.TITLE, REVIEW.NICK as writer_nick
-		                  from REVIEW_SCRAP RS, REVIEW
-		                  where RS.POST_ID = REVIEW.POST_ID and
-		                        RS.NICK = #{nick}
-		                  union
-		                  select CS.SCRAP_ID, CS.POST_ID, COMMUNITY.TITLE, COMMUNITY.NICK as writer_nick
-		                  from COMMUNITY_SCRAP CS, COMMUNITY
-		                  where CS.POST_ID = COMMUNITY.POST_ID and
-		                        CS.NICK = #{nick})
-		select *
-		from allScrap
-		order by SCRAP_ID desc
-	</select>
+<!--좋아요 개수-->
+<select id="likeCount" parameterType="String" resultType="int">
+	with alllike as (select like_id, nick, post_id from DAILY_LIKE
+	                 union
+	                 select like_id, nick, post_id from REVIEW_LIKE
+	                 union
+	                 select like_id, nick, post_id from COMMUNITY_LIKE)
+	select count(*)
+	from alllike
+	where NICK=#{nick}
+</select>
 
-	<!--회원정보 수정-->
-	<update id="updateMember" parameterType="member">
-		update MEMBER
-		set PASSWD=#{passwd},
-		    PROFILE_IMAGE=#{profile_image, jdbcType=VARCHAR},
-		    ADDRESS=#{address},
-		    PHONE=#{phone},
-		    TOKEN=#{token, jdbcType=VARCHAR},
-		    ADMIN_ROLE=#{admin_role}
-		where NICK = #{nick}
-	</update>
+<!--좋아요 목록-->
+<select id="like_list" parameterType="listQueryVO" resultType="listVO">
+	with allLike as (select 'daily' as BOARD_TYPE, DL.POST_ID, LIKE_ID, TITLE, D.NICK as NICK, REG_DATE, READ_COUNT
+	                 from DAILY D, DAILY_LIKE DL
+	                 where D.POST_ID = DL.POST_ID and
+		                 DL.NICK = #{nick}
+	                 union
+	                 select 'review' as BOARD_TYPE, RL.POST_ID, LIKE_ID, TITLE, R.NICK as NICK, REG_DATE, READ_COUNT
+	                 from REVIEW R, REVIEW_LIKE RL
+	                 where R.POST_ID = RL.POST_ID and
+		                 RL.NICK = #{nick}
+	                 union
+	                 select 'community' as BOARD_TYPE, CL.POST_ID, LIKE_ID, TITLE, C.NICK as NICK, REG_DATE, READ_COUNT
+	                 from COMMUNITY C, COMMUNITY_LIKE CL
+	                 where C.POST_ID = CL.POST_ID and
+		                 CL.NICK = #{nick}),
+	     storedlike as (
+		     select board_type, post_id, title, nick, reg_date, read_count
+		     from allLike
+		     order by LIKE_ID desc),
+	     rownumlike as (
+		     select ROWNUM rnum, storedlike.*
+		     from storedlike)
+	select * from rownumlike where rnum between #{startRow} and #{endRow}
+</select>
 
-	<delete id="deleteMember" parameterType="String">
-		delete from MEMBER where NICK = #{nick}
-	</delete>
+<!--스크랩 개수-->
+<select id="scrapCount" parameterType="String" resultType="int">
+	with allscrap as (select scrap_id, nick, post_id from DAILY_SCRAP
+	                  union
+	                  select scrap_id, nick, post_id from REVIEW_SCRAP
+	                  union
+	                  select scrap_id, nick, post_id from COMMUNITY_SCRAP)
+	select count(*)
+	from allscrap
+	where NICK=#{nick}
+</select>
+
+<!--스크랩 목록-->
+<select id="scrap_list" parameterType="listQueryVO" resultType="listVO">
+	with allscrap as (select 'daily' as BOARD_TYPE, DS.POST_ID, SCRAP_ID, D.TITLE, D.NICK as NICK, REG_DATE, READ_COUNT
+	                  from DAILY D, DAILY_SCRAP DS
+	                  where D.POST_ID = DS.POST_ID and
+		                  DS.NICK = #{nick}
+	                  union
+	                  select 'review' as BOARD_TYPE, RS.POST_ID, SCRAP_ID, R.TITLE, R.NICK as NICK, REG_DATE, READ_COUNT
+	                  from  REVIEW R, REVIEW_SCRAP RS
+	                  where R.POST_ID = RS.POST_ID and
+		                  RS.NICK = #{nick}
+	                  union
+	                  select 'community' as BOARD_TYPE, CS.POST_ID, SCRAP_ID, C.TITLE, C.NICK as NICK, REG_DATE, READ_COUNT
+	                  from COMMUNITY C, COMMUNITY_SCRAP CS
+	                  where C.POST_ID = CS.POST_ID and
+		                  CS.NICK = #{nick}),
+	     storedscrap as (
+		     select board_type, post_id, title, nick, reg_date, read_count
+		     from allscrap
+		     order by SCRAP_ID desc),
+	     rownumscrap as (
+		     select ROWNUM rnum, storedscrap.*
+		     from storedscrap)
+	select * from rownumscrap where rnum between #{startRow} and #{endRow}
+</select>
+
+<!--회원정보 수정-->
+<update id="updateMember" parameterType="memberVO">
+	update MEMBER
+	set PASSWD=#{passwd},
+	    PROFILE_IMAGE=#{profile_image, jdbcType=VARCHAR},
+	    ADDRESS=#{address},
+	    PHONE=#{phone},
+	    ADMIN_ROLE=#{admin_role}
+	where NICK = #{nick}
+</update>
+
+<!--회원 삭제-->
+<delete id="deleteMember" parameterType="String">
+	delete from MEMBER where NICK = #{nick}
+</delete>
 </mapper>
+
+
+
+
+
 
 
 

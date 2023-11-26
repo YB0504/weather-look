@@ -4,8 +4,6 @@ import com.ootd.weatherlook.dao.MyPageDao;
 import com.ootd.weatherlook.model.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -14,45 +12,63 @@ public class MyPageServiceImpl implements MyPageService{
 	private final MyPageDao myPageDao;
 
 	@Override
-	public int getListCount() throws Exception{
-		System.out.println("MyPageServiceImpl.getListCount");
-		return getListCount();
-	}
-
-	@Override
-	public List<Board> getAllPostList(String nick) throws Exception{
-		System.out.println("MyPageServiceImpl.getAllPostList");
-		return myPageDao.getAllPostList(nick);
-	}
-
-	@Override
-	public Member getMember(String nick) throws Exception {
+	public MemberVO getMember(String nick) throws Exception {
 		System.out.println("MyPageServiceImpl.getMember");
 		return myPageDao.getMember(nick);
 	}
 
 	@Override
-	public List<Comment> getAllCommentList(String nick) throws Exception {
-		System.out.println("MyPageServiceImpl.getAllCommentList");
-		return myPageDao.getAllCommentList(nick);
+	public int getPostCount(String nick) throws Exception{
+		System.out.println("MyPageServiceImpl.getPostCount");
+		return myPageDao.getPostCount(nick);
 	}
 
 	@Override
-	public List<Like> getAllLikeList(String nick) throws Exception {
+	public int getReplyCount(String nick) throws Exception {
+		System.out.println("MyPageServiceImpl.getReplyCount");
+		return myPageDao.getReplyCount(nick);
+	}
+
+	@Override
+	public int getLikeCount(String nick) throws Exception {
+		System.out.println("MyPageServiceImpl.getLikeCount");
+		return myPageDao.getLikeCount(nick);
+	}
+
+	@Override
+	public int getScrapCount(String nick) throws Exception {
+		System.out.println("MyPageServiceImpl.getScrapCount");
+		return myPageDao.getScrapCount(nick);
+	}
+
+	@Override
+	public List<ListVO> getAllPostList(ListQueryVO listQueryVO) throws Exception{
+		System.out.println("MyPageServiceImpl.getAllPostList");
+		return myPageDao.getAllPostList(listQueryVO);
+	}
+
+	@Override
+	public List<ListVO> getAllReplyList(ListQueryVO listQueryVO) throws Exception {
+		System.out.println("MyPageServiceImpl.getAllReplyList");
+		return myPageDao.getAllReplyList(listQueryVO);
+	}
+
+	@Override
+	public List<ListVO> getAllLikeList(ListQueryVO listQueryVO) throws Exception {
 		System.out.println("MyPageServiceImpl.getAllLikeList");
-		return myPageDao.getAllLikeList(nick);
+		return myPageDao.getAllLikeList(listQueryVO);
 	}
 
 	@Override
-	public List<Scrap> getAllScrapList(String nick) throws Exception {
+	public List<ListVO> getAllScrapList(ListQueryVO listQueryVO) throws Exception {
 		System.out.println("MyPageServiceImpl.getAllScrapList");
-		return myPageDao.getAllScrapList(nick);
+		return myPageDao.getAllScrapList(listQueryVO);
 	}
 
 	@Override
-	public int updateMember(Member member) throws Exception{
+	public int updateMember(MemberVO memberVO) throws Exception{
 		System.out.println("MyPageServiceImpl.updateMember");
-		return myPageDao.updateMember(member);
+		return myPageDao.updateMember(memberVO);
 	}
 
 	@Override

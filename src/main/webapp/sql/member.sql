@@ -1,7 +1,7 @@
-select * from member;
+select * from memberVO;
 
 
-insert into member values('준혁', '준혁', '1234', null, '우리집', '핸드폰', null, 'y');
+insert into memberVO values('준혁', '준혁', '1234', null, '우리집', '핸드폰', 'n');
 
 delete
 from MEMBER
