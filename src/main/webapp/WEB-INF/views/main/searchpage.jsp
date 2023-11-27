@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Search Page</title>
 <link rel="stylesheet" href="css/searchpage.css">
+<link rel="stylesheet" href="css/sunsearch.css">
 <script src="js/jquery-1.12.4.min.js"></script>
 <script src="js/script.js"></script>
 <script lang="javascript">
@@ -61,30 +62,27 @@
 		<div class="s_2">
 			<a href="#">${listcount }개의 글</a>
 		</div>
-		<div class="s_3">
-			<ul>
-				<li><a href="#">게시판</a>
-				<li>
-				<li><a href="#">제목</a></li>
-				<li><a href="#">작성자</a></li>
-				<li><a href="#">날짜</a></li>
-				<li><a href="#">조회수</a></li>
-				<li><a href="#">좋아요</a></li>
-			</ul>
-		</div>
+			<table   class="sr">
+			<tr>
+				<td><a href="#">게시판</a></td>
+				<td><a href="#">제목</a></td>
+				<td><a href="#">작성자</a></td>
+				<td><a href="#">조회수</a></td>
+				<td><a href="#">좋아요</a></td>
+				<td><a href="#">날짜</a></td>
+			</tr>
 
 		<c:forEach var="r" items="${searchresult }">
-			<div class="s_3">
-				<ul>
-					<li>${r.type_name }</li>
-					<li><a href=main> ${r.title } </a></li>
-					<li>${r.nick }</li>
-					<li>${r.read_count }</li>
-					<li>${r.reg_date }</li>
-					<li>${r.likes }</li>
-				</ul>
-			</div>
+				<tr>
+					<td>${r.type_name }</td>
+					<td><a href=main> ${r.title } </a></td>
+					<td>${r.nick }</td>
+					<td>${r.read_count }</td>
+					<td>${r.likes }</td>
+					<td>${r.reg_date }</td>
+				</tr>
 		</c:forEach>
+			</table>
 
 	</section>
 	<!-- contents -->

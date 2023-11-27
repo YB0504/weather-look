@@ -18,5 +18,5 @@ public class Report {
 	private String type_name;
 	private Date report_date;
 	
-	
+
 }

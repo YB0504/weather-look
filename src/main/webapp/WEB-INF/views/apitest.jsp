@@ -21,7 +21,7 @@ function apitest() {
             service: "address",
             request: "getaddress",
             version: "2.0",
-            crs: "EPSG:5179",
+            crs: "EPSG:4326",
             type: "ROAD",
             point: $("#point").val(),
             format: "json",

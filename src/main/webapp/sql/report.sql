@@ -20,7 +20,7 @@ update  community_report set report_date = sysdate where report_date is null;
 commit;
 
 insert into daily_report values(
-daily_report_seq.nextval, '테스트2', 4)
+daily_report_seq.nextval, '테스트2', 63, sysdate)
 ;
 insert into review_report values(
 review_report_seq.nextval, '테스트2', 2)
@@ -63,4 +63,6 @@ on community_report.post_id = community.post_id)
 order by report_date desc;
 
 -- 신고글 삭제
-delete from daily where post_id = 0;
+delete from daily where post_id = 62;
+
+commit;
