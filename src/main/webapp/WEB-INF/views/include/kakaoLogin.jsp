@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,10 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<script>
-	location.href="loginform1"
-</script>
-
+	<a href="javascript:kakaoLogin()"> 
+		<img src="./img/kakao_login_medium_narrow.png">
+	</a>
 </body>
 </html>

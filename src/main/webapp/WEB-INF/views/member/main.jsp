@@ -11,7 +11,9 @@
 메인입니다~
 
 ID : ${sessionScope.id }<br>
-passwd : ${passwd}<br>
+Nickname : ${sessionScope.nick}<br>
+
+<img src="${member.profile_image}">
 
 </body>
 </html>

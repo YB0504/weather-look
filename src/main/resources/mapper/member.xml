@@ -15,8 +15,8 @@
 	
 	<!-- 일반회원 가입 -->
 	<insert id="insertmember" parameterType="member">
-		insert into member(nick, id, passwd, profile_image, address, phone, oauth_token, admin_role)
-		values(#{nick}, #{id}, #{passwd}, #{profile_image, jdbcType=VARCHAR}, #{address} ,#{phone}, #{oauth_token, jdbcType=VARCHAR},
+		insert into member(nick, id, passwd, profile_image, address, phone, admin_role)
+		values(#{nick}, #{id}, #{passwd}, #{profile_image, jdbcType=VARCHAR}, #{address} ,#{phone},
 		<if test="id == 'master'">
 			'y'
 		</if>
@@ -30,4 +30,15 @@
 		select * from member where id = #{id}
 	</select>
 
+	<!-- 카카오 가입 -->
+	<insert id="insertKakao" parameterType="member">
+		insert into member(nick, id, passwd, profile_image, address, phone, admin_role)
+		values(#{nick}, '카카오선홍', 'kakao1234', #{profile_image, jdbcType=VARCHAR}, '서울', '010-1234-5678', 'n')
+	</insert>
+
+	<!-- 카카오 로그인 -->
+	<select id="kakaoLogin" parameterType="String" resultType="member">
+		select * from member where nick = #{nick}
+	</select>
+	
 </mapper>

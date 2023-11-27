@@ -9,7 +9,7 @@ String pass = request.getParameter("mempass");
 System.out.println("id=" + nick);
 System.out.println("pass=" + pass);
 
-NormalLogDao dao = new NormalLogDao();
+LoginDao dao = new LoginDao();
 
 int re = dao.nickcheck(nick);
 //1이면 중복 -1이면 사용가능 아이디

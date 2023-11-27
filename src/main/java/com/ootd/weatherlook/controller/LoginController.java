@@ -9,22 +9,21 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ootd.weatherlook.model.MemberDTO;
-import com.ootd.weatherlook.service.NormalLogService;
+import com.ootd.weatherlook.service.LoginService;
 
 @Controller
-public class NormalLoginController {
+public class LoginController {
 
 	@Autowired
-	private NormalLogService service;
+	private LoginService service;
 
-	@RequestMapping("loginform")
+	@RequestMapping("loginform1")
 	public String loginform() {
 		System.out.println("로그인 폼");
 		return "member/loginform";
@@ -133,9 +132,55 @@ public class NormalLoginController {
 		return "member/loginform";
 	}
 	
+	//카카오톡 로그인
+	@RequestMapping("kakaologin")
+	public String kakaologin(@RequestParam("nickname") String nick,
+							 @RequestParam("profileImage") String profile_image,
+							 HttpSession session,
+							 Model model)throws Exception {
+		
+		System.out.println("카카오톡 로그인 컨트롤러");
+		System.out.println("nick : "+nick);
+		System.out.println("프로필 사진 : " +profile_image);
+		
+		// 카카오 로그인 인증
+		MemberDTO kakaoCheck = service.kakaoLoginCheck(nick);
+		if(kakaoCheck == null) {	// 해당 nick으로 등록된 id가 없다면
+			
+			int result=0;
+			MemberDTO kakao = new MemberDTO();
+			
+			kakao.setNick(nick);
+			kakao.setProfile_image(profile_image);
+			result = service.kakaoLogin(kakao);		// 회원 DB에 저장
+			
+			MemberDTO logink2 = service.kakaoLoginCheck(nick);
+			session.setAttribute("nick",logink2.getNick());	// 회원 등록 후 세션 설정
+			
+			System.out.println("카톡카톡!!!!!");
+			model.addAttribute("member", kakao);
+			
+			return "member/main";
+			
+		}else if(kakaoCheck.getNick().equals(nick)) { // 등록되어 있는 회원
+			
+			System.out.println("카카오 로그인 성공");
+			
+			session.setAttribute("nick", nick);
+			MemberDTO member = service.kakaoLoginCheck(nick);
+			model.addAttribute("member", member);
+			return "member/main";
+			
+		}
+		
+		return "";	// 모두 해당하지 않는경우?
+	}
+
 	// 로그인 성공
 	@RequestMapping("main")
 	public String login(String id, String passwd, HttpSession session, Model model)throws Exception {
+		
+		System.out.println("로그인 인증");
 		
 		int result = 0;
 		
@@ -154,24 +199,16 @@ public class NormalLoginController {
 			if("master".equals(id) && dto.getPasswd().equals(passwd)) {
 				
 				session.setAttribute("id", id);
-				
-				String nick = dto.getNick();
-				String profile_image = dto.getProfile_image();
-				
-				model.addAttribute("nick", nick);
-				model.addAttribute("profile_image", profile_image);
+				session.setAttribute("nick", dto.getNick());
+				session.setAttribute("profile_image", dto.getProfile_image());
 				
 				return "member/adminPage";
 				
 			}else if(dto.getPasswd().equals(passwd)) {	// 비밀번호 일치 session 설정
 				
 				session.setAttribute("id", id);
-				
-				String nick = dto.getNick();
-				String profile_image = dto.getProfile_image();
-				
-				model.addAttribute("nick", nick);
-				model.addAttribute("profile_image", profile_image);
+				session.setAttribute("nick", dto.getNick());
+				session.setAttribute("profile_image", dto.getProfile_image());
 				
 				System.out.println("로그인 성공");
 				
@@ -182,6 +219,8 @@ public class NormalLoginController {
 				result = 2;
 				
 				model.addAttribute("result", result);
+				
+				System.out.println("로그인 실패");
 				
 				return "member/loginResult";
 			}

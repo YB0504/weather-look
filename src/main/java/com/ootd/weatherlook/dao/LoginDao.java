@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.ootd.weatherlook.model.MemberDTO;
 
 @Repository
-public class NormalLogDao {
+public class LoginDao {
 	
 	@Autowired
 	private SqlSession session;
@@ -40,6 +40,14 @@ public class NormalLogDao {
 
 	public MemberDTO login(String id) {
 		return session.selectOne("login", id);
+	}
+
+	public MemberDTO kakaoLoginCheck(String nick) {
+		return session.selectOne("kakaoLogin", nick);
+	}
+
+	public int kakaologin(MemberDTO kakao) {
+		return session.insert("insertKakao", kakao);
 	}
 
 }

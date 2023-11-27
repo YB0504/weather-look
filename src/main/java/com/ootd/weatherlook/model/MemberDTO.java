@@ -14,6 +14,5 @@ public class MemberDTO {
 	private String profile_image;
 	private String address;
 	private String phone;
-	private String oauth_token;
 	private String admin_role;
 }

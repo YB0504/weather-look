@@ -7,6 +7,7 @@
 <title>Insert title here</title>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+
 <script>
 	function loginCheck() {
 		if($.trim($("#id").val())==""){
@@ -22,55 +23,54 @@
 		
 	}
 	
-/* 	window.Kakao.init("832303dbd469e2e260ff6e85306d6fd8");
-	
-	function kakaoLogin() {
-		window.Kakao.Auth.login({
-			scope:'profile_nickname, profile_image',
-			success: function (authObj) {
-				console.log(authObj);
-				window.Kakao.API.request({
-					url:'/v2/user/me',
-					success:res => {
-						const kakao_account = res.kakao_account;
-						console.log(kakao_account)
-					}
-				});
-			}
-		});
-	}
-	
-	function kakaoLoginPro(response){
-		var data = {id:response.id,email:response.kakao_account.email}
-		$.ajax({
-			type : 'POST',
-			url : '/user/kakaoLoginPro.do',
-			data : data,
-			dataType : 'json',
-			success : function(data){
-				console.log(data)
-				if(data.JavaData == "YES"){
-					alert("로그인되었습니다.");
-					location.href = 'member/main'
-				}else if(data.JavaData == "register"){
-					$("#kakaoEmail").val(response.kakao_account.email);
-					$("#kakaoId").val(response.id);
-					$("#kakaoForm").submit();
-				}else{
-					alert("로그인에 실패했습니다");
-				}
-				
-			},
-			error: function(xhr, status, error){
-				alert("로그인에 실패했습니다."+error);
-			}
-		});
-	 */
 </script>
+<script>
+Kakao.init('832303dbd469e2e260ff6e85306d6fd8'); //발급받은 키 중 javascript키를 사용해준다.
+console.log(Kakao.isInitialized()); // sdk초기화여부판단
+//카카오로그인
+function kakaoLogin() {
+    Kakao.Auth.login({
+      success: function (response) {
+        Kakao.API.request({
+          url: '/v2/user/me',
+          success: function (response) {
+        	  console.log(response)
+        	  	// 로그인 성공 후 정보에서 닉네임 추출
+        		var nickname = response.properties.nickname;
+				var profileImage = response.properties.profile_image;
+				
+				console.log(profileImage);
+				location.href = "kakaologin?nickname=" + nickname + "&profileImage=" + profileImage;
+          },
+          fail: function (error) {
+            console.log(error)
+          },
+        })
+      },
+      fail: function (error) {
+        console.log(error)
+      },
+    })
+  }
+//카카오로그아웃  
+function kakaoLogout() {
+    if (Kakao.Auth.getAccessToken()) {
+      Kakao.API.request({
+        url: '/v1/user/unlink',
+        success: function (response) {
+        	console.log(response)
+        },
+        fail: function (error) {
+          console.log(error)
+        },
+      })
+      Kakao.Auth.setAccessToken(undefined)
+    }
+  }  
 
+</script>
 </head>
 <body>
-
 	<form action="main" method="post" onsubmit="return loginCheck()">
 		<table border="1" width="600" align="center">
 			<caption>로그인</caption>
@@ -93,9 +93,7 @@
 			</tr>
 			<tr>
 				<td colspan="2" align="center">
-				<a href="javascript:kakaoLogin()"> 
-					<img src="./img/kakao_login_medium_narrow.png">
-				</a>
+					<%@ include file="../include/kakaoLogin.jsp" %>
 				</td>
 			</tr>
 		</table>
