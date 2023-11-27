@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="redailyns">
+
+
+	<select id="rlist" parameterType="int" resultType="redaily">
+		select * from daily_reply where post_id = #{post_id} order by re_id 
+	</select>
+
+
+	<insert id="rinsert" parameterType="redaily">
+		insert into daily_reply values (daily_reply_seq.nextval,#{re_content},daily_reply_seq.nextval,0,0,sysdate,#{nick},#{post_id})
+	</insert>
+
+
+
+
+	<!-- <insert id="insert" parameterType="daily"> insert into daily values(daily_seq.nextval,#{title},0,sysdate,#{content},10,36,128,'준혁') 
+		</insert> <select id="count" resultType="int"> select count(*) from daily 
+		</select> <select id="list" parameterType="int" resultType="daily"> <![CDATA[ 
+		select * from (select rownum rnum, daily.* from ( select * from daily order 
+		by post_id desc) daily) where rnum >= ((#{page}-1) * 10 + 1) and rnum <= 
+		(#{page} * 10) ]]> </select> <update id="hit" parameterType="int"> update 
+		daily set read_count = read_count + 1 where post_id=#{post_id} </update> 
+		<select id="content" parameterType="int" resultType="daily"> select * from 
+		daily where post_id=#{post_id} </select> <update id="update" parameterType="daily"> 
+		update daily set nick=#{nick}, title=#{title}, content=#{content}, reg_date=sysdate 
+		where post_id=#{post_id} </update> <delete id="delete" parameterType="int"> 
+		delete from daily where post_id=${post_id} </delete> -->
+
+</mapper>
+
+
+
+
+
+
+
+
