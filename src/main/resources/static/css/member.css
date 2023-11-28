@@ -74,6 +74,11 @@ body{
     overflow: hidden;
 }
 
+form{
+    margin-left: 0 auto;
+    margin-top: 50px;
+}
+
 .sajin{
     overflow: hidden;
     padding-top: 100px;

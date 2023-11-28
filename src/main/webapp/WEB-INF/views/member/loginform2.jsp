@@ -102,41 +102,33 @@ function kakaoLogout() {
 			</div>
 		</nav>
 	</header>
-<div class="container mt-4">
-    <form action="main" method="post" onsubmit="return loginCheck()" class="border border-primary rounded p-4">
-        <h4 class="text-center mb-4">로그인</h4>
-
-        <div class="form-group row">
-            <label for="id">ID</label>
-            <div class="col-sm-10">
-                <input type="text" class="form-control" id="id" name="id">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <label for="passwd">비밀번호</label>
-            <div class="col-sm-10">
-                <input type="password" class="form-control" id="passwd" name="passwd">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-sm-10 offset-sm-2">
-                <input type="submit" class="btn btn-primary" value="Login">
-                <input type="reset" class="btn btn-primary" value="Cancel">
-                <input type="button" class="btn btn-primary" value="Sign in" onclick="location.href='memberjoin'">
-                <input type="button" class="btn btn-primary" value="ID 찾기">
-                <input type="button" class="btn btn-primary" value="비밀번호 찾기">
-            </div>
-        </div>
-
-        <div class="form-group row">
-            <div class="col-sm-10 offset-sm-2">
-                <%@ include file="../include/kakaoLogin.jsp" %>
-            </div>
-        </div>
-    </form>
-</div>
+	<form action="main" method="post" onsubmit="return loginCheck()">
+		<table border="1" width="600" align="center">
+			<caption>로그인</caption>
+			<tr>
+				<th>ID</th>
+				<td><input type="text" id="id" name="id"></td>
+			</tr>
+			<tr>
+				<th>비밀번호</th>
+				<td><input type="password" id="passwd" name="passwd"></td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<input type="submit" value="Login"> 
+					<input type="reset" value="Cancel">
+					<input type="button" value="Sign in" onclick="location.href='memberjoin'"> 
+					<input type="button" value="ID 찾기"> 
+					<input type="button" value="비밀번호 찾기">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<%@ include file="../include/kakaoLogin.jsp" %>
+				</td>
+			</tr>
+		</table>
+	</form>
         <footer id="footer">
             <div class="foot">
                 <ul class="f_m">
