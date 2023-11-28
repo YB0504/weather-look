@@ -1,11 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
 <%@ page import="java.util.*"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<c:set var="path" value="${pageContext.request.contextPath }" />
 <!doctype html>
 <html lang="ko">
 <head>
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- <link href="./css/bootstrap.min.css" rel="stylesheet"> -->
+<script src = "http://code.jquery.com/jquery-latest.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
 	<meta charset="UTF-8">
 	<title>게시판 목록</title>
 </head>
@@ -33,7 +40,14 @@
  					<c:out value="${num}"/>			
 					<c:set var="num" value="${num-1}"/>	 
 				</td>	
-				<td>${b.category }</td>		
+				<td>
+				<c:if test="${b.category == 'question'}">
+					질문하기
+				</c:if>
+				<c:if test="${b.category == 'talk'}">
+					수다
+				</c:if>
+				</td>		
 				<td>
 					<!-- 제목 출력 부분 -->	
 					<a href="commcontent?post_id=${b.post_id}&page=${page}">

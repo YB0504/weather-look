@@ -13,11 +13,11 @@ import lombok.Setter;
 public class CommunityRe {
 
 	private int re_id;
+	private int post_id;
 	private String re_content;
 	private int re_ref;
 	private int re_level;
-	private int step;
-	private Date rd_regdate;
+	private int re_step;
+	private Date re_regdate;
 	private String nick;
-	private int post_id;
 }

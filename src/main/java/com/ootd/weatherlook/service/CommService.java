@@ -12,42 +12,44 @@ import com.ootd.weatherlook.model.Community;
 public class CommService {
 
 	@Autowired
-	private CommDao dao;
+	private CommDao cd;
 	
 	public int insert(Community comm) {
 		System.out.println("service");
-		return dao.insert(comm);
+		return cd.insert(comm);
 	}
 
 	public int getCount() {
 		// TODO Auto-generated method stub
-		return dao.getCount();
+		return cd.getCount();
 	}
 
 	public List<Community> getCommList(int page) {
 		// TODO Auto-generated method stub
-		return dao.getCommList(page);
+		return cd.getCommList(page);
 	}
 
 	public void updatecount(int post_id) {
 		// TODO Auto-generated method stub
-		dao.updatecount(post_id);
+		cd.updatecount(post_id);
 	}
 
 	public Community getCommunity(int post_id) {
 		// TODO Auto-generated method stub
-		return dao.getCommunity(post_id);
+		return cd.getCommunity(post_id);
 	}
 
 	public int update(Community comm) {
 		// TODO Auto-generated method stub
-		return dao.update(comm);
+		return cd.update(comm);
 	}
 
 	public int delete(int post_id) {
 		// TODO Auto-generated method stub
-		return dao.delete(post_id);
+		return cd.delete(post_id);
 	}
+
+	
 
 	
 }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="commre">
+  
+  <select id= "rlist" parameterType="int" resultType="commre">
+  	select * from community_reply where post_id=#{post_id} order by re_id
+  </select>
+  
+  <insert id = "rinsert" parameterType="commre">
+  	insert into community_reply values(community_reply_seq.nextval,#{re_content},community_reply_seq.nextval,0,0,sysdate,#{nick},#{post_id})
+  </insert>
+   
+   <update id="rupdate" parameterType="commre">
+   		update community_reply set re_content=#{re_content},
+   		re_regdate=sysdate where re_id=#{re_id}
+   </update>
+   
+   <delete id="rdelete" parameterType="int">
+   		delete from community_reply where re_id=#{re_id}
+   </delete>
+</mapper>
+
+	
+
+

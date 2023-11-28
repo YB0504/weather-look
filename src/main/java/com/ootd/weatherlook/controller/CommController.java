@@ -22,7 +22,7 @@ import lombok.extern.log4j.Log4j;
 public class CommController {
 
 	@Autowired
-	private CommService service;
+	private CommService cs;
 	
 	
 	@RequestMapping("commform")
@@ -34,7 +34,7 @@ public class CommController {
 	public String commwrite(@ModelAttribute Community comm,
 							Model model) {
 		
-		int result = service.insert(comm);
+		int result = cs.insert(comm);
 		if(result == 1) System.out.println("글 작성 성공");
 			model.addAttribute("result", result);
 	
@@ -50,10 +50,10 @@ public class CommController {
 		int startRow = (page - 1) * limit + 1;
 		int endRow = page * limit;
 		
-		int listCount = service.getCount();
+		int listCount = cs.getCount();
 		System.out.println("listcount");
 		
-		List<Community> commlist = service.getCommList(page);
+		List<Community> commlist = cs.getCommList(page);
 		System.out.println("commlist");
 		
 		int pageCount = listCount/limit+((listCount%10 == 0)?0:1);
@@ -78,8 +78,8 @@ public class CommController {
 	public String commcontent(@RequestParam("post_id") int post_id,
 							  @RequestParam("page") String page,
 							  Model model) {
-		service.updatecount(post_id);
-		Community comm = service.getCommunity(post_id);
+		cs.updatecount(post_id);
+		Community comm = cs.getCommunity(post_id);
 		String content = comm.getContent().replace("\n","<br>");
 		
 		model.addAttribute("comm", comm);
@@ -94,7 +94,7 @@ public class CommController {
 								 @RequestParam("page") String page,
 								 Model model) {
 		
-		Community comm = service.getCommunity(post_id);
+		Community comm = cs.getCommunity(post_id);
 		model.addAttribute("comm", comm);
 		model.addAttribute("page", page);
 		
@@ -106,7 +106,7 @@ public class CommController {
 							 @RequestParam("page") String page,
 							 Model model) {
 		
-		int result = service.update(comm);
+		int result = cs.update(comm);
 		
 		model.addAttribute("result", result);
 		model.addAttribute("comm",comm);
@@ -122,7 +122,7 @@ public class CommController {
 							 @RequestParam("page") String page,
 							 Model model) {
 		
-		int result = service.delete(comm.getPost_id());
+		int result = cs.delete(comm.getPost_id());
 		
 		model.addAttribute("result", result);
 		model.addAttribute("page", page);
