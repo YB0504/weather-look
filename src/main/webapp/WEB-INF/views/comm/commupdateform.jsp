@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>    
 
 <!DOCTYPE html>
 <html>
@@ -13,16 +14,21 @@
 <input type="hidden" name="post_id" value="${comm.post_id }">
 <input type="hidden" name="page" value="${page }">
 <table border=1 width=400 align=center>
+
 	<tr><th>작성자명</th>
 		<td><input type=text name="nick" readonly="readonly"
 				value = "${comm.nick }"></td>
 	</tr>
 	<tr><th>머리말</th>
-		<td><select name = "category" id = "category" 
-		value = "${comm.category }">		
-		<option value = "">카테고리 선택</option>
-		<option value = "question" name = "질문">질문하기</option>
-		<option value = "talk">토크</option>
+		<td><select name = "category" id = "category" >
+		<c:if test="${comm.category == 'question' }">
+		<option value = "question" >질문하기</option>
+		<option value = "talk">수다</option>
+		</c:if>
+	<c:if test="${comm.category == 'talk' }">
+		<option value = "talk">수다</option>
+		<option value = "question" >질문하기</option>
+	</c:if>
 		</select> </td>
 	</tr>
 	<tr><th>제목</th>
@@ -34,7 +40,8 @@
 	</tr>
 	<tr><td colspan=2 align=center>
 			<input type=submit value="글 수정">
-			<input type=reset value="취소">
+			<input type=button value="취소" 
+onclick="location.href='commlist?page=${page}'"	>
 		</td>
 	</tr>
 </table>

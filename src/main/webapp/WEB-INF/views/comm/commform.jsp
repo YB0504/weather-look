@@ -15,8 +15,8 @@
 	<tr><th>머리말</th>
 		<td><select name = "category" id = "category">		
 		<option value = "">카테고리 선택</option>
-		<option value = "question" >질문하기</option>
-		<option value = "talk">토크</option>
+		<option value = "question" >질문</option>
+		<option value = "talk">수다</option>
 		</select> </td>
 	</tr>
 	<tr><th>작성자명</th>
