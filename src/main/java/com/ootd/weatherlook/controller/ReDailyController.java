@@ -40,5 +40,20 @@ public class ReDailyController {
 		rds.insert(rb);
 		return "redirect:rdlist?post_id="+rb.getPost_id();	 // 부모글 번호를 get방식으로 전달
 	}
-
+	
+	// 댓글 삭제
+	@RequestMapping("rdDelete")
+	public String sDelete(ReDaily rb, Model model) {
+		rds.delete(rb.getRe_id());
+		return "redirect:rdlist?post_id=" +rb.getPost_id();
+	}
+	
+	// 댓글 수정
+	@RequestMapping("rdUpdate")
+	public String sUpdate(ReDaily rb, Model model) {
+		rds.update(rb);
+		return "redirect:rdlist?post_id=" + rb.getPost_id();
+	}
+	
 }
+

@@ -1,12 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ include file="header.jsp"%>
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>상세 페이지</title>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
+<!-- <script src="http://code.jquery.com/jquery-latest.js"></script> -->
 
 <script>
 function delcheck(){
@@ -88,12 +89,12 @@ onClick="location.href='dailyupdateform?post_id=${daily.post_id}&page=${page}'">
 
 		<form name="frm" id="frm">
 			<input type="hidden" name="nick" value="${daily.nick}">
-			<input type="hidden" name="post_id" value="${daily.post_id}"> 댓글 :
+<%-- 			<input type="hidden" name="nick" value="${sessionScope.nick}">
+ --%>			<input type="hidden" name="post_id" value="${daily.post_id}"> 댓글 :
 			<textarea rows="3" cols="50" name="re_content"></textarea>
 			<input type="button" value="확인" id="repInsert">
 		</form>
 		<div id="slist"></div>
-		
 </div>
 </body>
 </html>

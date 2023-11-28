@@ -11,6 +11,7 @@
 <script>
 //	location.href="dailyform"
 	location.href="dailylist" 
+	//커밋
 </script>
 
 </body>

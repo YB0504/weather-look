@@ -13,10 +13,17 @@
 		insert into daily_reply values (daily_reply_seq.nextval,#{re_content},daily_reply_seq.nextval,0,0,sysdate,#{nick},#{post_id})
 	</insert>
 
+	<delete id="rdelete" parameterType="int">
+		delete from daily_reply where re_id=#{re_id}
+	</delete>
 
+	<update id="rupdate" parameterType="redaily">
+		update daily_reply set re_content=#{re_content},
+			re_regdate=sysdate where re_id=#{re_id}
+	</update>
 
-
-	<!-- <insert id="insert" parameterType="daily"> insert into daily values(daily_seq.nextval,#{title},0,sysdate,#{content},10,36,128,'준혁') 
+	<!-- <insert id="insert" parameterType="daily"> 
+	insert into daily values(daily_seq.nextval,#{title},0,sysdate,#{content},10,36,128,'준혁') 
 		</insert> <select id="count" resultType="int"> select count(*) from daily 
 		</select> <select id="list" parameterType="int" resultType="daily"> <![CDATA[ 
 		select * from (select rownum rnum, daily.* from ( select * from daily order 

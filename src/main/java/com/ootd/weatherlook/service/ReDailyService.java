@@ -24,6 +24,19 @@ public class ReDailyService {
 		rdd.insert(rb);
 	}
 
+	public void delete(int re_id) {
+		// TODO Auto-generated method stub
+		rdd.delete(re_id);
+	}
+
+
+	public void update(ReDaily rb) {
+		// TODO Auto-generated method stub
+		rdd.update(rb);
+	}
+	
+	
+
 
 	
 }

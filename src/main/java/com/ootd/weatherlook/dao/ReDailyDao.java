@@ -21,5 +21,15 @@ public class ReDailyDao {
 	public void insert(ReDaily rb) {
 		ress.insert("rinsert", rb);
 	}
+
+	public void delete(int re_id) {
+		// TODO Auto-generated method stub
+		ress.delete("rdelete", re_id);
+	}
+
+	public void update(ReDaily rb) {
+		// TODO Auto-generated method stub
+		ress.update("rupdate", rb);
+	}
 	
 }
