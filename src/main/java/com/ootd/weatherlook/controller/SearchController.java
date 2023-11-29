@@ -26,26 +26,17 @@ public class SearchController {
 	@Autowired
 	private MainServiceImpl mainpageservice;
 
-	
-	// 검색페이지--------------------
 
 	@RequestMapping("search")
-	public String searchpage(HttpServletRequest request, Model model) {
+	public String searchpage(@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "keyword", defaultValue = "") String keyword, Model model) {
 		// 트래킹 ->
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		StackTraceElement caller = stackTrace[1];
 		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
 		// <- 트래킹
 
-		int page = 1;
-		String keyword = "";
 		
-		if (request.getParameter("page") != null) {
-			page = Integer.parseInt(request.getParameter("page"));
-		}
-		if (request.getParameter("keyword") != null) {
-			keyword = request.getParameter("keyword");
-		}
 		
 		int numberset = 10;
 		int pageset = 10;
@@ -82,4 +73,32 @@ public class SearchController {
 		
 		return "main/searchpage";
 	}
+	
+	
+
+	@RequestMapping("detail")
+	public String detail(HttpServletRequest request, Model model) {
+		
+		// 트래킹 ->
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		StackTraceElement caller = stackTrace[1];
+		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
+		// <- 트래킹
+		
+		String type_name = request.getParameter("type_name");
+		String post_id = request.getParameter("post_id");
+		System.out.println("type_name : " + type_name);
+		System.out.println("post_id : " + post_id);
+		
+		if(type_name.equals("daily"))
+			System.out.println("daily 게시판 실행");
+		if(type_name.equals("review"))
+			System.out.println("review 게시판 실행");
+		if(type_name.equals("community"))
+			System.out.println("community 게시판 실행");
+		
+		
+		return "";
+	}
+	
 }

@@ -4,4 +4,5 @@ select * from community;
 
 -------------------------------------------------------------
 
-select 'daily' as board,  from daily;
+select * from daily
+where temperature <= 10 and temperature >= 5;

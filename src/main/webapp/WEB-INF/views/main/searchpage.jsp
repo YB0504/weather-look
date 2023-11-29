@@ -10,6 +10,7 @@
 <link rel="stylesheet" href="css/sunsearch.css">
 <script src="js/jquery-1.12.4.min.js"></script>
 <script src="js/script.js"></script>
+<script src="js/search.js"></script>
 <script lang="javascript">
 	function showPopup() {
 		window.open("search.html", "b",
@@ -50,59 +51,19 @@
 			</div>
 		</nav>
 	</header>
-	<section id="contents">
-		<div class="s_1">
-			<ul>
-				<li><a href="#"><img src="images/search.png" alt="search"></a>
-				</li>
-				<li><input type="text"></li>
-			</ul>
-		</div>
-		<div class="w_img"></div>
-		<div class="s_2">
-			<a href="#">${listcount }개의 글</a>
-		</div>
-			<table   class="sr">
-			<tr>
-				<td><a href="#">게시판</a></td>
-				<td><a href="#">제목</a></td>
-				<td><a href="#">작성자</a></td>
-				<td><a href="#">조회수</a></td>
-				<td><a href="#">좋아요</a></td>
-				<td><a href="#">날짜</a></td>
-			</tr>
 
-		<c:forEach var="r" items="${searchresult }">
-				<tr>
-					<td>${r.type_name }</td>
-					<td><a href=main> ${r.title } </a></td>
-					<td>${r.nick }</td>
-					<td>${r.read_count }</td>
-					<td>${r.likes }</td>
-					<td>${r.reg_date }</td>
-				</tr>
-		</c:forEach>
-			</table>
-
-	</section>
-	<!-- contents -->
-
-
-
-
-	<table align="center">
+	<table>
 		<tr>
-			<th>검색어</th>
 			<td><input type="text" name="keyword" id="keyword"
 				value="${keyword }"></td>
-			<td><input type="button" name="search" id="search" value="검색"
-				onClick="location.href='search?page=1&keyword='+document.getElementById('keyword').value"></td>
+			<td><input type="button"
+				onClick="location.href='search?page=1&keyword='+document.getElementById('keyword').value"
+				value = "검색">
 		</tr>
 	</table>
 
-	<!-- 키워드가 있으면 검색결과 갯수 표시하는 줄 출력하기 -->
-
-	<table border="1" align="center">
+	<!-- 검색결과 리스트 -->
+	<table>
 
 		<tr>
 			<th>게시판</th>
@@ -112,8 +73,6 @@
 			<th>작성일자</th>
 			<th>좋아요</th>
 		</tr>
-
-
 
 		<c:forEach var="r" items="${searchresult }">
 			<tr>

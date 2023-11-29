@@ -75,7 +75,7 @@ public class TestController {
 		return "testmain";
 	}
 
-	// @requsetparam써서 조건별로
+/*	// @requsetparam써서 조건별로
 	@RequestMapping("weather")
 	public String weathertest(HttpServletRequest request, Model model) {
 
@@ -136,6 +136,6 @@ public class TestController {
 		
 		return "main/mainpage";
 
-	}
+	}*/
 
 }

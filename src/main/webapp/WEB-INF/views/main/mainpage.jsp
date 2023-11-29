@@ -21,7 +21,7 @@
 
 </head>
 <body>
-	<section id="test">
+	<div id="test">
 		<h1>
 			<a href="main">메인으로 가기</a>
 		</h1>
@@ -51,7 +51,7 @@
 		<h3>
 			<a href="search">검색창으로 이동!</a>
 		</h3>
-	</section>
+	</div>
 
 	<!-- 구분선 ==================================================== -->
 
@@ -66,15 +66,20 @@
 
 		<div class="container_3x1">
 
-			<div class="container_region">
-				<select id="region">
-					<option>지역1</option>
-					<option>지역2</option>
-					<option>지역3</option>
-					<option>지역4</option>
-				</select>
-			</div>
+			<div class="containter_left">
+				<div class="container_region">
+					<select id="region">
+						<option>지역1</option>
+						<option>지역2</option>
+						<option>지역3</option>
+						<option>지역4</option>
+					</select>
+				</div>
+				<c:set var="highest" value = "8.2"/><!-- test value -->
+				<c:set var="lowest" value = "4.0"/><!-- test value -->
 
+				<div class="container_today"><a href = "weather?page=1&highest=${highest}&lowest=${lowest}">weather_today</a><br>${highest } : ${lowest }</div>
+			</div>
 			<div class="container_combination">
 				<div class="container_2x3">
 					<c:forEach begin="1" end="6" varStatus="i">
@@ -82,8 +87,6 @@
 					</c:forEach>
 				</div>
 			</div>
-
-
 		</div>
 		<div align="center">
 			<div class="container_3x3">

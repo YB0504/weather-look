@@ -1,7 +1,5 @@
 package com.ootd.weatherlook.model;
 
-import java.util.Date;
-
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -13,6 +11,9 @@ public class Weather {
 	private double latitude;
 	private double longitude;
 	private double temperature;
+	private double highest;
+	private double lowest;
+	private double deviation;
 
 	
 	

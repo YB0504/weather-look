@@ -39,27 +39,22 @@ public class MainController {
 	}
 
 	@RequestMapping("main")
-	public String main(@RequestParam(value = "page", defaultValue = "1") int page, HttpServletRequest request, Model model) {
-		
-		String temperature = request.getParameter("temperature");
-		String latitude = request.getParameter("latitude");
-		String longitude = request.getParameter("longitude");
-		
-		if(request.getParameter("temperature") != null
-				&& request.getParameter("latitude") != null
-				&& request.getParameter("longitude") != null) {
+	public String main(@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(name = "highest", required = false) Double highest,
+			@RequestParam(name = "lowest", required = false) Double lowest,
+			Model model) {
+
+		if (highest != null && lowest != null) {
+
+			model.addAttribute("highest",highest);
+			model.addAttribute("lowest", lowest);
 			
-			return "redirect:weather?temperature="+temperature
-					+"?latitude="+latitude
-					+"?longitude="+longitude
-					+"?page="+page;
+			return "redirect:weather?page="+page;
 		}
-		
-		return "redirect:recent?page="+page;
+
+		return "redirect:recent?page=" + page;
 	}
-	
-	
-	
+
 	// 쇼핑후기 + 데일리 게시판 최신순 출력
 	@RequestMapping("recent")
 	public String mainpage(HttpServletRequest request, Model model) {
@@ -75,7 +70,7 @@ public class MainController {
 		int numberset = 9;
 		int pageset = 10;
 		int startrow = 1 + (page - 1) * numberset;
-		int endrow = page*numberset;
+		int endrow = page * numberset;
 		List<MainBoard> mainlist = new ArrayList<MainBoard>();
 		Search search = new Search();
 		search.setNumberset(numberset);
@@ -83,13 +78,13 @@ public class MainController {
 		search.setEndrow(endrow);
 		search.setPage(page);
 		// <- 공통 설정
-		
+
 		int listcount = mainpageservice.getMainCount(search);
-		
+
 		// 메인보드 출력물 갯수 연산 ->
 		int maxpage = listcount / numberset + ((listcount % numberset == 0) ? 0 : 1);
-		int startpage = ((page - 1) / pageset) * numberset + 1; 
-		int endpage = startpage + pageset - 1; 
+		int startpage = ((page - 1) / pageset) * numberset + 1;
+		int endpage = startpage + pageset - 1;
 		if (endpage > maxpage)
 			endpage = maxpage;
 		// <- 메인보드 출력물 갯수 연산
@@ -105,32 +100,65 @@ public class MainController {
 
 	}
 
-	@RequestMapping("detail")
-	public String detail(HttpServletRequest request, Model model) {
-		
+	@RequestMapping("weather")
+	public String weather(@RequestParam(value = "page", defaultValue = "1") int page, 
+			@RequestParam("highest") Double highest,
+			@RequestParam("lowest") Double lowest,
+			Model model) {
+
 		// 트래킹 ->
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		StackTraceElement caller = stackTrace[1];
 		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
 		// <- 트래킹
+
+		model.addAttribute("highest",highest);
+		model.addAttribute("lowest",lowest);
 		
-		String type_name = request.getParameter("type_name");
-		String post_id = request.getParameter("post_id");
-		System.out.println("type_name : " + type_name);
-		System.out.println("post_id : " + post_id);
+		Weather weather = new Weather();
+		Double average = (highest+lowest)/2 ;
 		
-		if(type_name.equals("daily"))
-			System.out.println("daily 게시판 실행");
-		if(type_name.equals("review"))
-			System.out.println("review 게시판 실행");
-		if(type_name.equals("community"))
-			System.out.println("community 게시판 실행");
+		weather.setHighest(highest);
+		weather.setLowest(lowest);
+		weather.setTemperature(average);
+		weather.setDeviation(5);
 		
+		System.out.println("highest : "+highest);
+		System.out.println("lowest : "+lowest);
+		System.out.println("average : "+average);
 		
-		return "";
+		// 공통 설정 ->
+		int numberset = 9;
+		int pageset = 10;
+		int startrow = 1 + (page - 1) * numberset;
+		int endrow = page*numberset;
+		List<MainBoard> mainlist = new ArrayList<MainBoard>();
+		Search search = new Search();
+		search.setNumberset(numberset);
+		search.setStartrow(startrow);
+		search.setEndrow(endrow);
+		search.setPage(page);
+		// <- 공통 설정
+		
+		search.setWeather(weather);
+		int listcount = mainpageservice.getweatherCount(search);
+		
+		// 메인보드 출력물 갯수 연산 ->
+		int maxpage = listcount / numberset + ((listcount % numberset == 0) ? 0 : 1);
+		int startpage = ((page - 1) / pageset) * numberset + 1;
+		int endpage = startpage + pageset - 1;
+		if (endpage > maxpage)
+			endpage = maxpage;
+		// <- 메인보드 출력물 갯수 연산
+		mainlist = mainpageservice.getWeatherList(search);
+		System.out.println("mainlist: "+ mainlist);
+		
+		model.addAttribute("mainlist", mainlist);
+		model.addAttribute("startpage", startpage);
+		model.addAttribute("endpage", endpage);
+		model.addAttribute("listcount", listcount);
+		
+		return "main/mainpage";
 	}
-
-
-	
 
 }

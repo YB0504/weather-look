@@ -72,6 +72,16 @@ public class MainServiceImpl implements MainService {
 		// <- 트래킹
 		return mainDao.getWeatherList(search);
 	}
+	
+	@Override
+	public int getweatherCount(Search search) {
+		// 트래킹 ->
+		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
+		StackTraceElement caller = stackTrace[1];
+		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
+		// <- 트래킹
+		return mainDao.getweathercount(search);
+	}
 
 	@Override
 	public List<Report> getReportList(Search search) {
