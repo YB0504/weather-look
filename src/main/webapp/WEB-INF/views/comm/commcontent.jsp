@@ -90,7 +90,26 @@ onClick="location.href='commupdateform?post_id=${comm.post_id}&page=${page}'">
 			<input type="button" value="삭제" onClick="delcheck()"> 				
 </td>
 </tr>
-		</table><p>
+	</table><p>   
+    <c:choose>
+        <c:when test="${heart eq 1}">
+            <!-- If liked, show cancel like button -->
+            <form action="/cancelLike" method="post">
+                <input type="hidden" name="postId" value="${postId}" />
+                <input type="hidden" name="nick" value="${nick}" />
+                <button type="submit">Cancel Like</button>
+            </form>
+        </c:when>
+        <c:otherwise>
+            <div align ="center">
+            <form action="/like" method="post" >
+                <input type="hidden" name="postId" value="${postId}" />
+                <input type="hidden" name="nick" value="${nick}" />
+                <button type="submit">좋아요</button>
+            </form>
+            </div>
+        </c:otherwise>
+    </c:choose>
 		<div align = "center">
 		<form name="frm" id="frm">
 			<input type="hidden" name="nick" value="${comm.nick}">
