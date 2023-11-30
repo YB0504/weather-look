@@ -2,7 +2,6 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="path" value="${pageContext.request.contextPath }" />
 <!doctype html>
 <html lang="ko">
 <head>
@@ -25,7 +24,7 @@
 		var re_content = $('#tt_'+id).val();
 		var formData = "re_id="+id+'&re_content='+re_content
 			+"&post_id=${comm.post_id}";
-		$.post('${path}/repUpdate',formData, function(data) {
+		$.post('repUpdate',formData, function(data) {
 			$('#slist').html(data);
 		});
 	}
@@ -34,7 +33,7 @@
 	}
 	function del(re_id,post_id) {
 		var formData="re_id="+re_id+"&post_id="+post_id;
-		$.post("${path}/repDelete",formData, function(data) {
+		$.post("repDelete",formData, function(data) {
 			$('#slist').html(data);
 		});
 	}
