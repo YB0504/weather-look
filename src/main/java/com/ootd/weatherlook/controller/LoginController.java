@@ -151,7 +151,7 @@ public class LoginController {
 			MemberDTO kakao = new MemberDTO();
 			
 			kakao.setNick(nick);
-			kakao.setProfile_image(profile_image);
+			kakao.setProfile_image("default.jpeg");
 			result = service.kakaoLogin(kakao);		// 회원 DB에 저장
 			
 			MemberDTO logink2 = service.kakaoLoginCheck(nick);
