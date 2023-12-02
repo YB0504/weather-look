@@ -9,8 +9,7 @@
 <body>
 
 <script>
-
-location.href="/"
+	location.href="/"
 </script>
 
 </body>

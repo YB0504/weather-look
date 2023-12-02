@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+
+	<select id="postCount" resultType="int">
+		select count(*) from review
+	</select>
+
+	<select id="list" parameterType="int" resultType="review">
+    	<![CDATA[
+    	select * from (select rownum rnum, review.* from (
+   	 	select * from review order by post_id desc) review)
+    	where rnum >= ((#{page}-1) * 10 + 1) and rnum <= (#{page} * 10)
+    	]]>
+	</select>
+
+	<insert id="reviewInsert" parameterType="review">
+		insert into review (post_id, title, read_count, reg_date, content, item_type, nick, review_file)
+		values(review_seq.nextval, #{title}, 0, sysdate, #{content}, #{item_type}, #{nick}, #{review_file, jdbcType=VARCHAR})
+	</insert>
+
+	<update id="updateCount" parameterType="int">
+		update review set read_count = read_count + 1
+		where post_id=#{post_id}
+	</update>
+
+	<select id="content" parameterType="int" resultType="review">
+		select * from review where post_id=#{post_id}
+	</select>
+
+	<update id="update" parameterType="review">
+		update review set title=#{title}, content=#{content}, review_file=#{review_file, jdbcType=VARCHAR},
+		reg_date = sysdate where post_id=#{post_id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		review from review where post_id=${post_id}
+	</delete>
+
+</mapper>
