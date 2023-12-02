@@ -31,7 +31,7 @@
 			</tr>
 			<tr>
 				<td colspan=2 align=center><input type=submit value="글 수정">
-					<input type=reset value="취소"></td>
+					<input type=button value="취소" onclick="history.go(-1)"></td>
 			</tr>
 		</table>
 	</form>

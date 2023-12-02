@@ -9,7 +9,6 @@ import lombok.Data;
 @Data
 @Alias("daily")
 public class Daily {
-
 	private int post_id;
 	private String title;
 	private int read_count;
@@ -18,6 +17,7 @@ public class Daily {
 	private double temperature;
 	private double latitude;
 	private double longitude;
+	private String region;
+	private String daily_file;
 	private String nick;
-	
 }

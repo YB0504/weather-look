@@ -1,7 +1,16 @@
 package com.ootd.weatherlook.controller;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
+import feature.RegionSTNResolver;
+import feature.RegionTemperatureResolver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,36 +20,80 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ootd.weatherlook.model.Daily;
 import com.ootd.weatherlook.service.DailyService;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 @Controller
 public class DailyController {
 
 	@Autowired
 	private DailyService service;
-	
+
+	@RequestMapping("/")
+	public String main() {
+		System.out.println("DailyController.main");
+		return "redirect:dailyform";
+	}
+
 	@RequestMapping("dailyform")
-	public String dailyform() {
+	public String dailyform(HttpSession session) {
+		System.out.println("DailyController.dailyform");
+		session.setAttribute("nick", "준혁");
 		return "daily/dailyform";
 	}
 	
 	@RequestMapping("dailywrite")
-	public String dailywrite(Daily daily, Model model) {
-		System.out.println("dailywrite controller");
-		
-		int result = service.insert(daily);
-		if(result == 1) System.out.println("글 작성 성공");
+	public String dailywrite(@RequestParam("uploadFile") MultipartFile file,
+	                         @RequestParam("imageDate") String imageDate,
+	                         Daily daily,
+							 HttpServletRequest request,
+	                         Model model) {
+		System.out.println("DailyController.dailywrite");
+		int result;
+		String path = request.getServletContext().getRealPath("upload");
+
+		if (!file.isEmpty()) {
+			double latitude = daily.getLatitude();
+//			System.out.println("latitude : " + daily.getLatitude());
+			double longitude = daily.getLongitude();
+//			System.out.println("longitude : " + daily.getLongitude());
+//			System.out.println("imageDate : " + imageDate);
+
+			String region = RegionSTNResolver.getRegion(latitude, longitude);
+			daily.setRegion(region);
+
+			String stn = RegionSTNResolver.getSTN(region);
+			System.out.println("stn = " + stn);
+
+			double temperature = Double.parseDouble(RegionTemperatureResolver.getTemperature(imageDate, stn));
+			System.out.println("temperature = " + temperature);
+			daily.setTemperature(temperature);
+
+			try {
+				String originalFilename = file.getOriginalFilename();
+				String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+				UUID uuid = UUID.randomUUID();
+				String newFilename = uuid + extension;
+				file.transferTo(new File(path + "/" + newFilename));
+				daily.setDaily_file(newFilename);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		result = service.insert(daily);
 		model.addAttribute("result", result);
-		
 		return "daily/insertresult";
 	}
 	
-
-	
 	@RequestMapping("dailylist")
-	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page,
-							Model model) {
+	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		System.out.println("DailyController.dailylist");
+
 		int limit = 10;
-		
 		int startRow = (page - 1) * limit + 1;
 		int endRow = page * limit;
 		
@@ -72,6 +125,7 @@ public class DailyController {
 		public String dailycontent(@RequestParam("post_id") int post_id,
 								   @RequestParam("page") String page,
 								   Model model) {
+		System.out.println("DailyController.dailycontent");
 		service.updatecount(post_id);
 		Daily daily = service.getDaily(post_id);
 		String content = daily.getContent().replace("\n", "<br>");
@@ -81,14 +135,13 @@ public class DailyController {
 		model.addAttribute("page", page);
 		
 		return "daily/dailycontent";
-		
 	}		
 
 	@RequestMapping("dailyupdateform")
 	public String dailyupdateform(@RequestParam("post_id") int post_id,
 								  @RequestParam("page") String page,
 								  Model model) {
-		
+		System.out.println("DailyController.dailyupdateform");
 		Daily daily = service.getDaily(post_id);
 		model.addAttribute("daily", daily);
 		model.addAttribute("page", page);
@@ -100,7 +153,8 @@ public class DailyController {
 	public String dailyupdate(@ModelAttribute Daily daily,
 							  @RequestParam("page") String page,
 							  Model model) {
-		
+		System.out.println("DailyController.dailyupdate");
+
 		int result = service.update(daily);
 		
 		model.addAttribute("result", result);
@@ -108,14 +162,13 @@ public class DailyController {
 		model.addAttribute("page", page);
 		
 		return"redirect:dailylist";
-		
 	}
 
 	@RequestMapping("dailydelete")
 	public String dailydelete(@ModelAttribute Daily daily,
 							  @RequestParam("page") String page,
 							  Model model) {
-		
+		System.out.println("DailyController.dailydelete");
 		int result = service.delete(daily.getPost_id());
 		
 		model.addAttribute("result", result);

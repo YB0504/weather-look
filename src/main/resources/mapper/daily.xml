@@ -4,7 +4,8 @@
 <mapper namespace="dailyns">
 
 	<insert id="insert" parameterType="daily">
-		insert into daily values(daily_seq.nextval,#{title},0,sysdate,#{content},10,36,128,'준혁')
+		insert into DAILY(post_id, title, read_count, reg_date, content, temperature, latitude, longitude, nick, region, daily_file)
+		values(daily_seq.nextval, #{title}, 0, sysdate, #{content}, #{temperature, jdbcType=VARCHAR}, #{latitude, jdbcType=VARCHAR}, #{longitude, jdbcType=VARCHAR}, #{nick}, #{region, jdbcType=VARCHAR}, #{daily_file, jdbcType=VARCHAR})
 	</insert>
 
 	<select id="count" resultType="int">
@@ -18,7 +19,7 @@
     	where rnum >= ((#{page}-1) * 10 + 1) and rnum <= (#{page} * 10)
     	]]>
 	</select>
-	
+
     <update id="hit" parameterType="int">
 		update daily set read_count = read_count + 1
 		where post_id=#{post_id}
