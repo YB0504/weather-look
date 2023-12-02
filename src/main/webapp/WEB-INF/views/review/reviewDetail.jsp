@@ -11,7 +11,7 @@
 
             var result = confirm("정말 삭제하시겠습니까?");
             if (result) {
-                location.href = 'dailydelete?post_id=${daily.post_id}&page=${page}'
+                location.href = 'reviewDelete?post_id=${review.post_id}&page=${page}'
 
                 return false;
             }
@@ -83,25 +83,25 @@
 	</c:if>
 	<tr>
 		<td colspan=2 align=center>
-		<%-- <c:if test="${sessionScope.nick eq review.nick}"> --%>
+		<c:if test="${sessionScope.nick eq review.nick}">
 			<input type="button" value="목록"
 			       onClick="location.href='reviewList?page=${page}'">
 			<input type="button" value="수정"
 			       onClick="location.href='reviewUpdateForm?post_id=${review.post_id}&page=${page}'">
 			<input type="button" value="삭제" onclick="delcheck()">
-			<input type="button" value="신고" onclick="openReportPopup()">
-		<%-- </c:if> --%>
-		<%-- <c:if test="${empty sessionScope.nick and sessionScope.nick ne review.nick}">
+			<!-- <input type="button" value="신고" onclick="openReportPopup()"> -->
+		</c:if>
+		<c:if test="${sessionScope.nick ne review.nick}">
 			<input type="button" value="목록"
 			       onClick="location.href='reviewList?page=${page}'">
 			<input type="button" value="신고" onclick="openReportPopup()">
-		</c:if> --%>
+		</c:if>
 		</td>
 	</tr>
 </table><br>
 <form name="frm" id="frm">
 	<input type="hidden" name="nick" value="${review.nick}">
-	<%-- 			<input type="hidden" name="nick" value="${sessionScope.nick}"> --%> 
+	<%-- <input type="hidden" name="nick" value="${sessionScope.nick}"> --%> 
 	<input type="hidden" name="post_id" value="${review.post_id}"> 댓글 :
 	<textarea rows="3" cols="50" name="re_content"></textarea>
 	<input type="button" value="확인" id="repInsert">

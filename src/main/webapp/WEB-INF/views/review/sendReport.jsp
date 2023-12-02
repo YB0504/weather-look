@@ -10,7 +10,7 @@
 <body>
 <div>
  
-  <h2>비번찾기</h2>
+  <h2>신고하기</h2>
   <form method="post" action="reportSuccess" onsubmit="self.close();">  
    <table>
     <tr>
@@ -24,7 +24,7 @@
      	</select>
      </td>
     </tr>
-   </table>
+   </table><p>
    <div>
     <input type="submit" value="신고하기">
     <!-- close함수로 팝업창 닫기 -->
