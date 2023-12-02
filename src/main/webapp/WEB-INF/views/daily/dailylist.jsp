@@ -51,7 +51,7 @@
 				<div class="col-md-2">
 					<ul class="custom-menu">
 						<li><a href="main">Home</a></li>
-						<li ><a href="dailylist">DailyLook</a></li>
+						<li class="active"><a href="dailylist">DailyLook</a></li>
 						<li><a href="services.html">Review</a></li>
 						<li><a href="works.html">Community</a></li>
 						<li><a href="search">Search</a></li>
@@ -85,8 +85,8 @@
 
 	<nav class="navbar navbar-light custom-navbar">
 		<div class="container">
-			<a class="navbar-brand" href="main">WeatherLook</a> <a
-				href="#" class="burger" data-bs-toggle="collapse"
+			<a class="navbar-brand" href="main">WeatherLook</a> <a href="#"
+				class="burger" data-bs-toggle="collapse"
 				data-bs-target="#main-navbar"> <span></span>
 			</a>
 		</div>
@@ -104,39 +104,39 @@
 		<!-- test value -->
 
 		<section class="section site-portfolio">
-			<div class="row mb-5 align-items-center">
-				<div class="col-md-12 col-lg-6 mb-4 mb-lg-0" data-aos="fade-up">
-					<h2>
-						<a href="weather?page=1&highest=${highest}&lowest=${lowest}">
-							오늘의 날씨 : 최고기온 ${highest } 최저기온 ${lowest }</a>
-					</h2>
-					<p class="mb-0">div공간 좀 잘 쪼개서 월~일 선택해서 보면 좋긴하겠는데 힘들겠지</p>
+
+			<div>데일리룩 제작중</div>
+
+<div align = "center">
+			<div class ="search">
+				<div  class = "search_region">
+					<select>
+						<option>지역</option>
+						<option>지역1</option>
+						<option>지역2</option>
+						<option>지역3</option>
+					</select>
 				</div>
-				<div class="col-md-12 col-lg-6 text-start text-lg-end"
-					data-aos="fade-up" data-aos-delay="100">
-					<div id="filters" class="filters">
-						<a href="main" data-filter="*" class="active">All</a> <a href="#"
-							data-filter=".web">머넣지1</a> <a href="#" data-filter=".design">머넣2</a>
-						<a href="#" data-filter=".branding">머넣3</a> <a href="report">Report</a>
+				<div class = "search_temperature">
+					기온
+					<div>
+						<input type="text">
 					</div>
 				</div>
 			</div>
-
-
-
+</div>
 
 			<!-- 하위 3x3 썸네일 출력 -->
 
 			<div class="container">
 				<div id="portfolio-grid" class="row no-gutter" data-aos="fade-up"
 					data-aos-delay="200">
-					<c:forEach var="r" items="${mainlist}" varStatus="i">
+					<c:forEach var="r" items="${dailyList}" varStatus="i">
 						<div class="item col-sm-6 col-md-4 col-lg-4 mb-4">
-							<a href="detail?type_name=${r.type_name}&post_id=${r.post_id}"
-								class="item-wrap fancybox">
+							<a href="dailycontent?page=${page}&post_id=${r.post_id }" class="item-wrap fancybox">
 								<div class="work-info">
 									<h2>${r.title}</h2>
-									<span>${r.type_name}게시판${r.nick}</span>
+									<span>닉네임: ${r.nick}</span>
 								</div> <img class="img-fluid" src="images/img_${i.index }.jpg">
 							</a>
 						</div>
@@ -148,25 +148,37 @@
 
 			<div align="center">
 
+				<c:if test="${listCount > 0 }">
 
-				<c:if test="${page > 1 }">
-					<a href="main?page=${page-1}">[이전]</a>&nbsp;
+					<!-- 1 페이지로 이동 -->
+					<a href="dailylist?page=1" style="text-decoration: none"> << </a>
+
+					<!-- 이전 블럭으로 이동 -->
+					<c:if test="${startPage > 10}">
+						<a href="dailylist?page=${startPage - 10}">[이전]</a>
+					</c:if>
+
+					<!-- 각 블력에 10개의 페이지 출력 -->
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">
+						<c:if test="${i == page }">
+							<!-- 현재 페이지 -->
+      					[${i}]
 			</c:if>
+						<c:if test="${i != page }">
+							<!-- 현재 페이지가 아닌경우 -->
+							<a href="dailylist?page=${i}">[${i}]</a>
+						</c:if>
+					</c:forEach>
 
-				<c:forEach var="a" begin="${startpage}" end="${endpage}">
-					<c:if test="${a == page }">
-					[${a}]
-				</c:if>
-					<c:if test="${a != page }">
-						<a href="main?page=${a}">[${a}]</a>&nbsp;
-				</c:if>
-				</c:forEach>
+					<!-- 다음 블럭으로 이동 -->
+					<c:if test="${endPage < pageCount}">
+						<a href="dailylist?page=${startPage + 10}">[다음]</a>
+					</c:if>
 
-				<c:if test="${page >= maxpage }">
-				[다음] 
-			</c:if>
-				<c:if test="${page < maxpage }">
-					<a href="main?page=${page+1}">[다음]</a>
+					<!-- 마지막 페이지로 이동 -->
+					<a href="dailylist?page=${pageCount}" style="text-decoration: none">
+						>> </a>
+
 				</c:if>
 			</div>
 		</section>

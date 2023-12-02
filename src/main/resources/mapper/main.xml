@@ -36,8 +36,8 @@
 
 	<select id="searchlist" parameterType="search"
 		resultType="searchresult">
-		select * from(
-		select rownum rnum boards.* from(
+		select * from (
+		select rownum rnum boards.* from (
 		select 'daily' as
 		type_name, title, post_id, nick, reg_date from daily
 		<where>
@@ -68,9 +68,9 @@
 				|| '%' OR content LIKE '%' || #{keyword} || '%')
 			</if>
 		</where>
-		order by reg_date desc
-		)boards
-		)where rnum &gt;= #{startrow} and rnum
+		 order by reg_date desc
+		) boards
+		) where rnum &gt;= #{startrow} and rnum
 		&lt;= #{endrow}
 	</select>
 

@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+.search {
+	display: flex;
+	margin: 0 auto;
+	align-items: center;
+	justify-content: center;
+	 width: 50%;
+}
+
+.search_region {
+	flex: 1;
+}
+
+.search_temperature {
+	flex: 1;
+}

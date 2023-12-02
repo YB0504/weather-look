@@ -35,8 +35,8 @@ public class SearchController {
 		StackTraceElement caller = stackTrace[1];
 		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
 		// <- 트래킹
-
 		
+
 		
 		int numberset = 10;
 		int pageset = 10;
