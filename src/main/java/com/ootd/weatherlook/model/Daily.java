@@ -14,9 +14,9 @@ public class Daily {
 	private int read_count;
 	private Date reg_date;
 	private String content;
-	private double temperature;
-	private double latitude;
-	private double longitude;
+	private Double temperature;
+	private Double latitude;
+	private Double longitude;
 	private String region;
 	private String daily_file;
 	private String nick;

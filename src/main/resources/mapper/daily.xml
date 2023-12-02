@@ -30,9 +30,9 @@
 	</select>
 
 	<update id="update" parameterType="daily">
-		update daily set nick=#{nick}, title=#{title},
-		content=#{content}, reg_date=sysdate where
-		post_id=#{post_id}
+		update DAILY
+		set title=#{title}, content=#{content}, TEMPERATURE=#{temperature, jdbcType=VARCHAR}, LATITUDE=#{latitude, jdbcType=VARCHAR}, longitude=#{longitude, jdbcType=VARCHAR}, REGION=#{region, jdbcType=VARCHAR}, DAILY_FILE=#{daily_file, jdbcType=VARCHAR}, reg_date=sysdate
+		where post_id=#{post_id}
 	</update>
 
 	<delete id="delete" parameterType="int">

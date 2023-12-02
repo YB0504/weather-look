@@ -56,10 +56,7 @@ public class DailyController {
 
 		if (!file.isEmpty()) {
 			double latitude = daily.getLatitude();
-//			System.out.println("latitude : " + daily.getLatitude());
 			double longitude = daily.getLongitude();
-//			System.out.println("longitude : " + daily.getLongitude());
-//			System.out.println("imageDate : " + imageDate);
 
 			String region = RegionSTNResolver.getRegion(latitude, longitude);
 			daily.setRegion(region);
@@ -152,11 +149,58 @@ public class DailyController {
 	@RequestMapping("dailyupdate")
 	public String dailyupdate(@ModelAttribute Daily daily,
 							  @RequestParam("page") String page,
+							  @RequestParam("uploadFile") MultipartFile file,
+							  @RequestParam("imageDate") String imageDate,
+							  HttpServletRequest request,
 							  Model model) {
 		System.out.println("DailyController.dailyupdate");
+		String path = request.getServletContext().getRealPath("upload");
+		Daily storedDaily = service.getDaily(daily.getPost_id());
+		String storedDailyFile = storedDaily.getDaily_file();
+
+		if (!file.isEmpty()) {
+			//기존 파일 삭제
+			if (storedDailyFile != null){
+				File deleteFile = new File(path + "/" + storedDailyFile);
+				deleteFile.delete();
+			}
+
+			//새로운 파일에 대한 Data 추출
+			double latitude = daily.getLatitude();
+			double longitude = daily.getLongitude();
+
+			String region = RegionSTNResolver.getRegion(latitude, longitude);
+			daily.setRegion(region);
+
+			String stn = RegionSTNResolver.getSTN(region);
+			System.out.println("stn = " + stn);
+
+			double temperature = Double.parseDouble(RegionTemperatureResolver.getTemperature(imageDate, stn));
+			System.out.println("temperature = " + temperature);
+			daily.setTemperature(temperature);
+
+			try {
+				String originalFilename = file.getOriginalFilename();
+				String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+				UUID uuid = UUID.randomUUID();
+				String newFilename = uuid + extension;
+				file.transferTo(new File(path + "/" + newFilename));
+				daily.setDaily_file(newFilename);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		else {
+			//새로운 파일이 없을 경우 그대로 유지하기 위해 이전 글 정보를 넣음
+			daily.setDaily_file(storedDailyFile);
+			daily.setLatitude(storedDaily.getLatitude());
+			daily.setLongitude(storedDaily.getLongitude());
+			daily.setRegion(storedDaily.getRegion());
+			daily.setTemperature(storedDaily.getTemperature());
+		}
 
 		int result = service.update(daily);
-		
 		model.addAttribute("result", result);
 		model.addAttribute("daily", daily);
 		model.addAttribute("page", page);
@@ -167,8 +211,18 @@ public class DailyController {
 	@RequestMapping("dailydelete")
 	public String dailydelete(@ModelAttribute Daily daily,
 							  @RequestParam("page") String page,
+							  HttpServletRequest request,
 							  Model model) {
 		System.out.println("DailyController.dailydelete");
+
+		String path = request.getServletContext().getRealPath("upload");
+		Daily storedDaily = service.getDaily(daily.getPost_id());
+		String storedDailyFile = storedDaily.getDaily_file();
+
+		if (storedDailyFile != null){
+			File deleteFile = new File(path + "/" + storedDailyFile);
+			deleteFile.delete();
+		}
 		int result = service.delete(daily.getPost_id());
 		
 		model.addAttribute("result", result);
