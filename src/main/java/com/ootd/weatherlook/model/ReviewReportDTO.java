@@ -6,7 +6,7 @@ import lombok.Data;
 
 @Data
 @Alias("reviewReport")
-public class reviewReportDTO {
+public class ReviewReportDTO {
 	private int report_id;
 	private String reason;
 	private int post_id;

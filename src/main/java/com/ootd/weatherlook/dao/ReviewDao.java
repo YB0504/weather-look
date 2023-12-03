@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ootd.weatherlook.model.ReviewDTO;
+import com.ootd.weatherlook.model.ReviewReportDTO;
 
 @Repository
 public class ReviewDao{
@@ -40,6 +41,8 @@ public class ReviewDao{
 		return session.selectOne("content", post_id);
 	}
 
-
+	public void reportInsert(ReviewReportDTO reviewReport) {
+		session.insert("reportInsert", reviewReport);
+	}
 
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ootd.weatherlook.model.ReviewDTO;
+import com.ootd.weatherlook.model.ReviewReportDTO;
 import com.ootd.weatherlook.service.ReviewService;
 
 @Controller
@@ -188,6 +189,25 @@ public class Review {
 		model.addAttribute("page", page);
 
 		return "review/reviewDetail";
+	}
+	
+	@RequestMapping("sendReport")
+	public String sendReport() throws Exception {
+		System.out.println("신고하기 폼");
+		return "review/sendReport";
+	}
+
+	@RequestMapping("reportSuccess")
+	public String reportSuccess(ReviewReportDTO reviewReport) throws Exception {
+		
+		System.out.println("reportInsert");
+		
+		service.reportInsert(reviewReport);
+
+		System.out.println("신고 완료");
+		
+		return "review/reportList";
+
 	}
 
 }

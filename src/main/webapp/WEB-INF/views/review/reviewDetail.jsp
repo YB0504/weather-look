@@ -39,8 +39,8 @@
         });
         
     	// 신고 팝업 열기
-    	function openReportPopup() {
-    		window.open("sendReport","신고하기","width=450,height=500");
+   		 function openReportPopup(postId) {
+    	    window.open('sendReport?post_id=' + postId, '신고하기', 'width=450,height=500');
     	}
 
 	</script>
@@ -89,12 +89,14 @@
 			<input type="button" value="수정"
 			       onClick="location.href='reviewUpdateForm?post_id=${review.post_id}&page=${page}'">
 			<input type="button" value="삭제" onclick="delcheck()">
-			<!-- <input type="button" value="신고" onclick="openReportPopup()"> -->
 		</c:if>
 		<c:if test="${sessionScope.nick ne review.nick}">
 			<input type="button" value="목록"
 			       onClick="location.href='reviewList?page=${page}'">
-			<input type="button" value="신고" onclick="openReportPopup()">
+			<input type="button" value="신고" onclick="openReportPopup(${review.post_id})">
+		</c:if>
+		<c:if test="${empty sessionScope.nick}">
+			<input type="button" value="목록" onClick="location.href='reviewList?page=${page}'">
 		</c:if>
 		</td>
 	</tr>
