@@ -14,6 +14,7 @@ public class Weather {
 	private double highest;
 	private double lowest;
 	private double deviation;
+	private int ico;
 
 	
 	

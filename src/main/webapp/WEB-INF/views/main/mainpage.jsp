@@ -32,7 +32,7 @@
 <!-- Template Main CSS File -->
 <link href="assets/css/style.css" rel="stylesheet">
 
-
+<link href="css/mainpage2.css" rel="stylesheet">
 
 <!-- =======================================================
   * Template Name: MyPortfolio
@@ -50,7 +50,7 @@
 			<div class="row align-items-start">
 				<div class="col-md-2">
 					<ul class="custom-menu">
-						<li><a href="main">Home</a></li>
+						<li class="active"><a href="main">Home</a></li>
 						<li ><a href="dailylist">DailyLook</a></li>
 						<li><a href="services.html">Review</a></li>
 						<li><a href="works.html">Community</a></li>
@@ -103,25 +103,22 @@
 		<c:set var="lowest" value="4.0" />
 		<!-- test value -->
 
-		<section class="section site-portfolio">
-			<div class="row mb-5 align-items-center">
-				<div class="col-md-12 col-lg-6 mb-4 mb-lg-0" data-aos="fade-up">
-					<h2>
-						<a href="weather?page=1&highest=${highest}&lowest=${lowest}">
-							오늘의 날씨 : 최고기온 ${highest } 최저기온 ${lowest }</a>
-					</h2>
-					<p class="mb-0">div공간 좀 잘 쪼개서 월~일 선택해서 보면 좋긴하겠는데 힘들겠지</p>
-				</div>
-				<div class="col-md-12 col-lg-6 text-start text-lg-end"
-					data-aos="fade-up" data-aos-delay="100">
-					<div id="filters" class="filters">
-						<a href="main" data-filter="*" class="active">All</a> <a href="#"
-							data-filter=".web">머넣지1</a> <a href="#" data-filter=".design">머넣2</a>
-						<a href="#" data-filter=".branding">머넣3</a> <a href="report">Report</a>
-					</div>
-				</div>
-			</div>
+			<div class="weather_weekly">
+			
+			<c:forEach var="w" items="${weekly }" varStatus="i">
 
+					<div class="weather_day" data-aos="fade-up">
+						<h2>
+							<a href="weather?page=1&lowest=${w.lowest}&highest=${w.highest}">
+								${i.index} 번째 / <img src = "ico_svg/icon_flat_wt${w.ico }.svg"> 최저기온 ${w.lowest } 최고기온 ${w.highest }</a>
+						</h2>
+					</div>
+
+				</c:forEach>
+
+			</div>
+			
+		<section class="section site-portfolio">
 
 
 
