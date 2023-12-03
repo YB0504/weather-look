@@ -55,19 +55,23 @@ public class DailyController {
 		String path = request.getServletContext().getRealPath("upload");
 
 		if (!file.isEmpty()) {
-			double latitude = daily.getLatitude();
-			double longitude = daily.getLongitude();
+			//기온 추출 - imageDate가 없는 파일은 기온 추출도 불가능
+			if (imageDate != null && daily.getLatitude() != null && daily.getLongitude() != null) {
+				double latitude = daily.getLatitude();
+				double longitude = daily.getLongitude();
 
-			String region = RegionSTNResolver.getRegion(latitude, longitude);
-			daily.setRegion(region);
+				String region = RegionSTNResolver.getRegion(latitude, longitude);
+				daily.setRegion(region);
 
-			String stn = RegionSTNResolver.getSTN(region);
-			System.out.println("stn = " + stn);
+				String stn = RegionSTNResolver.getSTN(region);
+				System.out.println("stn = " + stn);
 
-			double temperature = Double.parseDouble(RegionTemperatureResolver.getTemperature(imageDate, stn));
-			System.out.println("temperature = " + temperature);
-			daily.setTemperature(temperature);
+				double temperature = Double.parseDouble(RegionTemperatureResolver.getTemperature(imageDate, stn));
+				System.out.println("temperature = " + temperature);
+				daily.setTemperature(temperature);
+			}
 
+			//파일 전송
 			try {
 				String originalFilename = file.getOriginalFilename();
 				String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
@@ -165,19 +169,21 @@ public class DailyController {
 				deleteFile.delete();
 			}
 
-			//새로운 파일에 대한 Data 추출
-			double latitude = daily.getLatitude();
-			double longitude = daily.getLongitude();
+			//새로운 파일에 대한 데이터 추출
+			if (imageDate != null && daily.getLatitude() != null && daily.getLongitude() != null) {
+				double latitude = daily.getLatitude();
+				double longitude = daily.getLongitude();
 
-			String region = RegionSTNResolver.getRegion(latitude, longitude);
-			daily.setRegion(region);
+				String region = RegionSTNResolver.getRegion(latitude, longitude);
+				daily.setRegion(region);
 
-			String stn = RegionSTNResolver.getSTN(region);
-			System.out.println("stn = " + stn);
+				String stn = RegionSTNResolver.getSTN(region);
+				System.out.println("stn = " + stn);
 
-			double temperature = Double.parseDouble(RegionTemperatureResolver.getTemperature(imageDate, stn));
-			System.out.println("temperature = " + temperature);
-			daily.setTemperature(temperature);
+				double temperature = Double.parseDouble(RegionTemperatureResolver.getTemperature(imageDate, stn));
+				System.out.println("temperature = " + temperature);
+				daily.setTemperature(temperature);
+			}
 
 			try {
 				String originalFilename = file.getOriginalFilename();
