@@ -84,27 +84,17 @@
 							<label for="address">Address</label>
 							<select class="form-select" id="address" name="address">
 								<%@ include file="../include/address.jsp" %>
-								<option value="">지역선택</option>
 								<c:forEach var="ad" items="${address}">
 									<option value="${ad}">${ad}</option>
 								</c:forEach>
 							</select>
 						</div>
 						<div class="col-md-12 mb-3">
-							<label for="previewImg">Profile Image</label><br>
-							<c:if test="${empty member.profile_image}">
-								<center><img id="previewImg" src="/upload/default.jpeg" width="200px" height="auto"></center>
-							</c:if>
-							<c:if test="${not empty member.profile_image}">
-								<center><img id="previewImg" src="/upload/${member.profile_image}" width="200px" height="auto"></center>
-							</c:if>
+							<input type="hidden" name="profile_image" id="profile_image">
+							<input type="file" class="form-control" name="profile_image_form" id="profile_image_form">
 						</div>
 						<div class="col-md-12 mb-3">
 							<input type="button" class="form-control btn btn-light" id="defaultImageButton" value="기본 이미지 선택">
-						</div>
-						<div class="col-md-12 mb-3">
-							<input type="hidden" name="profile_image" id="profile_image">
-							<input type="file" class="form-control" name="profile_image_form" id="profile_image_form">
 						</div>
 					</div>
 					<hr class="mb-4">

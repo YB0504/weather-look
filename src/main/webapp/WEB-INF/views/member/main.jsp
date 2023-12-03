@@ -12,7 +12,7 @@
 
 ID : ${sessionScope.id }<br>
 Nickname : ${sessionScope.nick}<br>
-
+profile_image : ${sessionScope.profile_image}<br>
 <img src="${member.profile_image}">
 
 </body>
