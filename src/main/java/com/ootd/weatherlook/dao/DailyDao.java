@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.Dailylike;
 
 @Repository
 public class DailyDao {
@@ -50,6 +51,8 @@ public class DailyDao {
 		// TODO Auto-generated method stub
 		return session.delete("delete", post_id);
 	}
+
+
 	
 	
 	

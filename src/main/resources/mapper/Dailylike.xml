@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dailylikens">
+
+    <insert id="insertLike" parameterType="dailylike">
+        INSERT INTO daily_like (like_id, nick, post_id) VALUES (daily_like_seq.nextval, #{nick}, #{post_id})
+    </insert>
+
+    <delete id="deleteLike" parameterType="dailylike">
+        DELETE FROM daily_like WHERE post_id = #dailylike_seq.nextval AND nick = #{nick}
+    </delete>
+
+    <select id="selectDailyLike" resultType="int" parameterType="dailylike">
+        SELECT COUNT(*) FROM daily_like WHERE post_id = #{post_id} AND nick = #{nick}
+    </select>
+    
+</mapper>
