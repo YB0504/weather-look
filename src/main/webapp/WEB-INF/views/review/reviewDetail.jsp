@@ -39,8 +39,8 @@
         });
         
     	// 신고 팝업 열기
-   		 function openReportPopup(postId) {
-    	    window.open('sendReport?post_id=' + postId, '신고하기', 'width=450,height=500');
+   		 function openReportPopup(postid) {
+    	    window.open('sendReport?post_id=' + postid, '신고하기', 'width=450,height=500');
     	}
 
 	</script>

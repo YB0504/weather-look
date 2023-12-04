@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,30 +9,29 @@
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script>
 function reportCheck() {
-    console.log("${review.post_id}");
     if ($("#reason").val() == "") {
         alert("신고 사유를 선택하세요");
         return false;
     }
-    return true; // 폼이 전송되도록 함
 }
 </script>
 </head>
 <body>
-<div>
- 
+<div align="center">
+
+<c:if test="${empty report}">
   <h2>신고하기</h2>
   <form method="post" action="reportSuccess" onsubmit="return reportCheck()">
-  <input type="hidden" name="post_id" value="${review.post_id}">
+  <input type="hidden" name="post_id" value="${post_id}">
    <table>
     <tr>
      <td>
      	<select id="reason" name="reason">
      		<option value = "">신고사유</option>
-			<option value = "사유1">사유1</option>
-			<option value = "사유2">사유2</option>
-			<option value = "사유3">사유3</option>
-			<option value = "사유4">사유4</option>
+			<option value = "욕설/비방">욕설/비방</option>
+			<option value = "광고/홍보">광고/홍보</option>
+			<option value = "불법/도박">불법/도박</option>
+			<option value = "사칭/도용">사칭/도용</option>
      	</select>
      </td>
     </tr>
@@ -42,6 +42,21 @@ function reportCheck() {
     <input type="reset" value="취소" onclick="self.close();" />
    </div>
   </form>
+  </c:if>
+  
+    <c:if test="${!empty report}">
+    <h2>신고 결과</h2>
+    <table>
+     <tr>
+      <th>신고 : </th>
+      <td>${report}</td>
+     </tr>
+    </table>
+    <div>
+    	<input type="button" value="닫기" onclick="self.close();" />
+    </div>
+  </c:if>
+  
  </div>
 </body>
 </html>

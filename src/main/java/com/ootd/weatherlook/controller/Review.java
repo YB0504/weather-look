@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -192,21 +193,28 @@ public class Review {
 	}
 	
 	@RequestMapping("sendReport")
-	public String sendReport() throws Exception {
+	public String sendReport(int post_id ,Model model) throws Exception {
 		System.out.println("신고하기 폼");
+		
+		model.addAttribute("post_id", post_id);
 		return "review/sendReport";
 	}
 
 	@RequestMapping("reportSuccess")
-	public String reportSuccess(ReviewReportDTO reviewReport) throws Exception {
+	public String reportSuccess(@ModelAttribute ReviewReportDTO reviewReport,
+			@RequestParam("post_id") int post_id, Model model) throws Exception {
 		
 		System.out.println("reportInsert");
+		
+		reviewReport.setPost_id(post_id);
 		
 		service.reportInsert(reviewReport);
 
 		System.out.println("신고 완료");
 		
-		return "review/reportList";
+		model.addAttribute("report", "게시글에 대한 신고가 완료 되었습니다.");
+		
+		return "review/sendReport";
 
 	}
 

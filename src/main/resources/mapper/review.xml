@@ -30,8 +30,8 @@
 	</select>
 
 	<insert id="reportInsert" parameterType="reviewReport">
-		insert into review_report (report_id, reason, post_id)
-		values (review_report_seq.nextval, #{reason}, #{post_id})
+		insert into review_report (report_id, reason, post_id, report_date)
+		values (review_report_seq.nextval, #{reason}, #{post_id}, sysdate)
 	</insert>
 
 </mapper>
