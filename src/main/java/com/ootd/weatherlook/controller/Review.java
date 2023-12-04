@@ -36,7 +36,7 @@ public class Review {
 	@RequestMapping("review")
 	String reviewMain(Model model, HttpSession session) {
 		System.out.println("Session Setting In");
-		String nick = "인범";
+		String nick = "준혁";
 
 		// 닉네임으로 세션 설정
 		session.setAttribute("nick", nick);

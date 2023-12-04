@@ -36,12 +36,16 @@
 			$('#slist').html(data);
 		});
 	}
+	// 신고 팝업 열기
+	function openReportPopup(reid) {
+		window.open('sendReport?re_id=' + reid, '신고하기', 'width=450,height=500');
+	}
 </script>
 </head>
 <body>
-	<div class="container" align="center">
-		<h2 class="text-primary">댓글</h2>
-		<table class="table table-bordered">
+	<div align="center">
+		<h2>댓글</h2>
+		<table border="1">
 			<tr>
 				<td>작성자</td>
 				<td>내용</td>
@@ -57,7 +61,10 @@
 						<c:if test="${rb.nick eq sessionScope.nick }"> 
 							<input type="button" value="수정" class="edit1" id="${rb.re_id}">
 							<input type="button" value="삭제"	 onclick="del(${rb.re_id},${rb.post_id})">
-						</c:if> 
+						</c:if>
+						<c:if test="${rb.nick ne sessionScope.nick }">
+							<input type="button" value="신고" onclick="openReportPopup(${rb.re_id}">
+						</c:if>
 					</td>
 				</tr>
 			</c:forEach>
