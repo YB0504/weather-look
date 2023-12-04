@@ -3,18 +3,38 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-	<meta charset="UTF-8">
-	<meta http-equiv="X-UA-Compatible">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>웨더룩</title>
-	<link rel="stylesheet" href="css/updateMember.css">
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Dashboard - NiceAdmin Bootstrap Template</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.gstatic.com" rel="preconnect">
+	<link
+			href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+			rel="stylesheet">
+
+	<!-- Vendor CSS Files -->
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+	<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+	<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+	<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+	<!-- Template Main CSS File -->
+	<link href="assets/css/style.css" rel="stylesheet">
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="js/script.js"></script>
-	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
-	<script src="./js/member.js"></script>
-	<script src="./js/updateMember.js"></script>
+
 	<script>
-        $(function () {
+        $(function() {
             $("#address").val("${member.address}")
 
             $("#defaultImageButton").click(function () {
@@ -25,115 +45,103 @@
                 previewFile();
             });
         });
+
+        function changeDefaultImage() {
+            $("#profile_image").val("default.jpeg")
+            $("#previewImg").attr("src", "upload/default.jpeg")
+            $("#profile_image_form").val("")
+        }
+
+        function previewFile() {
+            $("#profile_image").val("")
+            var fileInput = $('#profile_image_form')[0];
+            var previewImg = $('#previewImg')[0];
+
+            var file = fileInput.files[0];
+            var reader = new FileReader();
+
+            reader.onloadend = function () {
+                previewImg.src = reader.result;
+            };
+
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                previewImg.src = 'upload/default.jpeg';
+            }
+        }
 	</script>
 </head>
 <body>
-<div id="wrap">
-	<header id="header">
-		<h1 class="logo">
-			<a href="index.html"><img src="images/logo.png" alt="logo"></a>
-		</h1>
-		<nav class="nav">
-			<div class="menu">
-				<ul class="main">
-					<li>
-						<a href="dailylookmain.html">데일리룩</a>
-					</li>
-					<li>
-						<a href="review.html">쇼핑후기</a>
-					</li>
-					<li>
-						<a href="community.html">커뮤니티</a>
-					</li>
-				</ul>
-				<ul class="right">
-					<li>
-						<a href="mypage.html"><img src="images/user.png" alt="search"></a>
-					</li>
-					<li>
-						<a href="#" onclick="showPopup();"><img src="images/search.png" alt="mypage"></a>
-					</li>
-				</ul>
-			</div>
-		</nav>
-	</header>
-	<div class="container">
-		<div class="input-form-backgroud row">
-			<div class="input-form col-md-12 mx-auto">
-				<h4 class="mb-3">회원 정보 수정</h4>
-				<form class="validation-form" action="updateMember" method="post" enctype="multipart/form-data" onSubmit="return check()">
-					<input type="hidden" name="admin_role" value="${member.admin_role}">
-					<div class="row">
-						<div class="col-md-12 mb-3">
-							<label for="id">ID</label>
-							<input type="text" class="form-control" id="id" name="id" value="${member.id}">
-						</div>
-						<div class="col-md-12 mb-3">
-							<label for="passwd">PW</label>
-							<input type="password" class="form-control" id="passwd" name="passwd" value="">
-						</div>
-						<div class="col-md-12 mb-3">
-							<label for="id">Nick</label>
-							<input type="text" class="form-control" id="nick" name="nick" value="${member.nick}">
-						</div>
-						<div class="col-md-12 mb-3">
-							<label for="phone">Phone</label>
-							<input type="text" class="form-control" id="phone" name="phone" value="${member.phone}">
-						</div>
-						<div class="col-md-12 mb-3">
-							<label for="address">Address</label>
-							<select class="form-select" id="address" name="address">
-								<%@ include file="../include/address.jsp" %>
-								<option value="">지역선택</option>
-								<c:forEach var="ad" items="${address}">
-									<option value="${ad}">${ad}</option>
-								</c:forEach>
-							</select>
-						</div>
-						<div class="col-md-12 mb-3">
-							<label for="previewImg">Profile Image</label><br>
-							<c:if test="${empty member.profile_image}">
-								<center><img id="previewImg" src="/upload/default.jpeg" width="200px" height="auto"></center>
-							</c:if>
-							<c:if test="${not empty member.profile_image}">
-								<center><img id="previewImg" src="/upload/${member.profile_image}" width="200px" height="auto"></center>
-							</c:if>
-						</div>
-						<div class="col-md-12 mb-3">
-							<input type="button" class="form-control btn btn-light" id="defaultImageButton" value="기본 이미지 선택">
-						</div>
-						<div class="col-md-12 mb-3">
-							<input type="hidden" name="profile_image" id="profile_image">
-							<input type="file" class="form-control" name="profile_image_form" id="profile_image_form">
-						</div>
+
+<jsp:include page="../include/header.jsp"/>
+
+<main id="main" class="main">
+
+	<div class="pagetitle" style="max-width: 700px; margin: 0 auto; margin-bottom: 30px">
+		<h1>회원정보 수정</h1>
+	</div><!-- End Page Title -->
+
+	<section class="section dashboard" style="max-width: 700px; margin: 0 auto">
+		<div class="row">
+			<form class="validation-form" action="updateMember" method="post" enctype="multipart/form-data" onSubmit="return check()">
+				<input type="hidden" name="admin_role" value="${member.admin_role}">
+				<div class="row">
+					<div class="col-md-12 mb-3">
+						<label for="id">ID</label>
+						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="id" name="id" value="${member.id}" required>
 					</div>
-					<hr class="mb-4">
-					<div align="center">
-						<button class="btn btn-primary btn-lg btn-block" type="submit">수정 완료</button>
-						<button class="btn btn-primary btn-lg btn-block" type="button" onclick="location.href='myPage'">뒤로 가기
-						</button>
+					<div class="col-md-12 mb-3">
+						<label for="passwd">PW</label>
+						<input type="password" class="form-control" style="border: 1px solid #ccc;" id="passwd" name="passwd" value="" required>
 					</div>
-				</form>
-			</div>
+					<div class="col-md-12 mb-3">
+						<label for="id">Nick</label>
+						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="nick" name="nick" value="${member.nick}" required>
+					</div>
+					<div class="col-md-12 mb-3">
+						<label for="phone">Phone</label>
+						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="phone" name="phone" value="${member.phone}" required>
+					</div>
+					<div class="col-md-12 mb-3">
+						<label for="address">Address</label>
+						<select class="form-select" id="address" style="border: 1px solid #ccc;" name="address" required>
+							<%@ include file="../include/address.jsp" %>
+							<option value="">지역선택</option>
+							<c:forEach var="ad" items="${address}">
+								<option value="${ad}">${ad}</option>
+							</c:forEach>
+						</select>
+					</div>
+					<div class="col-md-12 mb-3">
+						<label for="previewImg">Profile Image</label><br>
+						<c:if test="${empty member.profile_image}">
+							<center><img id="previewImg" src="/upload/default.jpeg" width="200px" height="auto"></center>
+						</c:if>
+						<c:if test="${not empty member.profile_image}">
+							<center><img id="previewImg" src="/upload/${member.profile_image}" width="200px" height="auto"></center>
+						</c:if>
+					</div>
+					<div class="col-md-12 mb-3">
+						<input type="button" class="form-control btn btn-light" style="border: 1px solid #ccc;" id="defaultImageButton" value="기본 이미지 선택">
+					</div>
+					<div class="col-md-12 mb-3">
+						<input type="hidden" name="profile_image" id="profile_image">
+						<input type="file" class="form-control" style="border: 1px solid #ccc;" name="profile_image_form" id="profile_image_form">
+					</div>
+				</div>
+				<hr class="mb-4">
+				<div align="center">
+					<button class="btn btn-primary btn-lg btn-block" type="submit">수정 완료</button>
+					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="location.href='myPage'">뒤로 가기
+					</button>
+				</div>
+			</form>
 		</div>
-	</div>
-	<footer id="footer">
-		<div class="foot">
-			<ul class="f_m">
-				<li><a href="#">회사소개</a></li>
-				<li><a href="#">이용약관</a></li>
-				<li><a href="#">개인정보처리방침</a></li>
-				<li><a href="#">입점문의</a></li>
-				<li><a href="#">공지사항</a></li>
-			</ul>
-			<p>COPYRIGHT © <span>WeatherLook INC.</span> All RIGHTS RESERVED</p>
-			<div class="call">
-				<p class="f_p"><span><img src="images/icon.png" alt="img"> </span>1566-1566 평일 AM 9:00 - PM 6:00
-					점심 PM 1:00 - PM 2:00
-					주말 및 공휴일 휴무</p>
-			</div><!-- call -->
-		</div> <!-- f -->
-	</footer><!-- footer -->
-</div><!-- wrap -->
+	</section>
+</main><!-- End #main -->
+
+<jsp:include page="../include/footer.jsp"/>
+
 </body>
 </html>
