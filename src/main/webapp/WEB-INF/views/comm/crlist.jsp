@@ -57,7 +57,8 @@
 					<fmt:formatDate value="${rb.re_regdate }"
 					 pattern="yyyy-MM-dd HH:mm:ss"/></td>
 					<td id="btn_${rb.re_id}">
-						<c:if test="${rb.post_id==comm.post_id }">
+						
+						<c:if test="${rb.nick==sessionScope.nick }">
 							<input type="button" value="수정" class="edit1" id="${rb.re_id}">
 							<input type="button" value="삭제"	 onclick="del(${rb.re_id},${rb.post_id})">
 						</c:if></td>

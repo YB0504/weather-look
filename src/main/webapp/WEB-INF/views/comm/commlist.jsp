@@ -57,7 +57,8 @@
 					
 		</table>
 		<a href="commform">글쓰기</a>
-
+<tr><td><%= session.getAttribute("nick") %>
+</td></tr>
 		
 <!-- 페이지 처리 -->
 <center>

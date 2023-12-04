@@ -2,6 +2,8 @@ package com.ootd.weatherlook.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,7 +39,8 @@ public class CommReController {
 	}
 	
 	@RequestMapping("crInsert")
-	public String sInsert(CommunityRe cr, Model model) {
+	public String sInsert(CommunityRe cr, Model model,
+							HttpSession session) {
 		crs.insert(cr);
 		System.out.println("crInsert");
 		return "redirect:crlist?post_id="+cr.getPost_id();

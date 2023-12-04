@@ -2,6 +2,8 @@ package com.ootd.weatherlook.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,9 +13,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.context.annotation.SessionScope;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ootd.weatherlook.model.Community;
+import com.ootd.weatherlook.model.CommunityLike;
+import com.ootd.weatherlook.service.CommLikeService;
 import com.ootd.weatherlook.service.CommService;
 
 import lombok.extern.log4j.Log4j;
@@ -24,6 +30,9 @@ public class CommController {
 	@Autowired
 	private CommService cs;
 	
+	@Autowired
+	private CommLikeService cls;
+	
 	
 	@RequestMapping("commform")
 	public String commform() {
@@ -32,12 +41,17 @@ public class CommController {
 	
 	@RequestMapping("commwrite")
 	public String commwrite(@ModelAttribute Community comm,
+							HttpSession session,
 							Model model) {
 		
+		
+		
 		int result = cs.insert(comm);
+		
+		session.setAttribute("nick",comm.getNick());
 		if(result == 1) System.out.println("글 작성 성공");
 			model.addAttribute("result", result);
-	
+			
 		return "comm/insertresult";
 	}
 	
@@ -77,11 +91,15 @@ public class CommController {
 	@RequestMapping("commcontent")
 	public String commcontent(@RequestParam("post_id") int post_id,
 							  @RequestParam("page") String page,
+							  HttpSession session,
 							  Model model) {
 		cs.updatecount(post_id);
 		Community comm = cs.getCommunity(post_id);
-		String content = comm.getContent().replace("\n","<br>");
 		
+		CommunityLike commlike = cls.getLike(post_id);
+		
+		String content = comm.getContent().replace("\n","<br>");
+				
 		model.addAttribute("comm", comm);
 		model.addAttribute("content", content);
 		model.addAttribute("page", page);
@@ -92,8 +110,9 @@ public class CommController {
 	@RequestMapping("commupdateform")
 	public String commupdateform(@RequestParam("post_id") int post_id,
 								 @RequestParam("page") String page,
+								 HttpSession session,
 								 Model model) {
-		
+		System.out.println(session.getAttribute("nick"));
 		Community comm = cs.getCommunity(post_id);
 		model.addAttribute("comm", comm);
 		model.addAttribute("page", page);

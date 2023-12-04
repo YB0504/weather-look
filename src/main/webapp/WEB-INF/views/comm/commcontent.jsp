@@ -7,8 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>상세 페이지</title>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-
+ <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script>
 function delcheck(){
 	var result = confirm("정말 삭제하시겠습니까?");
@@ -18,6 +18,9 @@ function delcheck(){
 		return false;
 	}
 	
+}
+function delfail(){
+	alert("삭제 권한이 없습니다.");
 }
 	
 </script>
@@ -42,6 +45,25 @@ $(function(){
 		});
 	});
 });
+</script>
+<script>
+$(function(){
+	
+  $('#heart').click(function() {
+  var heart = confirm("추천 하시겠습니까?");
+  if(heart){
+	  
+  $(this).toggleClass("bi-heart bi-heart-fill").css("color","red");
+		location.href='commlikeinsert?post_id=${comm.post_id}&nick=${sessionScope.nick}&page=${page}'
+  }
+  });
+});
+</script>
+<script>
+	function updatebutton(){
+		alert("수정 권한이 없습니다");
+	}
+
 </script>
 
 </head>
@@ -84,35 +106,47 @@ $(function(){
 			<input type="button" value="목록"
 onClick="location.href='commlist?page=${page}'"	>
  
+ <c:choose>
+ 	<c:when test="${sessionScope.nick == comm.nick}">
 			<input type="button" value="수정"
 onClick="location.href='commupdateform?post_id=${comm.post_id}&page=${page}'">
-			 
+ 	</c:when>
+ 	<c:otherwise>
+	<input type="button" value="수정"
+onclick="updatebutton()">
+		
+ 	</c:otherwise>
+ </c:choose>
+ 
+ 
+ <c:choose>
+ <c:when test="${sessionScope.nick == comm.nick }">
 			<input type="button" value="삭제" onClick="delcheck()"> 				
+ </c:when>
+ <c:otherwise>
+			<input type="button" value="삭제" onClick="delfail()"> 				
+ </c:otherwise>
+ </c:choose>		 
 </td>
 </tr>
 	</table><p>   
-    <c:choose>
-        <c:when test="${heart eq 1}">
-            <!-- If liked, show cancel like button -->
-            <form action="/cancelLike" method="post">
-                <input type="hidden" name="postId" value="${postId}" />
-                <input type="hidden" name="nick" value="${nick}" />
-                <button type="submit">Cancel Like</button>
-            </form>
-        </c:when>
-        <c:otherwise>
-            <div align ="center">
-            <form action="/like" method="post" >
-                <input type="hidden" name="postId" value="${postId}" />
-                <input type="hidden" name="nick" value="${nick}" />
-                <button type="submit">좋아요</button>
-            </form>
-            </div>
-        </c:otherwise>
-    </c:choose>
+	
+  <div align = "center" id = "heartload">
+	<c:choose>
+		<c:when test="${session.nick eq commlike.nick and not empty commlike.like_id}">		
+		<i class="bi bi-heart-fill" id = "heartfill" ></i> 
+		</c:when>	
+	</c:choose>
+	
+	<c:otherwise>
+	<i class="bi bi-heart" id = "heart" ></i>		
+	</c:otherwise>
+	
+
+</div>	
 		<div align = "center">
 		<form name="frm" id="frm">
-			<input type="hidden" name="nick" value="${comm.nick}">
+			<input type="hidden" name="nick" value="${sessionScope.nick}">
 			<input type="hidden" name="post_id" value="${comm.post_id}"> 댓글 :
 			<textarea rows="3" cols="50" name="re_content"></textarea>
 			<input type="button" value="확인" id="repInsert">
