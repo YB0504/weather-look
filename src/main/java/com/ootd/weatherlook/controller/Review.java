@@ -36,7 +36,7 @@ public class Review {
 	@RequestMapping("review")
 	String reviewMain(Model model, HttpSession session) {
 		System.out.println("Session Setting In");
-		String nick = "회원";
+		String nick = "인범";
 
 		// 닉네임으로 세션 설정
 		session.setAttribute("nick", nick);
@@ -122,7 +122,7 @@ public class Review {
 		System.out.println("nick : " + nick);
 		System.out.println("글 작성 성공");
 
-		return "review/reviewDetail";
+		return "reviewList";
 	}
 
 	@RequestMapping("reviewList")
@@ -175,7 +175,7 @@ public class Review {
 
 	@RequestMapping("reviewDetail")
 	public String reviewDetail(@RequestParam("post_id") int post_id, @RequestParam("page") String page,
-			HttpSession session, HttpServletRequest request, Model model)throws Exception {
+			HttpSession session, Model model)throws Exception {
 		System.out.println("review.reviewDetail");
 		
 		String nick = (String) session.getAttribute("nick");
@@ -216,6 +216,79 @@ public class Review {
 		
 		return "review/sendReport";
 
+	}
+	
+	@RequestMapping("reviewUpdateForm")
+	public String dailyupdateform(@RequestParam("post_id") int post_id,
+								  @RequestParam("page") String page,
+								  Model model) {
+		System.out.println("reviewUpdateForm");
+		ReviewDTO review = service.getReview(post_id);
+		model.addAttribute("review", review);
+		model.addAttribute("page", page);
+		
+		return "review/reviewUpdateForm";
+	}
+	
+	@RequestMapping("reviewUpdate")
+	public String reviewUpdate(@ModelAttribute ReviewDTO review,
+							  @RequestParam("page") String page,
+							  @RequestParam("uploadFile") MultipartFile file,
+							  HttpServletRequest request,
+							  Model model)throws Exception {
+		System.out.println("reviewUpdate");
+		String path = request.getServletContext().getRealPath("upload");
+		ReviewDTO storedReview = service.getReview(review.getPost_id());
+		String storedReviewFile = storedReview.getReview_file();
+
+		if (!file.isEmpty()) {
+			//기존 파일 삭제
+			if (storedReviewFile != null){
+				File deleteFile = new File(path + "/" + storedReviewFile);
+				deleteFile.delete();
+			}
+
+				String originalFilename = file.getOriginalFilename();
+				String extension = originalFilename.substring(originalFilename.lastIndexOf("."));
+
+				UUID uuid = UUID.randomUUID();
+				String newFilename = uuid + extension;
+				file.transferTo(new File(path + "/" + newFilename));
+				review.setReview_file(newFilename);
+		}else {
+			//새로운 파일이 없을 경우 그대로 유지하기 위해 이전 글 정보를 넣음
+			review.setReview_file(storedReviewFile);
+		}
+
+		int result = service.reviewUpdate(review);
+		model.addAttribute("result", result);
+		model.addAttribute("review", review);
+		model.addAttribute("page", page);
+		
+		return"redirect:reviewList";
+	}
+
+	@RequestMapping("reviewDelete")
+	public String reviewDelete(@ModelAttribute ReviewDTO review,
+							  @RequestParam("page") String page,
+							  HttpServletRequest request,
+							  Model model) {
+		System.out.println("reviewDelete");
+
+		String path = request.getServletContext().getRealPath("upload");
+		ReviewDTO storedReview = service.getReview(review.getPost_id());
+		String storedReviewFile = storedReview.getReview_file();
+
+		if (storedReviewFile != null){
+			File deleteFile = new File(path + "/" + storedReviewFile);
+			deleteFile.delete();
+		}
+		int result = service.reviewDelete(review.getPost_id());
+		
+		model.addAttribute("result", result);
+		model.addAttribute("page", page);
+		
+		return"redirect:reviewList";
 	}
 
 }

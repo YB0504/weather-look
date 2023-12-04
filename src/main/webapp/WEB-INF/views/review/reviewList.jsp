@@ -46,7 +46,7 @@
 		</c:forEach>
 
 	</table>
-	<a href="reviewInserForm">글쓰기</a>
+	<a href="reviewInsertForm">글쓰기</a>
 
 
 	<!-- 페이지 처리 -->

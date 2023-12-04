@@ -39,5 +39,14 @@ public class ReviewService {
 		dao.reportInsert(reviewReport);
 	}
 
+	public int reviewUpdate(ReviewDTO review) {
+		return dao.reviewUpdate(review);
+	}
+
+	public int reviewDelete(int post_id) {
+		return dao.reviewDelete(post_id);
+	}
+
+
 
 }

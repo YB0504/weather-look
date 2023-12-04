@@ -45,4 +45,12 @@ public class ReviewDao{
 		session.insert("reportInsert", reviewReport);
 	}
 
+	public int reviewUpdate(ReviewDTO review) {
+		return session.update("reviewUpdate", review);
+	}
+
+	public int reviewDelete(int post_id) {
+		return session.delete("reviewDelete", post_id);
+	}
+
 }

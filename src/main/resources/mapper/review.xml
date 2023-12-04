@@ -33,5 +33,14 @@
 		insert into review_report (report_id, reason, post_id, report_date)
 		values (review_report_seq.nextval, #{reason}, #{post_id}, sysdate)
 	</insert>
+	
+	<update id="reviewUpdate" parameterType="review">
+		update review set title=#{title}, content=#{content}, review_file=#{review_file, jdbcType=VARCHAR}, reg_date=sysdate
+		where post_id=#{post_id}
+	</update>
+
+	<delete id="reviewDelete" parameterType="int">
+		delete from review where post_id=${post_id}
+	</delete>
 
 </mapper>

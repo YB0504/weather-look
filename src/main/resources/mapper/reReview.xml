@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reReview">
+
+	<select id="reReviewList" parameterType="int" resultType="reviewReply">
+		select * from review_reply where post_id = #{post_id} order by re_id 
+	</select>
+	
+	<insert id="reInsert" parameterType="reviewReply">
+		insert into review_reply values (review_reply_seq.nextval,#{re_content},review_reply_seq.nextval,0,0,sysdate,#{nick},#{post_id})
+	</insert>
+
+	<update id="reUpdate" parameterType="reviewReply">
+		update review_reply set re_content=#{re_content},
+			re_regdate=sysdate where re_id=#{re_id}
+	</update>
+	
+	<delete id="reDelete" parameterType="int">
+		delete from review_reply where re_id=#{re_id}
+	</delete>
+
+</mapper>

@@ -20,27 +20,27 @@
 	<script>
         $(function () {
 
-            $('#slist').load('rdlist?post_id=${daily.post_id}')
+            $('#slist').load('reReviewList?post_id=${review.post_id}')
 
             $('#repInsert').click(function () {
-                if (!frm.re_content.value) {
+                if (!reReviewForm.re_content.value) {
                     alert('댓글을 입력 하세요.');
-                    frm.re_content.focus();
+                    reReviewForm.re_content.focus();
                     return false;
                 }
                 var frmData = $('form').serialize();
 
-                $.post('rdInsert', frmData, function (data) {
+                $.post('reInsert', frmData, function (data) {
                     //모델어트리뷰트 어노테이션 dto객체 생성해서 값 받을 수 있다.
                     $('#slist').html(data);	//새로 달린 댓글을 받아와서 slist 출력
-                    frm.re_content.value = '';
+                    reReviewForm.re_content.value = '';
                 });
             });
         });
         
     	// 신고 팝업 열기
-   		 function openReportPopup(postid) {
-    	    window.open('sendReport?post_id=' + postid, '신고하기', 'width=450,height=500');
+   		function openReportPopup(postid) {
+    		window.open('sendReport?post_id=' + postid, '신고하기', 'width=450,height=500');
     	}
 
 	</script>
@@ -83,26 +83,21 @@
 	</c:if>
 	<tr>
 		<td colspan=2 align=center>
-		<c:if test="${sessionScope.nick eq review.nick}">
 			<input type="button" value="목록"
 			       onClick="location.href='reviewList?page=${page}'">
+		<c:if test="${not empty sessionScope.nick and sessionScope.nick eq review.nick}">
 			<input type="button" value="수정"
 			       onClick="location.href='reviewUpdateForm?post_id=${review.post_id}&page=${page}'">
 			<input type="button" value="삭제" onclick="delcheck()">
 		</c:if>
-		<c:if test="${sessionScope.nick ne review.nick}">
-			<input type="button" value="목록"
-			       onClick="location.href='reviewList?page=${page}'">
+		<c:if test="${not empty sessionScope.nick and sessionScope.nick ne review.nick}">
 			<input type="button" value="신고" onclick="openReportPopup(${review.post_id})">
-		</c:if>
-		<c:if test="${empty sessionScope.nick}">
-			<input type="button" value="목록" onClick="location.href='reviewList?page=${page}'">
 		</c:if>
 		</td>
 	</tr>
 </table><br>
-<form name="frm" id="frm">
-	<input type="hidden" name="nick" value="${review.nick}">
+<form name="reReviewForm" id="reReviewForm">
+	<input type="hidden" name="nick" value="${sessionScope.nick}">
 	<%-- <input type="hidden" name="nick" value="${sessionScope.nick}"> --%> 
 	<input type="hidden" name="post_id" value="${review.post_id}"> 댓글 :
 	<textarea rows="3" cols="50" name="re_content"></textarea>
