@@ -33,11 +33,10 @@
 	</select>
 
 	<!-- 검색페이지 -->
-
 	<select id="searchlist" parameterType="search"
 		resultType="searchresult">
 		select * from (
-		select rownum rnum boards.* from (
+		select rownum rnum, boards.* from (
 		select 'daily' as
 		type_name, title, post_id, nick, reg_date from daily
 		<where>

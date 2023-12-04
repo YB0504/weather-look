@@ -1,8 +1,11 @@
 package com.ootd.weatherlook.controller;
 
+import java.time.LocalDate;
+import java.time.format.TextStyle;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -95,13 +98,24 @@ public class MainController {
 
 		double d = (Math.random() * 10);
 
-		int[] test = {1, 5, 7, 14};
-		
-		for (int i = 0; i < 8; i++) {
+		int[] test = { 1, 5, 7, 14 };
+
+		// 요일 설정
+		LocalDate currentDate = LocalDate.now();
+		LocalDate[] dates = new LocalDate[7];
+		String[] days = new String[7];
+		for (int i = 0; i < 7; i++) {
+			dates[i] = currentDate.plusDays(i);
+			days[i] = dates[i].getDayOfWeek().getDisplayName(TextStyle.SHORT, Locale.ENGLISH).toUpperCase();
+		}
+		model.addAttribute("days", days);
+
+		for (int i = 0; i < 1; i++) {
 			Weather weather = new Weather();
 			weather.setHighest(Math.round(((Math.random() * 10) + 10) * 10.0) / 10.0);
 			weather.setLowest(Math.round((Math.random() * 10) * 10.0) / 10.0);
-			weather.setIco(test[(int)(Math.random()*4)]);
+			weather.setIco(test[(int) (Math.random() * 4)]);
+			weather.setDay(days[i]);
 			weekly.add(i, weather);
 		}
 		System.out.println("weekly: " + weekly);

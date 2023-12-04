@@ -1,13 +1,52 @@
 @charset "UTF-8";
-.body{
+
+.body {
 	margin: 0;
 }
 
+.week {
+	display: flex;
+	width: 900px;
+	margin: 0 auto;
+	color: #072e73;
+	font-family: "Open Sans", sans-serif;
+}
+
+.day {
+	flex: 1;
+	padding: 10px;
+	box-sizing: border-box;
+	text-align: center;
+}
+
 .weather_weekly {
+	display: flex;
+	width: 900px;
+	margin: 0 auto;
+}
+
+.weather_day {
+	display: flex;
+	flex: 1;
+	width: 900px;
+	margin: 0 auto;
+	text-align: center;
+}
+
+.weather_text {
+	flex: 1;
+	padding: 10px;
+	text-align: center;
+	font-size: 14px;
+	color: #000;
+	font-family: "Open Sans", sans-serif;
+}
+
+/* .weather_weekly {
 	display: grid;
-	grid-template-columns: repeat(2, 1fr); /* 2 columns */
-	grid-template-rows: repeat(4, 1fr); /* 4 rows */
-	gap: 10px; /* Adjust the gap between grid items */
+	grid-template-columns: repeat(2, 1fr); 2 columns
+	grid-template-rows: repeat(4, 1fr); 4 rows
+	gap: 10px; Adjust the gap between grid items
 	max-width: 1200px;
 	margin-top: 40px;
 	margin-bottom: 20px;
@@ -15,8 +54,132 @@
 }
 
 .weather_day {
-	border: 1px solid #ccc; /* Add border for each day */
-	padding: 10px; /* Add padding for better spacing */
-	text-align: center; /* Center text within each day */
-font-size: 16px;
+	border: 1px solid #ccc; Add border for each day
+	padding: 10px; Add padding for better spacing
+	text-align: center; Center text within each day
+	font-size: 16px;
+} */
+.mainbox {
+	max-width: 900px;
+}
+
+.maincard {
+	width: 900px;
+	margin-bottom: 30px;
+	margin: 30px auto; /* 수평 가운데 정렬을 위한 margin 설정 */
+	border: none;
+	border-radius: 5px;
+	box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+	margin-bottom: 30px;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: 20px;
+}
+
+.maincardbody {
+	padding: 0 20px 20px 20px;
+	width: calc(30%);
+	margin-bottom: 20px;
+}
+
+}
+.maincardlink {
+	text-decoration: none;
+	display: flex; /* 자식 요소를 세로로 배치하기 위해 flex 설정 */
+}
+
+.maincardinfo {
+	flex-direction: column; /* 자식 요소를 세로로 배치하도록 설정 */
+	margin-right: 10px;
+}
+
+.maincardinfo p {
+	font-size: 16px;
+	color: #264885;
+	margin: 0; /* 기본 마진 제거 */
+}
+
+.maincardinfo span {
+	font-size: 12px;
+	display: block; /* 한 줄씩 표시하도록 설정 */
+	color: #264885; /* 게시판 정보에 회색 텍스트 적용 */
+}
+
+.card-body img {
+	max-width: 100%; /* 이미지가 컨테이너를 넘어가지 않도록 설정 */
+	margin-bottom: 10px;
+}
+
+.item {
+	border: none;
+	margin-bottom: 30px;
+}
+
+.item .item-wrap {
+	display: block;
+	position: relative;
+	overflow: hidden;
+}
+
+.item .item-wrap:after {
+	z-index: 2;
+	position: absolute;
+	content: "";
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: rgba(0, 0, 0, 0.4);
+	visibility: hidden;
+	opacity: 0;
+	transition: 0.3s all ease-in-out;
+}
+
+.item .item-wrap img {
+	transition: 0.3s transform ease;
+	transform: scale(1);
+}
+
+.item .item-wrap>.work-info {
+	position: absolute;
+	top: 50%;
+	width: 100%;
+	text-align: center;
+	z-index: 3;
+	transform: translateY(-50%);
+	color: #fff;
+	opacity: 0;
+	visibility: hidden;
+	margin-top: 20px;
+	transition: 0.3s all ease;
+}
+
+.item .item-wrap>.work-info h3 {
+	font-size: 20px;
+	margin-bottom: 0;
+}
+
+.item .item-wrap>.work-info span {
+	font-size: 14px;
+	text-transform: uppercase;
+	letter-spacing: 0.2rem;
+}
+
+.item .item-wrap:hover {
+	text-decoration: none;
+}
+
+.item .item-wrap:hover img {
+	transform: scale(1.05);
+}
+
+.item .item-wrap:hover:after {
+	opacity: 1;
+	visibility: visible;
+}
+
+.item .item-wrap:hover .work-info {
+	margin-top: 0px;
+	opacity: 1;
+	visibility: visible;
 }

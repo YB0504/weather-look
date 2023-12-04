@@ -9,6 +9,18 @@
 	
 	</delete>
 	
+	<delete id="removereview" parameterType="int">
+	
+	delete from review where post_id = #{post_id}
+	
+	</delete>
+	
+	<delete id="removecommunity" parameterType="int">
+	
+	delete from community where post_id = #{post_id}
+	
+	</delete>
+	
 	
 </mapper>
 
