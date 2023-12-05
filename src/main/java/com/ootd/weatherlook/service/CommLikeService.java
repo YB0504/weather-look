@@ -21,10 +21,18 @@ public class CommLikeService {
 		return cld.insert(commlike);
 	}
 
-	public CommunityLike getLike(int post_id) {
+	public CommunityLike getLike(CommunityLike commlike) {
 		// TODO Auto-generated method stub
-		return cld.getLike(post_id);
+		return cld.getLike(commlike);
 	}
+
+	public void delete(int post_id) {
+		// TODO Auto-generated method stub
+		cld.delete(post_id);
+	}
+
+	
+
 
 }
 	

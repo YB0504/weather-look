@@ -10,8 +10,7 @@
 <body>	
 <c:if test="${result == 1 }">
 	<script>
-		alert("게시글 수정")
-		location.href="commlist"
+		location.href="commcontent?post_id=${commlike.post_id}&page=${page}"
 	</script>
 </c:if>
 </body>

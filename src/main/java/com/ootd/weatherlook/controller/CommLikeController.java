@@ -28,13 +28,14 @@ public class CommLikeController {
 	@RequestMapping("commlikeinsert")
 	public String likeinsert(CommunityLike commlike,
 							@RequestParam("post_id") int post_id,
-							@RequestParam("page") String page
+							@RequestParam("page") String page,
+							HttpSession session
 							,Model model) {
 	
 		 cls.insert(commlike);
 		 int result = 1;
 		 System.out.println("좋아요 클릭 성공");	 
-		 	 
+	
 		 	 model.addAttribute("commlike", commlike);
 			 model.addAttribute("result", result);
 			 model.addAttribute("page", page);
@@ -42,5 +43,13 @@ public class CommLikeController {
 			return "comm/likeresult";
 	}
 	
+	@RequestMapping("commlikedelete")
+	public String likedelete(CommunityLike commlike,
+							Model model) {
+
+		cls.delete(commlike.getPost_id());
+		
+		return "redirect:content";
+	}
 
 }

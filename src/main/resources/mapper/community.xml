@@ -37,7 +37,17 @@
 		delete from community where post_id=${post_id}
 	</delete>
 	
+	<insert id="linsert" parameterType="commlike">
+	insert into community_like values(community_like_seq.nextval,#{post_id},#{nick})
+	</insert>
 	
+	<select id="getLike" parameterType="commlike" resultType="commlike">
+		select * from community_like where post_id=#{post_id} and nick=#{nick}
+	</select>
+	
+	<delete id="likedelete" parameterType="int">
+		delete from community_like where post_id=#{post_id}
+	</delete>
 </mapper>
 
 	

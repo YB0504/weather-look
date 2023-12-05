@@ -46,17 +46,24 @@ $(function(){
 	});
 });
 </script>
-<script>
+ <script>
 $(function(){
 	
   $('#heart').click(function() {
   var heart = confirm("추천 하시겠습니까?");
-  if(heart){
-	  
-  $(this).toggleClass("bi-heart bi-heart-fill").css("color","red");
-		location.href='commlikeinsert?post_id=${comm.post_id}&nick=${sessionScope.nick}&page=${page}'
-  }
+  if(heart)  
+		location.href='commlikeinsert?post_id=${comm.post_id}&nick=${sessionScope.nick}&page=${page}'  
   });
+});
+</script>
+<script>
+$(function(){
+	
+	$('#heart-fill').click(function(){
+		var heartfill = confirm("추천을 취소하시겠습니까?");
+		if(heartfill)
+			location.href = 'commlikedelete?post_id={commlike.post_id}&nick=${commlike.nick}$page=${page}'
+	});
 });
 </script>
 <script>
@@ -64,7 +71,7 @@ $(function(){
 		alert("수정 권한이 없습니다");
 	}
 
-</script>
+</script> 
 
 </head>
 <body>
@@ -130,20 +137,20 @@ onclick="updatebutton()">
 </td>
 </tr>
 	</table><p>   
-	
-  <div align = "center" id = "heartload">
-	<c:choose>
-		<c:when test="${session.nick eq commlike.nick and not empty commlike.like_id}">		
-		<i class="bi bi-heart-fill" id = "heartfill" ></i> 
-		</c:when>	
-	</c:choose>
-	
-	<c:otherwise>
-	<i class="bi bi-heart" id = "heart" ></i>		
-	</c:otherwise>
-	
-
-</div>	
+	<div>
+ 	session : ${sessionScope.nick }<br>
+ 	like_id : ${commlike.like_id }
+ </div>
+  <div align="center">
+	<c:if test="${not empty commlike}">
+		<i class="bi bi-heart-fill" style = "color : red" id="heart-fill"></i>	
+	</c:if>      
+	<c:if test="${empty commlike}">
+        <i class="bi bi-heart" id="heart" ></i> 	
+	</c:if>
+</svg>
+   
+</div>
 		<div align = "center">
 		<form name="frm" id="frm">
 			<input type="hidden" name="nick" value="${sessionScope.nick}">

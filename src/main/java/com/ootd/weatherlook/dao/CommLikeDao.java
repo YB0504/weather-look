@@ -19,9 +19,18 @@ public class CommLikeDao {
 		return lsession.insert("linsert",commlike);
 	}
 
-	public CommunityLike getLike(int post_id) {
+	public CommunityLike getLike(CommunityLike commlike) {
 		// TODO Auto-generated method stub
-		return lsession.selectOne("like", post_id);
+		return lsession.selectOne("getLike", commlike);
 	}
+
+	public void delete(int post_id) {
+		// TODO Auto-generated method stub
+		lsession.delete("likedelete",post_id);
+	}
+
+
+
+
 
 }

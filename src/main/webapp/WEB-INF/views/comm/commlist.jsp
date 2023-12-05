@@ -12,6 +12,10 @@
 <body>
 		<table border=1 align="center" width=800>
 			<caption>게시판 목록</caption>
+			<div align = "right">
+			<input type ="button" value = "로그인"
+onclick="location.href='loginform'">
+			</div>
 			<tr>
 				<th>번호</th>
 				<th>머리말</th>

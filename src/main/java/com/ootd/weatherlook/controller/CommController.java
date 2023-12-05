@@ -94,12 +94,19 @@ public class CommController {
 							  HttpSession session,
 							  Model model) {
 		cs.updatecount(post_id);
+		System.out.println("updatecount");
 		Community comm = cs.getCommunity(post_id);
 		
-		CommunityLike commlike = cls.getLike(post_id);
+		CommunityLike likeDTO = new CommunityLike();
+		
+		likeDTO.setNick((String)session.getAttribute("nick"));
+		likeDTO.setPost_id(post_id);
+		CommunityLike commlike = cls.getLike(likeDTO);
+		model.addAttribute("commlike", commlike);
+		System.out.println("컴라이크생성");
 		
 		String content = comm.getContent().replace("\n","<br>");
-				
+		
 		model.addAttribute("comm", comm);
 		model.addAttribute("content", content);
 		model.addAttribute("page", page);
