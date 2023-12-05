@@ -31,7 +31,7 @@ public class TestController {
 	public String apitest() {
 
 		
-		return "apitest";
+		return "weatherapi";
 	}
 	@RequestMapping("maintest")
 	public String maintest(@RequestParam(value = "page", defaultValue = "1") int page, HttpServletRequest request, Model model) {

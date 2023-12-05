@@ -12,7 +12,7 @@
 <meta content="" name="description">
 <meta content="" name="keywords">
 
-
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <!-- 에셋2 ========================================= -->
 
@@ -52,65 +52,134 @@
 </head>
 <body>
 
-<%@ include file="../include/header.jsp" %>
+	<%@ include file="../include/header.jsp"%>
 	<main id="main">
 
 
 
 		<!-- 게시판 이동 외 =========================== -->
 
-		<c:set var="highest"/>
+		<c:set var="highest" />
 		<!-- test value -->
-		<c:set var="lowest"/>
+		<c:set var="lowest" />
 		<!-- test value -->
 
-		<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const clickableDays = document.querySelectorAll(".clickable-day");
-        const weatherDays = document.querySelectorAll(".weather_day");
-
-        clickableDays.forEach(clickableDay => {
-            clickableDay.addEventListener("click", function () {
-                const clickedDay = this.innerText.trim();
-                console.log("Clicked day: " + clickedDay);
-
-                weatherDays.forEach(weatherDay => {
-                    const dayId = weatherDay.id;
-                    // 클릭한 요일에 해당하는 요소만 표시
-                    weatherDay.classList.toggle("hidden", dayId !== clickedDay);
-                });
-            });
-        });
-    });
-</script>
+		<c:set var="lat" value="37.5683" />
+		<c:set var="lon" value="127" />
 
 
 		<div id="weather">
 
 			<div class="week">
-				<c:forEach var="day" items="${days }" varStatus = "i">
+				<c:forEach var="d" items="${dates }" varStatus="status">
+					<c:if test="${status.first}">
+						<c:set var="today1" value="${d.df1}" />
+						<c:set var="today2" value="${d.df2}" />
+						<c:set var="today3" value="${d.df3}" />
+					</c:if>
 					<div class="day">
-					<input type = "hidden" name = "dayvalue" value = "${i.index }">
-						<a>${day }</a>
+						<input type="hidden" class="datevalue" value="${d.df2}">
+						<div class="d1">${d.df1}</div>
+						<div class="lowest">
+							<c:set var="lowest" />
+							${lowest }
+						</div>
+						<div class="highest">
+							<c:set var="highest" />
+							${highest }
+						</div>
 					</div>
 				</c:forEach>
 			</div>
 
 
 
+			<script>
+			
+			$(document).ready(function(){
+		        // 페이지 로딩 완료 후 getWeather 함수 호출
+		        getWeather(35.1028, 129.0403);
+		    });
+			
+			
+			function getWeather(lat, lon){
+				const apiUrl = 'http://api.openweathermap.org/data/2.5/forecast';
+				/* const lat = '35.1028';  // 실제 위도 값으로 대체
+				const lon = '129.0403';  // 실제 경도 값으로 대체 */
+				const apiKey = '9657c91ee7eafcd506fa727097c899fa';  // 실제 API 키로 대체
 
-			<div class="weather_weekly">
-				<c:forEach var="w" items="${weekly}" varStatus="i">
-					<div class="weather_day">
-						<p class="weather_text">
-							<a href="weather?page=1&lowest=${w.lowest}&highest=${w.highest}">
-								${w.day} / <img src="ico_svg/icon_flat_wt${w.ico}.svg">
-								최저기온 ${w.lowest} 최고기온 ${w.highest}
-							</a>
-						</p>
-					</div>
-				</c:forEach>
-			</div>
+
+				
+				const apiUrlWithParams = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=9657c91ee7eafcd506fa727097c899fa&units=metric`;
+//				const apiUrlWithParams = `${apiUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}`;
+// http://api.openweathermap.org/data/2.5/daily?lat=35.1028&lon=129.0403&appid=9657c91ee7eafcd506fa727097c899fa
+				
+				
+				fetch(apiUrlWithParams)
+				  .then(response => response.json())
+				  .then(data => {
+					  
+					  const weatherData = data.list;
+
+			            // 각 날짜의 12:00:00 및 21:00:00 날씨 정보 추출
+			            const dailyWeather = weatherData.reduce((result, item) => {
+			                const date = item.dt_txt.split(' ')[0];
+			                const time = item.dt_txt.split(' ')[1];
+
+			                if (time === '12:00:00' || time === '21:00:00') {
+			           
+
+			                    // 최저 온도 및 최고 온도 업데이트
+			                    if (result[date].lowest === null || item.main.temp < result[date].lowest) {
+			                        result[date].lowest = item.main.temp;
+			                    }
+
+			                    if (result[date].highest === null || item.main.temp > result[date].highest) {
+			                        result[date].highest = item.main.temp;
+			                    }
+			                }
+			                
+			                return result;
+					
+			            }, {});
+
+			            // 추출된 데이터를 활용하여 lowest 및 highest 변수 업데이트
+for (const date in dailyWeather) {
+    const lowestTemp = dailyWeather[date].lowest;
+    const highestTemp = dailyWeather[date].highest;
+
+    // 해당 날짜에 맞는 요소 찾아 업데이트
+    const dateInputElement = document.querySelector(`.datevalue[value="${date}"]`);
+    
+    if (dateInputElement) {
+        const dayElement = dateInputElement.closest('.day');
+        if (dayElement) {
+            const lowestElement = dayElement.querySelector('.lowest');
+            const highestElement = dayElement.querySelector('.highest');
+            
+            if (lowestElement) {
+                lowestElement.innerText = `Lowest: ${lowestTemp}°C`;
+            }
+            if (highestElement) {
+                highestElement.innerText = `Highest: ${highestTemp}°C`;
+            }
+        }
+    }
+}                
+			                
+				    // API 응답을 처리하는 로직을 여기에 추가
+				    console.log(data);
+			
+				  })
+				  .catch(error => {
+				    // API 호출 중 발생한 오류 처리
+				    console.error('API 호출 중 오류:', error);
+				  });
+				}
+
+			
+
+</script>
 
 		</div>
 
