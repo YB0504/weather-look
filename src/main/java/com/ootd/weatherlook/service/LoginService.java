@@ -35,6 +35,14 @@ public class LoginService {
 	public int kakaoLogin(MemberDTO kakao){
 		return memberDao.kakaologin(kakao);
 	}
-	
+
+	public MemberDTO idSearch(MemberDTO mem) {
+		return memberDao.idSearch(mem);
+	}
+
+	public MemberDTO pwSearch(MemberDTO mem) {
+		return memberDao.pwSearch(mem);
+	}
+
 	
 }

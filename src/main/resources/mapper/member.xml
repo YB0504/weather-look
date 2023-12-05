@@ -33,12 +33,22 @@
 	<!-- 카카오 가입 -->
 	<insert id="insertKakao" parameterType="member">
 		insert into member(nick, id, passwd, profile_image, address, phone, admin_role)
-		values(#{nick}, '카카오선홍', 'kakao1234', #{profile_image, jdbcType=VARCHAR}, '서울', '010-1234-5678', 'n')
+		values(#{nick}, #{id}, 'kakao1234', #{profile_image, jdbcType=VARCHAR}, '서울', '010-1234-5678', 'n')
 	</insert>
 
 	<!-- 카카오 로그인 -->
 	<select id="kakaoLogin" parameterType="String" resultType="member">
 		select * from member where nick = #{nick}
+	</select>
+	
+	<!-- ID 찾기 -->	
+	<select id="idSearch" parameterType="member" resultType="member">
+		select * from member where phone = #{phone}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="pwSearch" parameterType="member" resultType="member">
+		select * from member where id = #{id} and phone = #{phone}
 	</select>
 	
 </mapper>

@@ -50,4 +50,14 @@ public class LoginDao {
 		return session.insert("insertKakao", kakao);
 	}
 
+	public MemberDTO idSearch(MemberDTO mem) {
+		return session.selectOne("idSearch", mem);
+	}
+
+	public MemberDTO pwSearch(MemberDTO mem) {
+		return session.selectOne("pwSearch", mem);
+	}
+
+
+
 }

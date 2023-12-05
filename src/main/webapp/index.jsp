@@ -9,7 +9,7 @@
 <body>
 
 <script>
-	location.href="loginform1"
+	location.href="loginform"
 </script>
 
 </body>

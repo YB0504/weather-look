@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,7 +24,7 @@ public class LoginController {
 	@Autowired
 	private LoginService service;
 
-	@RequestMapping("loginform1")
+	@RequestMapping("loginform")
 	public String loginform() {
 		System.out.println("로그인 폼");
 		return "member/loginform";
@@ -135,13 +136,13 @@ public class LoginController {
 	//카카오톡 로그인
 	@RequestMapping("kakaologin")
 	public String kakaologin(@RequestParam("nickname") String nick,
-							 @RequestParam("profileImage") String profile_image,
+							 @RequestParam("email") String id,
 							 HttpSession session,
 							 Model model)throws Exception {
 		
 		System.out.println("카카오톡 로그인 컨트롤러");
 		System.out.println("nick : "+nick);
-		System.out.println("프로필 사진 : " +profile_image);
+		System.out.println("카카오 id : " +id);
 		
 		// 카카오 로그인 인증
 		MemberDTO kakaoCheck = service.kakaoLoginCheck(nick);
@@ -151,29 +152,29 @@ public class LoginController {
 			MemberDTO kakao = new MemberDTO();
 			
 			kakao.setNick(nick);
-			kakao.setProfile_image("default.jpeg");
+			kakao.setProfile_image("dafault.jpeg");
+			kakao.setId(id);
 			result = service.kakaoLogin(kakao);		// 회원 DB에 저장
 			
 			MemberDTO logink2 = service.kakaoLoginCheck(nick);
 			session.setAttribute("nick",logink2.getNick());	// 회원 등록 후 세션 설정
+			session.setAttribute("id", logink2.getId());
 			
 			System.out.println("카톡카톡!!!!!");
 			model.addAttribute("member", kakao);
 			
 			return "member/main";
 			
-		}else if(kakaoCheck.getNick().equals(nick)) { // 등록되어 있는 회원
+		}else if(kakaoCheck.getNick().equals(nick))  // 등록되어 있는 회원
 			
 			System.out.println("카카오 로그인 성공");
 			
 			session.setAttribute("nick", nick);
+			session.setAttribute("id", id);
 			MemberDTO member = service.kakaoLoginCheck(nick);
 			model.addAttribute("member", member);
 			return "member/main";
 			
-		}
-		
-		return "";	// 모두 해당하지 않는경우?
 	}
 
 	// 로그인 성공
@@ -184,9 +185,9 @@ public class LoginController {
 		
 		int result = 0;
 		
-		MemberDTO dto = service.login(id);
+		MemberDTO member = service.login(id);
 		
-		if(dto == null) {	// 가입되지 않은 회원
+		if(member == null) {	// 가입되지 않은 회원
 			
 			result = 1;
 			
@@ -196,19 +197,19 @@ public class LoginController {
 			
 		} else {
 			
-			if("master".equals(id) && dto.getPasswd().equals(passwd)) {
+			if("master".equals(id) && member.getPasswd().equals(passwd)) {
 				
 				session.setAttribute("id", id);
-				session.setAttribute("nick", dto.getNick());
-				session.setAttribute("profile_image", dto.getProfile_image());
+				session.setAttribute("nick", member.getNick());
+				session.setAttribute("profile_image", member.getProfile_image());
 				
 				return "member/adminPage";
 				
-			}else if(dto.getPasswd().equals(passwd)) {	// 비밀번호 일치 session 설정
+			}else if(member.getPasswd().equals(passwd)) {	// 비밀번호 일치 session 설정
 				
 				session.setAttribute("id", id);
-				session.setAttribute("nick", dto.getNick());
-				session.setAttribute("profile_image", dto.getProfile_image());
+				session.setAttribute("nick", member.getNick());
+				session.setAttribute("profile_image", member.getProfile_image());
 				
 				System.out.println("로그인 성공");
 				
@@ -227,4 +228,54 @@ public class LoginController {
 		}
 	}
 	
+	@RequestMapping("idSearchForm")
+	public String idSearchForm()throws Exception {
+		System.out.println("ID 찾기 폼");
+		return "member/idSearchForm";
+	}
+	
+	@RequestMapping("idSearch")
+	public String idSearch(@ModelAttribute MemberDTO mem,@RequestParam("phone") String phone, Model model)throws Exception {
+		
+		System.out.println("ID 찾기");
+		
+		MemberDTO member = service.idSearch(mem);
+		
+		if(member.getPhone().equals(phone)) {
+			
+			System.out.println("ID 찾기 성공");
+			
+			model.addAttribute("searchId", member.getId());
+			
+		}
+		
+		return "member/idSearchForm";
+		
+	}
+	
+	@RequestMapping("pwSearchForm")
+	public String pwSearchForm()throws Exception {
+		System.out.println("비밀번호 찾기 폼");
+		return "member/pwSearchForm";
+	}
+	
+	@RequestMapping("pwSearch")
+	public String pwSearch(@ModelAttribute MemberDTO mem, @RequestParam("id") String id,
+						   @RequestParam("phone") String phone, Model model)throws Exception {
+		
+		System.out.println("비밀번호 찾기");
+		
+		MemberDTO member = service.pwSearch(mem);
+		
+		if(member.getId().equals(id) && member.getPhone().equals(phone)) {
+		
+			System.out.println("비밀번호 찾기 성공");
+			
+			model.addAttribute("searchPw", member.getPasswd());
+			
+		}
+		
+		return "member/pwSearchForm";
+		
+	}
 }

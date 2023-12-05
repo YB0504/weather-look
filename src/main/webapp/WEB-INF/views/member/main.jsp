@@ -8,12 +8,11 @@
 </head>
 <body>
 
-메인입니다~
+메인입니다~<br>
 
 ID : ${sessionScope.id }<br>
 Nickname : ${sessionScope.nick}<br>
-profile_image : ${sessionScope.profile_image}<br>
-<img src="${member.profile_image}">
+프로필 : <img src="upload/${sessionScope.profile_image}">
 
 </body>
 </html>
