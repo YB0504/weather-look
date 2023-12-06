@@ -54,15 +54,33 @@ public class ReReview {
 	// 댓글 수정
 	@RequestMapping("reUpdate")
 	public String reUpdate(ReReviewDTO reReview, Model model)throws Exception {
+		System.out.println("댓글 수정 완료");
 		rrs.reUpdate(reReview);
-		return "redirect:reReviewList?post_id=" + reReview.getPost_id();
+		return "redirect:reReviewList?post_id="+reReview.getPost_id();
 	}
 	
 	// 댓글 삭제
 	@RequestMapping("reDelete")
 	public String reDelete(ReReviewDTO reReview, Model model)throws Exception {
 		rrs.reDelete(reReview.getRe_id());
-		return "redirect:reReviewList?post_id=" +reReview.getPost_id();
+		return "redirect:reReviewList?post_id="+reReview.getPost_id();
 	}
+	
+	// 대댓글 작성
+	@RequestMapping("reReplyInsert")
+    public String reReplyInsert(ReReviewDTO reReview, HttpSession session, 
+            HttpServletRequest request, Model model) throws Exception {
+        System.out.println("대댓글 작성 완료");
+        
+        System.out.println("re_level" +reReview.getRe_level());
+        System.out.println("re_step" +reReview.getRe_step());
+
+        String nick = (String) session.getAttribute("nick");
+        reReview.setNick(nick);
+
+        rrs.reReplyInsert(reReview);
+
+        return "redirect:reReviewList?post_id=" + reReview.getPost_id();
+    }
 	
 }

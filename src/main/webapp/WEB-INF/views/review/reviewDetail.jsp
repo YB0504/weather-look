@@ -6,6 +6,7 @@
 <head>
 	<meta charset="UTF-8">
 	<title>상세 페이지</title>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script>
         function delcheck() {
 
@@ -33,7 +34,9 @@
                 $.post('reInsert', frmData, function (data) {
                     //모델어트리뷰트 어노테이션 dto객체 생성해서 값 받을 수 있다.
                     $('#slist').html(data);	//새로 달린 댓글을 받아와서 slist 출력
-                    reReviewForm.re_content.value = '';
+                 //   reReviewForm.re_content.value = '';
+                    $("#re_content").val("").focus();
+                    
                 });
             });
         });
@@ -98,9 +101,8 @@
 </table><br>
 <form name="reReviewForm" id="reReviewForm">
 	<input type="hidden" name="nick" value="${sessionScope.nick}">
-	<%-- <input type="hidden" name="nick" value="${sessionScope.nick}"> --%> 
 	<input type="hidden" name="post_id" value="${review.post_id}"> 댓글 :
-	<textarea rows="3" cols="50" name="re_content"></textarea>
+	<textarea rows="3" cols="50" name="re_content" id="re_content"></textarea>
 	<input type="button" value="확인" id="repInsert">
 </form>
 	<div id="slist"></div>

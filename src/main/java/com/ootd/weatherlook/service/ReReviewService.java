@@ -30,4 +30,8 @@ public class ReReviewService {
 	public void reDelete(int re_id) {
 		reDao.reDelete(re_id);
 	}
+
+	public void reReplyInsert(ReReviewDTO reReview) {
+		reDao.reReplyInsert(reReview);
+	}
 }

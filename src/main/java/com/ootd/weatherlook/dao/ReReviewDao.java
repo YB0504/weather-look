@@ -30,4 +30,8 @@ public class ReReviewDao {
 	public void reDelete(int re_id) {
 		session.delete("reDelete", re_id);
 	}
+
+	public void reReplyInsert(ReReviewDTO reReview) {
+		session.insert("reReplyInsert", reReview);
+	}
 }

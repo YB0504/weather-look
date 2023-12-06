@@ -2,9 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="reReview">
-
+	<!-- 서브쿼리 정렬 -->
 	<select id="reReviewList" parameterType="int" resultType="reviewReply">
-		select * from review_reply where post_id = #{post_id} order by re_id 
+		select * from (select reReply.* from  
+	  	(select * from review_reply order by re_ref asc,re_step desc) reReply) 
+	    where post_id = 123 order by re_ref, re_regdate
 	</select>
 	
 	<insert id="reInsert" parameterType="reviewReply">
@@ -19,5 +21,10 @@
 	<delete id="reDelete" parameterType="int">
 		delete from review_reply where re_id=#{re_id}
 	</delete>
+	
+	<insert id="reReplyInsert" parameterType="reviewReply">
+    	insert into review_reply values (review_reply_seq.nextval, #{re_content},
+      	#{re_ref}, #{re_level}+1, #{re_step}+1, sysdate, #{nick}, #{post_id})
+	</insert>
 
 </mapper>
