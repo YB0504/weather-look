@@ -19,7 +19,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ootd.weatherlook.model.Community;
 import com.ootd.weatherlook.model.CommunityLike;
+import com.ootd.weatherlook.model.CommunityScrap;
 import com.ootd.weatherlook.service.CommLikeService;
+import com.ootd.weatherlook.service.CommScrapService;
 import com.ootd.weatherlook.service.CommService;
 
 import lombok.extern.log4j.Log4j;
@@ -33,6 +35,8 @@ public class CommController {
 	@Autowired
 	private CommLikeService cls;
 	
+	@Autowired
+	private CommScrapService css;
 	
 	@RequestMapping("commform")
 	public String commform() {
@@ -104,6 +108,14 @@ public class CommController {
 		CommunityLike commlike = cls.getLike(likeDTO);
 		model.addAttribute("commlike", commlike);
 		System.out.println("컴라이크생성");
+		
+		CommunityScrap scrapDTO = new CommunityScrap();
+		
+		scrapDTO.setNick((String)session.getAttribute("nick"));
+		scrapDTO.setPost_id(post_id);
+		CommunityScrap commscrap = css.getScrap(scrapDTO);
+		model.addAttribute("commscrap", commscrap);
+		System.out.println("스크랩");
 		
 		String content = comm.getContent().replace("\n","<br>");
 		

@@ -46,7 +46,7 @@ $(function(){
 	});
 });
 </script>
- <script>
+<script>
 $(function(){
 	
   $('#heart').click(function() {
@@ -62,7 +62,27 @@ $(function(){
 	$('#heart-fill').click(function(){
 		var heartfill = confirm("추천을 취소하시겠습니까?");
 		if(heartfill)
-			location.href = 'commlikedelete?post_id={commlike.post_id}&nick=${commlike.nick}$page=${page}'
+			location.href = 'commlikedelete?post_id=${commlike.post_id}&like_id=${commlike.like_id}&page=${page}'
+	});
+});
+</script>
+ <script>
+$(function(){
+	
+  $('#scrap').click(function() {
+  var heart = confirm("스크랩 하시겠습니까?");
+  if(heart)  
+		location.href='commscrapinsert?post_id=${comm.post_id}&nick=${sessionScope.nick}&page=${page}'  
+  });
+});
+</script>
+<script>
+$(function(){
+	
+	$('#scrap-fill').click(function(){
+		var heartfill = confirm("스크랩을 취소하시겠습니까?");
+		if(heartfill)
+			location.href = 'commscrapdelete?post_id=${commscrap.post_id}&scrap_id=${commscrap.scrap_id}&page=${page}'
 	});
 });
 </script>
@@ -146,10 +166,15 @@ onclick="updatebutton()">
 		<i class="bi bi-heart-fill" style = "color : red" id="heart-fill"></i>	
 	</c:if>      
 	<c:if test="${empty commlike}">
-        <i class="bi bi-heart" id="heart" ></i> 	
+ 	<i class="bi bi-heart" id="heart" ></i>	 	
+ 	</c:if>
+	<c:if test="${not empty commscrap}">
+	<i class="bi bi-bookmark-fill" id = "scrap-fill" style = "color : blue"></i> 
 	</c:if>
-</svg>
-   
+	<c:if test="${empty commscrap}">	
+	<i class="bi bi-bookmark" id = "scrap" ></i> 
+	</c:if>
+	
 </div>
 		<div align = "center">
 		<form name="frm" id="frm">

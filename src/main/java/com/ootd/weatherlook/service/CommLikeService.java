@@ -26,12 +26,11 @@ public class CommLikeService {
 		return cld.getLike(commlike);
 	}
 
-	public void delete(int post_id) {
+	public void likedelete(int like_id) {
 		// TODO Auto-generated method stub
-		cld.delete(post_id);
-	}
+		cld.likedelete(like_id);
 
-	
+	}	
 
 
 }

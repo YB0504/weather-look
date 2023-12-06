@@ -1,7 +1,5 @@
 package com.ootd.weatherlook.controller;
 
-import java.util.List;
-
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,50 +9,47 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ootd.weatherlook.model.Community;
+import com.ootd.weatherlook.model.CommunityScrap;
 import com.ootd.weatherlook.model.CommunityLike;
-import com.ootd.weatherlook.model.CommunityRe;
-import com.ootd.weatherlook.service.CommLikeService;
-import com.ootd.weatherlook.service.CommService;
+import com.ootd.weatherlook.service.CommScrapService;
 
 @Controller
-public class CommLikeController {
+public class CommScrapController {
 
 	@Autowired
-	private CommLikeService cls;
+	private CommScrapService css;
 	
-	@Autowired
-	private CommService cs;
-	
-	@RequestMapping("commlikeinsert")
-	public String likeinsert(CommunityLike commlike,
+	@RequestMapping("commscrapinsert")
+	public String likeinsert(CommunityScrap commscrap,
 							@RequestParam("post_id") int post_id,
 							@RequestParam("page") String page,
-							HttpSession session
+							HttpSession session,
+							RedirectAttributes redirectAttributes
 							,Model model) {
 	
-		 cls.insert(commlike);
-		 int result = 1;
-		 System.out.println("좋아요 클릭 성공");	 
+		 int result= css.insert(commscrap);
+		 System.out.println("스크랩 클릭 성공");	 
+		//redirect
+			redirectAttributes.addAttribute("post_id", post_id);
+			redirectAttributes.addAttribute("page", page);
 	
-		 	 model.addAttribute("commlike", commlike);
+		 	 model.addAttribute("commscrap", commscrap);
 			 model.addAttribute("result", result);
 			 model.addAttribute("page", page);
 						
-			return "comm/likeresult";
+			return "redirect:commcontent";
 	}
-	
-	@RequestMapping("commlikedelete")
+	@RequestMapping("commscrapdelete")
 	public String likedelete(@RequestParam("post_id") int post_id,
             				@RequestParam("page") String page,
-            				@RequestParam("like_id") int like_id,
+            				@RequestParam("scrap_id") int scrap_id,
 							RedirectAttributes redirectAttributes) {		
 		System.out.println("commlikedelete");
 		System.out.println("post_id : " + post_id);
 		System.out.println("page : " + page);
-		System.out.println("like_id : " + like_id);
+		System.out.println("scrap_id : " + scrap_id);
 		
-		cls.likedelete(like_id);	
+		css.delete(scrap_id);	
 		System.out.println("삭제 완료");
 		
 		//redirect
@@ -62,6 +57,5 @@ public class CommLikeController {
 		redirectAttributes.addAttribute("page", page);
 				
 		return "redirect:commcontent";
-
 	}
 }

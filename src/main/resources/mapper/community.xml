@@ -46,7 +46,19 @@
 	</select>
 	
 	<delete id="likedelete" parameterType="int">
-		delete from community_like where post_id=#{post_id}
+		delete from community_like where like_id=#{like_id}
+	</delete>
+	
+	<select id="getscrap" parameterType="commscrap" resultType="commscrap">
+		select * from community_scrap where post_id=#{post_id} and nick=#{nick}
+	</select>
+
+	<insert id="sinsert" parameterType="commscrap">
+		insert into community_scrap values(community_scrap_seq.nextval,#{post_id},#{nick})
+	</insert>
+	
+	<delete id="scrapdelete">
+		delete from community_scrap where scrap_id=#{scrap_id}
 	</delete>
 </mapper>
 

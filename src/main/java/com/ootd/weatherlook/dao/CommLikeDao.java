@@ -24,7 +24,7 @@ public class CommLikeDao {
 		return lsession.selectOne("getLike", commlike);
 	}
 
-	public void delete(int post_id) {
+	public void likedelete(int post_id) {
 		// TODO Auto-generated method stub
 		lsession.delete("likedelete",post_id);
 	}
