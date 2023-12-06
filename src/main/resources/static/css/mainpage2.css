@@ -4,19 +4,51 @@
 	margin: 0;
 }
 
-.week {
-	display: flex;
+.weather {
+	
+}
+
+.weather_2x2box {
 	width: 900px;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
 	margin: 0 auto;
-	color: #072e73;
-	font-family: "Open Sans", sans-serif;
+}
+
+.days {
+	display: flex;
+	flex-wrap: wrap;
 }
 
 .day {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	margin: 5px;
+	background-color: #ffffff;
+	border-radius: 12px;
+	border: 1px solid #e3e3e3;
+	text-align: center
+}
+
+.dayvalue {
+	display: flex;
 	flex: 1;
-	padding: 10px;
-	box-sizing: border-box;
+	padding: 4px;
 	text-align: center;
+	margin: 2px;
+	align-items: center;
+	font-family: "Open Sans", sans-serif;
+	color: #012970;
+	font-size: 16px;
+}
+
+.weathervalue {
+	flex: 1;
+	align-items: center;
+	font-family: "Open Sans", sans-serif;
+	color: #012970;
+	font-size: 16px;
 }
 
 .weather_weekly {

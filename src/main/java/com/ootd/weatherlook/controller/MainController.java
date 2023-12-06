@@ -105,7 +105,7 @@ public class MainController {
 		// DateTimeFormatter을 사용하여 날짜를 원하는 형식으로 포맷팅
 		DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("MM/dd");
 		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-		DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("EEE요일");
+		DateTimeFormatter formatter3 = DateTimeFormatter.ofPattern("EEE");
 
 		// 각각의 형식으로 현재 날짜 출력
 
@@ -126,15 +126,6 @@ public class MainController {
 		model.addAttribute("dates", dates);
 		// <============================ 날짜
 
-		for (int i = 0; i < 1; i++) {
-			Weather weather = new Weather();
-			weather.setHighest(Math.round(((Math.random() * 10) + 10) * 10.0) / 10.0);
-			weather.setLowest(Math.round((Math.random() * 10) * 10.0) / 10.0);
-			weather.setIco(test[(int) (Math.random() * 4)]);
-			weekly.add(i, weather);
-		}
-		System.out.println("weekly: " + weekly);
-		model.addAttribute("weekly", weekly);
 
 		// =============================
 
@@ -143,7 +134,10 @@ public class MainController {
 		model.addAttribute("startpage", startpage);
 		model.addAttribute("endpage", endpage);
 		model.addAttribute("listcount", listcount);
-
+		model.addAttribute("page", page);
+		model.addAttribute("maxpage", maxpage);
+		
+		
 		return "main/mainpage";
 
 	}
@@ -204,6 +198,7 @@ public class MainController {
 		model.addAttribute("endpage", endpage);
 		model.addAttribute("listcount", listcount);
 
+		
 		return "main/mainpage";
 	}
 

@@ -66,35 +66,34 @@
 
 		<c:set var="lat" value="37.5683" />
 		<c:set var="lon" value="127" />
+		<c:set var="templow" />
+		<c:set var="temphigh" />
 
+		<div class="weather">
+			<div class="weather_2x2box">
 
-		<div id="weather">
-
-			<div class="week">
 				<c:forEach var="d" items="${dates }" varStatus="status">
-					<c:if test="${status.first}">
-						<c:set var="today1" value="${d.df1}" />
-						<c:set var="today2" value="${d.df2}" />
-						<c:set var="today3" value="${d.df3}" />
-					</c:if>
-					<div class="day">
-						<input type="hidden" class="datevalue" value="${d.df2}">
-						<div class="d1">${d.df1}</div>
-						<div class="lowest">
-							<c:set var="lowest" />
-							${lowest }
+					<a href="#" onclick="updateLink('${d.df2}');">
+						<div id="${d.df2 }" class="day">
+							<div class="dayvalue">${d.df1}${d.df3 }</div>
+							<div class="dayvalue" id="${d.df2 }_low"></div>
+							<div class="dayvalue" id="${d.df2 }_high"></div>
 						</div>
-						<div class="highest">
-							<c:set var="highest" />
-							${highest }
-						</div>
-					</div>
+					</a>
 				</c:forEach>
-			</div>
 
 
 
-			<script>
+				<script>
+				
+			    function updateLink(dateId) {
+			        var templow = document.getElementById(dateId + '_templow').textContent.slice(0, -1);
+			        var temphigh = document.getElementById(dateId + '_temphigh').textContent.slice(0, -1);
+			        var link = 'daily?templow=' + templow + '&temphigh=' + temphigh;
+			        window.location.href = link;
+			    }
+				
+				
 			
 			$(document).ready(function(){
 		        // 페이지 로딩 완료 후 getWeather 함수 호출
@@ -119,57 +118,13 @@
 				  .then(response => response.json())
 				  .then(data => {
 					  
-					  const weatherData = data.list;
-
-			            // 각 날짜의 12:00:00 및 21:00:00 날씨 정보 추출
-			            const dailyWeather = weatherData.reduce((result, item) => {
-			                const date = item.dt_txt.split(' ')[0];
-			                const time = item.dt_txt.split(' ')[1];
-
-			                if (time === '12:00:00' || time === '21:00:00') {
-			           
-
-			                    // 최저 온도 및 최고 온도 업데이트
-			                    if (result[date].lowest === null || item.main.temp < result[date].lowest) {
-			                        result[date].lowest = item.main.temp;
-			                    }
-
-			                    if (result[date].highest === null || item.main.temp > result[date].highest) {
-			                        result[date].highest = item.main.temp;
-			                    }
-			                }
-			                
-			                return result;
 					
-			            }, {});
 
-			            // 추출된 데이터를 활용하여 lowest 및 highest 변수 업데이트
-for (const date in dailyWeather) {
-    const lowestTemp = dailyWeather[date].lowest;
-    const highestTemp = dailyWeather[date].highest;
-
-    // 해당 날짜에 맞는 요소 찾아 업데이트
-    const dateInputElement = document.querySelector(`.datevalue[value="${date}"]`);
-    
-    if (dateInputElement) {
-        const dayElement = dateInputElement.closest('.day');
-        if (dayElement) {
-            const lowestElement = dayElement.querySelector('.lowest');
-            const highestElement = dayElement.querySelector('.highest');
-            
-            if (lowestElement) {
-                lowestElement.innerText = `Lowest: ${lowestTemp}°C`;
-            }
-            if (highestElement) {
-                highestElement.innerText = `Highest: ${highestTemp}°C`;
-            }
-        }
-    }
-}                
 			                
 				    // API 응답을 처리하는 로직을 여기에 추가
 				    console.log(data);
-			
+				    displayWeatherInfo(data);
+				   
 				  })
 				  .catch(error => {
 				    // API 호출 중 발생한 오류 처리
@@ -177,11 +132,96 @@ for (const date in dailyWeather) {
 				  });
 				}
 
-			
+			  function displayWeatherInfo(data) {
+		            
+		            
+		            for (var i = 0; i < data.list.length; i++) {
+		  
+		                var weatherlist = data.list[i];
 
+		                var dateTimeParts = weatherlist.dt_txt.split(' '); // 날짜와 시간을 분리
+		                var date = dateTimeParts[0];
+		                var time = dateTimeParts[1];
+		                
+		                
+		                
+		                if(time === "21:00:00"){
+			                var creatediv = document.createElement('div');
+			                creatediv.classList.add('weathervalue');
+			                creatediv.setAttribute('id', date+'_templow');
+			                creatediv.setAttribute('value', weatherlist.main.temp);
+			                creatediv.textContent = weatherlist.main.temp + '℃';
+			               
+			                var templow = document.getElementById(date+'_low');
+			              
+			                if(templow){
+			                templow.appendChild(creatediv);
+			                }
+			                
+			                creatediv = document.createElement('div');
+			                creatediv.classList.add('weathervalue');
+			                creatediv.setAttribute('id', date+'_icolow');
+			                creatediv.innerHTML =   '<img src="https://openweathermap.org/img/wn/' +
+			                weatherlist.weather[0].icon.substring(0, 2) +
+			                'd@2x.png"/>';
+
+			                temphigh = document.getElementById(date+'_low');
+			              
+			                if(temphigh){
+				                temphigh.appendChild(creatediv);
+				                }
+			                
+			                
+		                }
+		                if(time === "12:00:00"){
+			                var creatediv = document.createElement('div');
+			                creatediv.classList.add('weathervalue');
+			                creatediv.setAttribute('id', date+'_temphigh');
+			                creatediv.setAttribute('value', weatherlist.main.temp);
+			                creatediv.textContent = weatherlist.main.temp + '℃';
+			               
+			                var temphigh = document.getElementById(date+'_high');
+			              
+			                if(temphigh){
+			                temphigh.appendChild(creatediv);
+			                }
+			                
+			                creatediv = document.createElement('div');
+			                creatediv.classList.add('weathervalue');
+			                creatediv.setAttribute('id', date+'_icohigh');
+			                creatediv.innerHTML =   '<img src="https://openweathermap.org/img/wn/' +
+			                weatherlist.weather[0].icon.substring(0, 2) +
+			                'd@2x.png"/>'; 
+			                temphigh = document.getElementById(date+'_high');
+			              
+			                if(temphigh){
+				                temphigh.appendChild(creatediv);
+				                }
+			                
+			                
+			                
+			                
+		                }
+/* 		                creatediv.textContent = 'Date: ' + weatherlist.dt_txt + ', Temperature: ' + weatherlist.main.temp
+		                + ', desciption: ' + weatherlist.weather[0].description + ', icon: ' + weatherlist.weather[0].icon; */
+		                
+
+		            }
+		            
+		        }
+
+		        // 페이지 로드 시 날씨 정보 표시 함수 호출
+		        window.onload = displayWeatherInfo;
+
+		    
+		        
+		        
 </script>
 
+			</div>
+
 		</div>
+		<!-- 날씨박스 -->
 
 		<section>
 
@@ -205,29 +245,30 @@ for (const date in dailyWeather) {
 
 
 
-			<div align="center">
+			 <nav aria-label="Page navigation example">
+				<ul class="pagination" style = "justify-content: center;">
+					<c:if test="${page > 1 }">
+						<li class="page-item">
+						<a class="page-link"
+							href="main?page=${page-1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+					</c:if>
+
+					<c:forEach var="a" begin="${startpage}" end="${endpage}">
+				
+							<li class="page-item"><a class="page-link"
+								href="main?page=${a}">${a}</a></li>
+					</c:forEach>
 
 
-				<c:if test="${page > 1 }">
-					<a href="main?page=${page-1}">[이전]</a>&nbsp;
-			</c:if>
+					<c:if test="${page < maxpage }">
+						<li class="page-item"><a class="page-link" href="main?page=${page+1}"
+							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+						</a></li>
+					</c:if>
+				</ul>
+</nav>
 
-				<c:forEach var="a" begin="${startpage}" end="${endpage}">
-					<c:if test="${a == page }">
-					[${a}]
-				</c:if>
-					<c:if test="${a != page }">
-						<a href="main?page=${a}">[${a}]</a>&nbsp;
-				</c:if>
-				</c:forEach>
 
-				<c:if test="${page >= maxpage }">
-				[다음] 
-			</c:if>
-				<c:if test="${page < maxpage }">
-					<a href="main?page=${page+1}">[다음]</a>
-				</c:if>
-			</div>
 		</section>
 	</main>
 
