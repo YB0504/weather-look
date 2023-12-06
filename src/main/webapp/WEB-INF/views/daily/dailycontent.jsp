@@ -33,7 +33,7 @@
 				frm.re_content.focus();
 				return false;
 			}
-			var frmData = $('form').serialize();
+			var frmData = $('#frm').serialize();
 
 			$.post('rdInsert', frmData, function(data) {
 				//모델어트리뷰트 어노테이션 dto객체 생성해서 값 받을 수 있다.
@@ -42,17 +42,67 @@
 			});
 		});
 
-		$('#heart').click(function() {
+		// 좋아요 버튼이 안눌러져 있을때  클릭 : insertSQL문 실행
+// 		$('#nogood').click(function() {
+// 			alert("nogood");
+			
+// 			var frmData = $('#frm2').serialize();
+// 			$.post('heartInsert', frmData, function(data) {
+// 				alert("좋아요가 눌러졌습니다.");
+// 				alert(data);
+// 				if(data == 1){
+// 					$("#nogood").attr("src","./img/good.png");	
+// //					location.reload();		//  새로고침
+					
+// 					return false;
+// 				}
+// 			});			
+// 		});
+		
+		
+		
+		// 좋아요 버튼이 눌러져 있을때  클릭 : updateSQL문 실행
+// 		$('#good').click(function() {
+			
+// 			alert("good");
 
-			const frmData = $('#frm2').serialize();
-
-			$.post('heartInsert', frmData, function(data) {
-				alert("좋아요가 눌러졌습니다.")
-	
+// 			var frmData = $('#frm2').serialize();
+// 			$.post('heartUpdate', frmData, function(data) {
+// 				alert("좋아요가 취소되었습니다.");				
+// 				alert(data);
 				
-			});
-		});
+// 				if(data == 1){
+// 					$("#good").attr("src","./img/nogood.png");	
+// //					location.reload();
+					
+// 					return false;
+// 				}
+// 			});			
+// 		});
+		
 	});
+	
+	function nogood(nick, post_id, page, state){
+		if(state == 'y'){
+			alert("좋아요 취소가 눌러졌습니다.");
+		}else if(state == 'n'){
+			alert("좋아요가 눌러졌습니다.");
+		}
+		
+		location.href="heartInsert?nick="+nick+"&post_id="+post_id+"&page="+page+"&state="+state;
+		
+		return false;
+	}
+	
+// 	function good1(nick, post_id, page){
+// 		alert("좋아요가 취소되었습니다.");
+		
+// 		location.href="heartUpdate?nick="+nick+"&post_id="+post_id+"&page="+page;
+		
+// 		return false;
+// 	}
+	
+	
 </script>
 </head>
 <body>
@@ -97,22 +147,28 @@
 			</td>
 		</tr>
 	</table>
+	<!-- 댓글 처리 -->
 	<form name="frm" id="frm">
 		<input type="hidden" name="nick" value="${daily.nick}">
-		<%-- 			<input type="hidden" name="nick" value="${sessionScope.nick}">
-	 --%>
+		<%-- <input type="hidden" name="nick" value="${sessionScope.nick}"> --%>
 		<input type="hidden" name="post_id" value="${daily.post_id}">
 		댓글 :
 		<textarea rows="3" cols="50" name="re_content"></textarea>
 		<input type="button" value="확인" id="repInsert">
 	</form>
+	
+	<!-- 좋아요 처리 -->
 	<form name="frm2" id="frm2">
-		<input type="hidden" name="nick" value="${daily.nick}"> <input
-			type="hidden" name="post_id" value="${daily.post_id}"> <input
-			type="button" value="좋아요" id="heart">
-				<input type="hidden" id="like" value="${like}" >
+		<input type="hidden" name="nick" value="${daily.nick}"> 
+		<input type="hidden" name="post_id" value="${daily.post_id}"> 
 	</form>
 
+	<c:if test="${dailylike.like_check == 'n' }">  <!-- insertSQL문 실행 -->
+		<img src="./img/nogood.png" width=50 height=50 id="nogood" onclick="nogood('${daily.nick}','${daily.post_id}','${page}','n')">
+	</c:if>
+	<c:if test="${dailylike.like_check == 'y' }">	<!--  updateSQL문 실행 -->
+		<img src="./img/good.png" width=50 height=50 id="good" onclick="nogood('${daily.nick}','${daily.post_id}','${page}','y')">
+	</c:if>
 
 	<div id="slist"></div>
 	</div>

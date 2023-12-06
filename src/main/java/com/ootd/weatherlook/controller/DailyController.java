@@ -1,31 +1,39 @@
 package com.ootd.weatherlook.controller;
 
 import java.io.File;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
-import feature.RegionSTNResolver;
-import feature.RegionTemperatureResolver;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import com.ootd.weatherlook.model.Daily;
-import com.ootd.weatherlook.service.DailyService;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.Dailylike;
+import com.ootd.weatherlook.service.DailyService;
+import com.ootd.weatherlook.service.DailylikeService;
+
+import feature.RegionSTNResolver;
+import feature.RegionTemperatureResolver;
 
 @Controller
 public class DailyController {
 
 	@Autowired
 	private DailyService service;
-
+	
+	@Autowired
+	private DailylikeService dService;
+	
 	@RequestMapping("/")
 	public String main() {
 		System.out.println("DailyController.main");
@@ -120,12 +128,37 @@ public class DailyController {
 	@RequestMapping("dailycontent")
 		public String dailycontent(@RequestParam("post_id") int post_id,
 								   @RequestParam("page") String page,
+								   HttpSession session,
 								   Model model) {
 		System.out.println("DailyController.dailycontent");
 		service.updatecount(post_id);
 		Daily daily = service.getDaily(post_id);
 		String content = daily.getContent().replace("\n", "<br>");
 		
+		String nick = (String)session.getAttribute("nick");
+		Dailylike dailylike = new Dailylike();
+		dailylike.setPost_id(post_id);
+		dailylike.setNick("준혁");		
+		
+		// 좋아요 선태여부 체크
+		int like_count = service.likecount(dailylike);  //  선택 : like_count = 1
+														//  미선택 : like_count = 0
+		
+		Map map = new HashMap();
+		map.put("post_id", post_id);
+		map.put("nick", "준혁");
+		
+		List<Dailylike> list = dService.getList(map);	
+		System.out.println("좋아요 목록"+ list);
+		int result = 0;
+		if(!list.isEmpty()) {
+			Dailylike dl = list.get(0);
+			if(dl != null) {
+				model.addAttribute("dailylike",dl);
+			}
+		}		
+		
+		model.addAttribute("like_count",like_count);
 		model.addAttribute("daily",daily);
 		model.addAttribute("content",content);
 		model.addAttribute("page", page);
@@ -231,4 +264,9 @@ public class DailyController {
 		
 		return"redirect:dailylist";
 	}
+	
+	
+		
+	
+	
 }

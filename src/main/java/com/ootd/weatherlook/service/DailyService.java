@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ootd.weatherlook.dao.DailyDao;
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.Dailylike;
 
 @Service
 public class DailyService {
@@ -27,27 +28,25 @@ public class DailyService {
 		return dao.getDailyList(page);
 	}
 
-	public void updatecount(int post_id) {
-		// TODO Auto-generated method stub
-		dao.updatecount(post_id);
-	}
-
 	public Daily getDaily(int post_id) {
-		// TODO Auto-generated method stub
 		return dao.getDaily(post_id);
 	}
 
 	public int update(Daily daily) {
-		// TODO Auto-generated method stub
 		return dao.update(daily);
 	}
 
 	public int delete(int post_id) {
-		// TODO Auto-generated method stub
 		return dao.delete(post_id);
 	}
 
+	public int likecount(Dailylike dailylike) {
+		return dao.likecount(dailylike);
+	}
 
+	public void updatecount(int post_id) {
+		dao.updatecount(post_id);
+	}
 
 	
 }

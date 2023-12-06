@@ -3,13 +3,31 @@
 
 <mapper namespace="dailylikens">
 
-    <insert id="insertLike" parameterType="dailylike">
-        INSERT INTO daily_like (like_id, nick, post_id) VALUES (daily_like_seq.nextval, #{nick}, #{post_id})
-    </insert>
+	<!-- 좋아요 눌렀는지 안눌렀는지 -->
+	<select id="likecheck" resultType="int">
+		select count(*) from daily_like where post_id = #{post_id} and nick = #{nick}
+	</select>
 
-    <delete id="deleteLike" parameterType="dailylike">
-        DELETE FROM daily_like WHERE post_id = #dailylike_seq.nextval AND nick = #{nick}
-    </delete>
+    <insert id="insertLike" parameterType="dailylike">
+        INSERT INTO daily_like VALUES (daily_like_seq.nextval, #{nick}, #{post_id}, 'y')
+    </insert>
+    
+    <select id="listLike" parameterType="Map" resultType="dailylike">
+       select * from daily_like where post_id = #{post_id} and nick = #{nick} 
+    </select>
+    
+	<update id="updateLike" parameterType="dailylike">
+		update daily_like set 
+		
+		<if test='like_check == "y" '>
+			like_check = 'n'  
+		</if>
+		<if test='like_check == "n" '>
+			like_check = 'y'  
+		</if>
+		where post_id = #{post_id} and nick = #{nick} 
+		<!-- where post_id = #{post_id} and nick = #{nick} and #{like_id} -->
+	</update>
 
     <select id="selectDailyLike" resultType="int" parameterType="dailylike">
         SELECT COUNT(*) FROM daily_like WHERE post_id = #{post_id} AND nick = #{nick}
