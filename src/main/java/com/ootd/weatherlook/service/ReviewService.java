@@ -2,6 +2,8 @@ package com.ootd.weatherlook.service;
 
 import java.util.List;
 
+import com.ootd.weatherlook.model.LikeDTO;
+import com.ootd.weatherlook.model.ScrapDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -47,6 +49,27 @@ public class ReviewService {
 		return dao.reviewDelete(post_id);
 	}
 
+	public void likeInsert(LikeDTO likeDTO) {
+		dao.likeInsert(likeDTO);
+	}
 
+	public void likeDelete(int like_id) {
+		dao.likeDelete(like_id);
+	}
 
+	public LikeDTO isLike(LikeDTO likeDTO) {
+		return dao.isLike(likeDTO);
+	}
+
+	public void scrapInsert(ScrapDTO scrapDTO) {
+		dao.scrapInsert(scrapDTO);
+	}
+
+	public void scrapDelete(int scrap_id) {
+		dao.scrapDelete(scrap_id);
+	}
+
+	public ScrapDTO isScrap(ScrapDTO scrapDTO) {
+		return dao.isScrap(scrapDTO);
+	}
 }
