@@ -27,7 +27,7 @@ public class CommScrapController {
 							RedirectAttributes redirectAttributes
 							,Model model) {
 	
-		 int result= css.insert(commscrap);
+		 int result= css.commScrapInsert(commscrap);
 		 System.out.println("스크랩 클릭 성공");	 
 		//redirect
 			redirectAttributes.addAttribute("post_id", post_id);
@@ -49,7 +49,7 @@ public class CommScrapController {
 		System.out.println("page : " + page);
 		System.out.println("scrap_id : " + scrap_id);
 		
-		css.delete(scrap_id);	
+		css.commScrapDelete(scrap_id);	
 		System.out.println("삭제 완료");
 		
 		//redirect

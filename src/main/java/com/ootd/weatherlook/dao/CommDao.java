@@ -14,39 +14,39 @@ public class CommDao {
 	@Autowired
 	private SqlSession session;
 	
-	public int insert(Community comm) {
+	public int commInsert(Community comm) {
 		System.out.println(comm.getNick());
-		return session.insert("insert", comm);
+		return session.insert("commInsert", comm);
 	}
 
-	public int getCount() {
+	public int getCommCount() {
 		// TODO Auto-generated method stub
-		return session.selectOne("count");
+		return session.selectOne("getCommCount");
 	}
 
 	public List<Community> getCommList(int page) {
 		// TODO Auto-generated method stub
-		return session.selectList("list", page);
+		return session.selectList("getCommList", page);
 	}
 
-	public void updatecount(int post_id) {
+	public void commUpdateCount(int post_id) {
 		// TODO Auto-generated method stub
-		session.update("hit", post_id);
+		session.update("commUpdateCount", post_id);
 	}
 
 	public Community getCommunity(int post_id) {
 		// TODO Auto-generated method stub
-		return session.selectOne("content", post_id);
+		return session.selectOne("getCommunity", post_id);
 	}
 
-	public int update(Community comm) {
+	public int commUpdate(Community comm) {
 		// TODO Auto-generated method stub
-		return session.update("update", comm);
+		return session.update("commUpdate", comm);
 	}
 
-	public int delete(int post_id) {
+	public int commDelete(int post_id) {
 		// TODO Auto-generated method stub
-		return session.delete("delete", post_id);
+		return session.delete("commDelete", post_id);
 	}
 
 	

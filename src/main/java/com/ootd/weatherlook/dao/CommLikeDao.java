@@ -14,19 +14,19 @@ public class CommLikeDao {
 	@Autowired
 	private SqlSession lsession;
 
-	public int insert(CommunityLike commlike) {
+	public int commLikeInsert(CommunityLike commlike) {
 		// TODO Auto-generated method stub
-		return lsession.insert("linsert",commlike);
+		return lsession.insert("commLikeInsert",commlike);
 	}
 
-	public CommunityLike getLike(CommunityLike commlike) {
+	public CommunityLike getCommLike(CommunityLike commlike) {
 		// TODO Auto-generated method stub
-		return lsession.selectOne("getLike", commlike);
+		return lsession.selectOne("getCommLike", commlike);
 	}
 
-	public void likedelete(int post_id) {
+	public void commLikeDelete(int post_id) {
 		// TODO Auto-generated method stub
-		lsession.delete("likedelete",post_id);
+		lsession.delete("commLikeDelete",post_id);
 	}
 
 

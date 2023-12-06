@@ -16,19 +16,19 @@ public class CommLikeService {
 	@Autowired
 	private CommLikeDao cld;
 
-	public int insert(CommunityLike commlike) {
+	public int commLikeInsert(CommunityLike commlike) {
 		// TODO Auto-generated method stub
-		return cld.insert(commlike);
+		return cld.commLikeInsert(commlike);
 	}
 
-	public CommunityLike getLike(CommunityLike commlike) {
+	public CommunityLike getCommLike(CommunityLike commlike) {
 		// TODO Auto-generated method stub
-		return cld.getLike(commlike);
+		return cld.getCommLike(commlike);
 	}
 
-	public void likedelete(int like_id) {
+	public void commLikeDelete(int like_id) {
 		// TODO Auto-generated method stub
-		cld.likedelete(like_id);
+		cld.commLikeDelete(like_id);
 
 	}	
 

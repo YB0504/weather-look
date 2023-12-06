@@ -26,10 +26,10 @@ onclick="location.href='loginform'">
 			</tr>
 
 			<!-- 화면 출력 번호  변수 정의 -->		
-			<c:set var="num" value="${listcount-(page-1)*10}"/> 	
+			<c:set var="num" value="${listCount-(page-1)*10}"/> 	
 	
 			<!-- 반복문 시작 -->
-			<c:forEach var="b" items="${commlist}">			
+			<c:forEach var="b" items="${commList}">			
 			<tr align="center">
 				<td>					
  					<!-- 번호 출력 부분 -->	
@@ -66,7 +66,7 @@ onclick="location.href='loginform'">
 		
 <!-- 페이지 처리 -->
 <center>
-<c:if test="${listcount > 0 }">
+<c:if test="${listCount > 0 }">
 
 <!-- 1 페이지로 이동 -->
 <a href="commlist?page=1" style="text-decoration:none"> << </a>

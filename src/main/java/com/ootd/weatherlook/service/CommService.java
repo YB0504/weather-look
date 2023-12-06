@@ -14,14 +14,19 @@ public class CommService {
 	@Autowired
 	private CommDao cd;
 	
-	public int insert(Community comm) {
+	public int commInsert(Community comm) {
 		System.out.println("service");
-		return cd.insert(comm);
+		return cd.commInsert(comm);
 	}
 
-	public int getCount() {
+	public int getCommCount() {
 		// TODO Auto-generated method stub
-		return cd.getCount();
+		return cd.getCommCount();
+	}
+
+	public void commUpdateCount(int post_id) {
+		// TODO Auto-generated method stub
+		cd.commUpdateCount(post_id);
 	}
 
 	public List<Community> getCommList(int page) {
@@ -29,24 +34,20 @@ public class CommService {
 		return cd.getCommList(page);
 	}
 
-	public void updatecount(int post_id) {
-		// TODO Auto-generated method stub
-		cd.updatecount(post_id);
-	}
 
 	public Community getCommunity(int post_id) {
 		// TODO Auto-generated method stub
 		return cd.getCommunity(post_id);
 	}
 
-	public int update(Community comm) {
+	public int commUpdate(Community comm) {
 		// TODO Auto-generated method stub
-		return cd.update(comm);
+		return cd.commUpdate(comm);
 	}
 
-	public int delete(int post_id) {
+	public int commDelete(int post_id) {
 		// TODO Auto-generated method stub
-		return cd.delete(post_id);
+		return cd.commDelete(post_id);
 	}
 
 	

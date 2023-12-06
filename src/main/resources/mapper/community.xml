@@ -3,15 +3,18 @@
 
 <mapper namespace="comm">
     
-   <insert id = "insert" parameterType="comm">
+    <!-- 글 작성 -->
+   <insert id = "commInsert" parameterType="comm">
    insert into community values(community_seq.nextval,#{title},0,sysdate,#{content},#{category},#{nick})  
    </insert>
 	
-	<select id="count" resultType="int">
+	<!-- 글 개수 구해오기 -->
+	<select id="getCommCount" resultType="int">
 		select count(*) from community
 	</select>
 
-	<select id="list" parameterType="int" resultType="comm">
+	<!-- 글 목록 구해오기 -->
+	<select id="getCommList" parameterType="int" resultType="comm">
 		<![CDATA[
 		select * from (select rownum rnum, comm.* from (
 		select * from community order by post_id desc) comm)
@@ -19,45 +22,45 @@
 		]]>
 	</select>
 	
-	<update id="hit" parameterType="int">
+	<update id="commUpdateCount" parameterType="int">
 		update community set read_count = read_count + 1
 		where post_id=#{post_id}
 	</update>
 	
-	<select id="content" parameterType="int" resultType="comm">
+	<select id="getCommunity" parameterType="int" resultType="comm">
 		select * from community where post_id=#{post_id}
 	</select>
 	
-	<update id = "update" parameterType="comm">
+	<update id = "commUpdate" parameterType="comm">
 		update community set nick=#{nick}, title=#{title},
 		content=#{content},category=#{category}, reg_date=sysdate where post_id=#{post_id}
 	</update>
 	
-	<delete id="delete" parameterType="int">
+	<delete id="commDelete" parameterType="int">
 		delete from community where post_id=${post_id}
 	</delete>
 	
-	<insert id="linsert" parameterType="commlike">
+	<insert id="commLikeInsert" parameterType="commlike">
 	insert into community_like values(community_like_seq.nextval,#{post_id},#{nick})
 	</insert>
 	
-	<select id="getLike" parameterType="commlike" resultType="commlike">
+	<select id="getCommLike" parameterType="commlike" resultType="commlike">
 		select * from community_like where post_id=#{post_id} and nick=#{nick}
 	</select>
 	
-	<delete id="likedelete" parameterType="int">
+	<delete id="commLikeDelete" parameterType="int">
 		delete from community_like where like_id=#{like_id}
 	</delete>
 	
-	<select id="getscrap" parameterType="commscrap" resultType="commscrap">
+	<select id="getCommScrap" parameterType="commscrap" resultType="commscrap">
 		select * from community_scrap where post_id=#{post_id} and nick=#{nick}
 	</select>
 
-	<insert id="sinsert" parameterType="commscrap">
+	<insert id="commScrapInsert" parameterType="commscrap">
 		insert into community_scrap values(community_scrap_seq.nextval,#{post_id},#{nick})
 	</insert>
 	
-	<delete id="scrapdelete">
+	<delete id="commScrapDelete">
 		delete from community_scrap where scrap_id=#{scrap_id}
 	</delete>
 </mapper>

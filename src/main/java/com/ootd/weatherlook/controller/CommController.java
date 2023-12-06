@@ -50,7 +50,7 @@ public class CommController {
 		
 		
 		
-		int result = cs.insert(comm);
+		int result = cs.commInsert(comm);
 		
 		session.setAttribute("nick",comm.getNick());
 		if(result == 1) System.out.println("글 작성 성공");
@@ -68,10 +68,10 @@ public class CommController {
 		int startRow = (page - 1) * limit + 1;
 		int endRow = page * limit;
 		
-		int listCount = cs.getCount();
+		int listCount = cs.getCommCount();
 		System.out.println("listcount");
 		
-		List<Community> commlist = cs.getCommList(page);
+		List<Community> commList = cs.getCommList(page);
 		System.out.println("commlist");
 		
 		int pageCount = listCount/limit+((listCount%10 == 0)?0:1);
@@ -83,8 +83,8 @@ public class CommController {
 			endPage = pageCount;
 		
 		model.addAttribute("page", page);
-		model.addAttribute("listcount", listCount);
-		model.addAttribute("commlist", commlist);
+		model.addAttribute("listCount", listCount);
+		model.addAttribute("commList", commList);
 		model.addAttribute("pageCount", pageCount);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
@@ -97,15 +97,15 @@ public class CommController {
 							  @RequestParam("page") String page,
 							  HttpSession session,
 							  Model model) {
-		cs.updatecount(post_id);
+		cs.commUpdateCount(post_id);
 		System.out.println("updatecount");
+		
 		Community comm = cs.getCommunity(post_id);
 		
-		CommunityLike likeDTO = new CommunityLike();
-		
+		CommunityLike likeDTO = new CommunityLike();		
 		likeDTO.setNick((String)session.getAttribute("nick"));
 		likeDTO.setPost_id(post_id);
-		CommunityLike commlike = cls.getLike(likeDTO);
+		CommunityLike commlike = cls.getCommLike(likeDTO);
 		model.addAttribute("commlike", commlike);
 		System.out.println("컴라이크생성");
 		
@@ -113,7 +113,7 @@ public class CommController {
 		
 		scrapDTO.setNick((String)session.getAttribute("nick"));
 		scrapDTO.setPost_id(post_id);
-		CommunityScrap commscrap = css.getScrap(scrapDTO);
+		CommunityScrap commscrap = css.getCommScrap(scrapDTO);
 		model.addAttribute("commscrap", commscrap);
 		System.out.println("스크랩");
 		
@@ -144,7 +144,7 @@ public class CommController {
 							 @RequestParam("page") String page,
 							 Model model) {
 		
-		int result = cs.update(comm);
+		int result = cs.commUpdate(comm);
 		
 		model.addAttribute("result", result);
 		model.addAttribute("comm",comm);
@@ -160,7 +160,7 @@ public class CommController {
 							 @RequestParam("page") String page,
 							 Model model) {
 		
-		int result = cs.delete(comm.getPost_id());
+		int result = cs.commDelete(comm.getPost_id());
 		
 		model.addAttribute("result", result);
 		model.addAttribute("page", page);

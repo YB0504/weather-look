@@ -13,19 +13,19 @@ public class CommScrapDao {
 	@Autowired
 	private SqlSession cssession;
 
-	public int insert(CommunityScrap commscrap) {
+	public int commScrapInsert(CommunityScrap commscrap) {
 		// TODO Auto-generated method stub
-		return cssession.insert("sinsert", commscrap);
+		return cssession.insert("commScrapInsert", commscrap);
 	}
 
-	public void delete(int scrap_id) {
+	public void commScrapDelete(int scrap_id) {
 		// TODO Auto-generated method stub
-		cssession.delete("scrapdelete", scrap_id);
+		cssession.delete("commScrapDelete", scrap_id);
 	}
 
-	public CommunityScrap getScrap(CommunityScrap commscrap) {
+	public CommunityScrap getCommScrap(CommunityScrap commscrap) {
 		// TODO Auto-generated method stub
-		return cssession.selectOne("getscrap", commscrap);
+		return cssession.selectOne("getCommScrap", commscrap);
 	}
 	
 	

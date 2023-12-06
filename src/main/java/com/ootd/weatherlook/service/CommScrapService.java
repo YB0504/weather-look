@@ -12,19 +12,19 @@ public class CommScrapService {
 	@Autowired
 	private CommScrapDao csd;
 
-	public int insert(CommunityScrap commscrap) {
+	public int commScrapInsert(CommunityScrap commscrap) {
 		// TODO Auto-generated method stub
-		return csd.insert(commscrap);
+		return csd.commScrapInsert(commscrap);
 	}
 
-	public void delete(int scrap_id) {
+	public void commScrapDelete(int scrap_id) {
 		// TODO Auto-generated method stub
-		csd.delete(scrap_id);
+		csd.commScrapDelete(scrap_id);
 	}
 
-	public CommunityScrap getScrap(CommunityScrap commscrap) {
+	public CommunityScrap getCommScrap(CommunityScrap commscrap) {
 		// TODO Auto-generated method stub
-		return csd.getScrap(commscrap);
+		return csd.getCommScrap(commscrap);
 	}
 	
 }

@@ -33,7 +33,7 @@ public class CommLikeController {
 							HttpSession session
 							,Model model) {
 	
-		 cls.insert(commlike);
+		 cls.commLikeInsert(commlike);
 		 int result = 1;
 		 System.out.println("좋아요 클릭 성공");	 
 	
@@ -54,7 +54,7 @@ public class CommLikeController {
 		System.out.println("page : " + page);
 		System.out.println("like_id : " + like_id);
 		
-		cls.likedelete(like_id);	
+		cls.commLikeDelete(like_id);	
 		System.out.println("삭제 완료");
 		
 		//redirect
