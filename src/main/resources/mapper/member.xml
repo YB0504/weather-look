@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+	<!-- ID 중복검사 -->
+	<select id="idcheck" parameterType="String" resultType="member">
+		select * from member where id = #{id}
+	</select>
+	
+	<!-- NICK 중복검사 -->
+	<select id="nickcheck" parameterType="String" resultType="member">
+		select * from member where nick = #{nick}
+	</select>
+	
+	<!-- 일반회원 가입 -->
+	<insert id="insertmember" parameterType="member">
+		insert into member(nick, id, passwd, profile_image, address, phone, admin_role)
+		values(#{nick}, #{id}, #{passwd}, #{profile_image, jdbcType=VARCHAR}, #{address} ,#{phone},
+		<if test="id == 'master'">
+			'y'
+		</if>
+		<if test="id != 'master'">
+			'n'
+		</if>)
+	</insert>
+	
+	<!-- 로그인 -->
+	<select id="login" parameterType="String" resultType="member">
+		select * from member where id = #{id}
+	</select>
+
+	<!-- 카카오 가입 -->
+	<insert id="insertKakao" parameterType="member">
+		insert into member(nick, id, passwd, profile_image, address, phone, admin_role)
+		values(#{nick}, #{id}, 'kakao1234', #{profile_image, jdbcType=VARCHAR}, '서울', '010-1234-5678', 'n')
+	</insert>
+
+	<!-- 카카오 로그인 -->
+	<select id="kakaoLogin" parameterType="String" resultType="member">
+		select * from member where nick = #{nick}
+	</select>
+	
+	<!-- ID 찾기 -->	
+	<select id="idSearch" parameterType="member" resultType="member">
+		select * from member where phone = #{phone}
+	</select>
+	
+	<!-- 비밀번호 찾기 -->
+	<select id="pwSearch" parameterType="member" resultType="member">
+		select * from member where id = #{id} and phone = #{phone}
+	</select>
+	
+</mapper>

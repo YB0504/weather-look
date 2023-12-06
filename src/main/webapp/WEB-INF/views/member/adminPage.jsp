@@ -7,5 +7,8 @@
 <title>Insert title here</title>
 </head>
 <body>
+
+관리자 페이지 입니다~
+
 </body>
 </html>

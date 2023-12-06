@@ -1,8 +1,3 @@
-select * from memberVO;
+insert into member (nick, id, passwd, address, phone) values('티슈', 'tishu123@naver.com', '1234', '서울', '010-111-1111');
 
-
-insert into memberVO values('준혁', '준혁', '1234', null, '우리집', '핸드폰', 'n');
-
-delete
-from MEMBER
-where NICK = '선홍';
+delete from MEMBER where nick = '인범';
