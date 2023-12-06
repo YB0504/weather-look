@@ -2,6 +2,8 @@ package com.ootd.weatherlook.dao;
 
 import java.util.List;
 
+import com.ootd.weatherlook.model.LikeDTO;
+import com.ootd.weatherlook.model.ScrapDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -53,4 +55,27 @@ public class ReviewDao{
 		return session.delete("reviewDelete", post_id);
 	}
 
+	public void likeInsert(LikeDTO likeDTO) {
+		session.insert("likeInsert", likeDTO);
+	}
+
+	public void likeDelete(int like_id) {
+		session.delete("likeDelete", like_id);
+	}
+
+	public LikeDTO isLike(LikeDTO likeDTO) {
+		return session.selectOne("isLike", likeDTO);
+	}
+
+	public void scrapInsert(ScrapDTO scrapDTO) {
+		session.insert("scrapInsert", scrapDTO);
+	}
+
+	public void scrapDelete(int scrap_id) {
+		session.delete("scrapDelete", scrap_id);
+	}
+
+	public ScrapDTO isScrap(ScrapDTO scrapDTO) {
+		return session.selectOne("isScrap", scrapDTO);
+	}
 }
