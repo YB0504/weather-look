@@ -37,10 +37,18 @@ public class CommController {
 	
 	@Autowired
 	private CommScrapService css;
-	
+
+	@RequestMapping("/")
+	public String main() {
+		System.out.println("CommController.main");
+		return "redirect:commform";
+	}
+
 	@RequestMapping("commform")
-	public String commform() {
-		return "comm/commform";
+	public String commform(HttpSession session) {
+		System.out.println("CommController.commform");
+		session.setAttribute("nick", "준혁");
+		return "index";
 	}
 	
 	@RequestMapping("commwrite")
