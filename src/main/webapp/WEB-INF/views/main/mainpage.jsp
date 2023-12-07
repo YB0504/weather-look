@@ -14,7 +14,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-<!-- 에셋2 ========================================= -->
+<!-- 에셋 ========================================= -->
 
 <!-- Favicons -->
 <!--   <link href="assets/img/favicon.png" rel="icon">
@@ -27,27 +27,27 @@
 	rel="stylesheet">
 
 <!-- Vendor CSS Files -->
-<link href="assets2/vendor/bootstrap/css/bootstrap.min.css"
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="assets2/vendor/bootstrap-icons/bootstrap-icons.css"
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
 	rel="stylesheet">
-<link href="assets2/vendor/boxicons/css/boxicons.min.css"
+<link href="assets/vendor/boxicons/css/boxicons.min.css"
 	rel="stylesheet">
-<link href="assets2/vendor/quill/quill.snow.css" rel="stylesheet">
-<link href="assets2/vendor/quill/quill.bubble.css" rel="stylesheet">
-<link href="assets2/vendor/remixicon/remixicon.css" rel="stylesheet">
-<link href="assets2/vendor/simple-datatables/style.css" rel="stylesheet">
+<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="assets2/css/style.css" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
 
 
-<!-- ========================================= 에셋2 -->
+<!-- ========================================= 에셋 -->
 
 
 
-<link href="css/mainpage2.css" rel="stylesheet">
-
+<link href="css/mainpage.css" rel="stylesheet">
+<script src="js/weather.js"></script>
 
 </head>
 <body>
@@ -55,15 +55,9 @@
 	<%@ include file="../include/header.jsp"%>
 	<main id="main">
 
+		<!-- 날씨박스 ==============> -->
 
-
-		<!-- 게시판 이동 외 =========================== -->
-
-		<c:set var="highest" />
-		<!-- test value -->
-		<c:set var="lowest" />
-		<!-- test value -->
-
+		<!-- 기본 지역 설정 : 서울 -->
 		<c:set var="lat" value="37.5683" />
 		<c:set var="lon" value="127" />
 		<c:set var="templow" />
@@ -75,159 +69,21 @@
 				<c:forEach var="d" items="${dates }" varStatus="status">
 					<a href="#" onclick="updateLink('${d.df2}');">
 						<div id="${d.df2 }" class="day">
-							<div class="dayvalue">${d.df1}${d.df3 }</div>
-							<div class="dayvalue" id="${d.df2 }_low"></div>
+							<div class="dayvalue">${d.df1}(${d.df3 })</div>
 							<div class="dayvalue" id="${d.df2 }_high"></div>
+							<div class="dayvalue" id="${d.df2 }_low"></div>
 						</div>
 					</a>
 				</c:forEach>
 
 
-
-				<script>
-				
-			    function updateLink(dateId) {
-			        var templow = document.getElementById(dateId + '_templow').textContent.slice(0, -1);
-			        var temphigh = document.getElementById(dateId + '_temphigh').textContent.slice(0, -1);
-			        var link = 'daily?templow=' + templow + '&temphigh=' + temphigh;
-			        window.location.href = link;
-			    }
-				
-				
-			
-			$(document).ready(function(){
-		        // 페이지 로딩 완료 후 getWeather 함수 호출
-		        getWeather(35.1028, 129.0403);
-		    });
-			
-			
-			function getWeather(lat, lon){
-				const apiUrl = 'http://api.openweathermap.org/data/2.5/forecast';
-				/* const lat = '35.1028';  // 실제 위도 값으로 대체
-				const lon = '129.0403';  // 실제 경도 값으로 대체 */
-				const apiKey = '9657c91ee7eafcd506fa727097c899fa';  // 실제 API 키로 대체
-
-
-				
-				const apiUrlWithParams = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=9657c91ee7eafcd506fa727097c899fa&units=metric`;
-//				const apiUrlWithParams = `${apiUrl}?lat=${lat}&lon=${lon}&appid=${apiKey}`;
-// http://api.openweathermap.org/data/2.5/daily?lat=35.1028&lon=129.0403&appid=9657c91ee7eafcd506fa727097c899fa
-				
-				
-				fetch(apiUrlWithParams)
-				  .then(response => response.json())
-				  .then(data => {
-					  
-					
-
-			                
-				    // API 응답을 처리하는 로직을 여기에 추가
-				    console.log(data);
-				    displayWeatherInfo(data);
-				   
-				  })
-				  .catch(error => {
-				    // API 호출 중 발생한 오류 처리
-				    console.error('API 호출 중 오류:', error);
-				  });
-				}
-
-			  function displayWeatherInfo(data) {
-		            
-		            
-		            for (var i = 0; i < data.list.length; i++) {
-		  
-		                var weatherlist = data.list[i];
-
-		                var dateTimeParts = weatherlist.dt_txt.split(' '); // 날짜와 시간을 분리
-		                var date = dateTimeParts[0];
-		                var time = dateTimeParts[1];
-		                
-		                
-		                
-		                if(time === "21:00:00"){
-			                var creatediv = document.createElement('div');
-			                creatediv.classList.add('weathervalue');
-			                creatediv.setAttribute('id', date+'_templow');
-			                creatediv.setAttribute('value', weatherlist.main.temp);
-			                creatediv.textContent = weatherlist.main.temp + '℃';
-			               
-			                var templow = document.getElementById(date+'_low');
-			              
-			                if(templow){
-			                templow.appendChild(creatediv);
-			                }
-			                
-			                creatediv = document.createElement('div');
-			                creatediv.classList.add('weathervalue');
-			                creatediv.setAttribute('id', date+'_icolow');
-			                creatediv.innerHTML =   '<img src="https://openweathermap.org/img/wn/' +
-			                weatherlist.weather[0].icon.substring(0, 2) +
-			                'd@2x.png"/>';
-
-			                temphigh = document.getElementById(date+'_low');
-			              
-			                if(temphigh){
-				                temphigh.appendChild(creatediv);
-				                }
-			                
-			                
-		                }
-		                if(time === "12:00:00"){
-			                var creatediv = document.createElement('div');
-			                creatediv.classList.add('weathervalue');
-			                creatediv.setAttribute('id', date+'_temphigh');
-			                creatediv.setAttribute('value', weatherlist.main.temp);
-			                creatediv.textContent = weatherlist.main.temp + '℃';
-			               
-			                var temphigh = document.getElementById(date+'_high');
-			              
-			                if(temphigh){
-			                temphigh.appendChild(creatediv);
-			                }
-			                
-			                creatediv = document.createElement('div');
-			                creatediv.classList.add('weathervalue');
-			                creatediv.setAttribute('id', date+'_icohigh');
-			                creatediv.innerHTML =   '<img src="https://openweathermap.org/img/wn/' +
-			                weatherlist.weather[0].icon.substring(0, 2) +
-			                'd@2x.png"/>'; 
-			                temphigh = document.getElementById(date+'_high');
-			              
-			                if(temphigh){
-				                temphigh.appendChild(creatediv);
-				                }
-			                
-			                
-			                
-			                
-		                }
-/* 		                creatediv.textContent = 'Date: ' + weatherlist.dt_txt + ', Temperature: ' + weatherlist.main.temp
-		                + ', desciption: ' + weatherlist.weather[0].description + ', icon: ' + weatherlist.weather[0].icon; */
-		                
-
-		            }
-		            
-		        }
-
-		        // 페이지 로드 시 날씨 정보 표시 함수 호출
-		        window.onload = displayWeatherInfo;
-
-		    
-		        
-		        
-</script>
-
 			</div>
-
 		</div>
-		<!-- 날씨박스 -->
+		<!-- <============== 날씨박스 -->
 
 		<section>
 
-
-
-			<!-- 하위 3x3 썸네일 출력 -->
+			<!-- 3x3 썸네일 출력 ==============> -->
 
 			<div class="maincard">
 				<c:forEach var="r" items="${mainlist}" varStatus="i">
@@ -242,53 +98,59 @@
 					</div>
 				</c:forEach>
 			</div>
+			<!-- <============== 3x3 썸네일 출력 -->
 
 
+			<!-- 페이징 ==============> -->
 
-			 <nav aria-label="Page navigation example">
-				<ul class="pagination" style = "justify-content: center;">
-					<c:if test="${page > 1 }">
-						<li class="page-item">
-						<a class="page-link"
-							href="main?page=${page-1}" aria-label="Previous"><span aria-hidden="true">&laquo;</span></a></li>
+			<div style="display: flex; justify-content: center;">
+				<ul class="pagination">
+					<c:if test="${startpage > 10}">
+						<li class="page-item disabled"><a class="page-link"
+							href="main?page=${startpage - 10}" tabindex="-1"
+							aria-disabled="true">&laquo;</a></li>
 					</c:if>
 
-					<c:forEach var="a" begin="${startpage}" end="${endpage}">
-				
+					<c:forEach var="i" begin="${startpage}" end="${endpage}">
+						<c:if test="${i == page }">
+							<li class="page-item active" aria-current="page"><a
+								class="page-link" href="">${i}</a></li>
+						</c:if>
+						<c:if test="${i != page }">
 							<li class="page-item"><a class="page-link"
-								href="main?page=${a}">${a}</a></li>
+								href="main?page=${i}">${i}</a></li>
+						</c:if>
 					</c:forEach>
 
-
-					<c:if test="${page < maxpage }">
-						<li class="page-item"><a class="page-link" href="main?page=${page+1}"
-							aria-label="Next"> <span aria-hidden="true">&raquo;</span>
-						</a></li>
+					<c:if test="${endpage < maxpage}">
+						<li class="page-item"><a class="page-link"
+							href="main?page=${startpage + 10}">&raquo;</a></li>
 					</c:if>
 				</ul>
-</nav>
+			</div>
 
+			<!--  <============== 페이징 -->
 
 		</section>
 	</main>
 
 
-	<!-- 에셋2 ========================================= -->
+	<!-- 에셋 ========================================= -->
 
 	<!-- Vendor JS Files -->
-	<script src="assets2/vendor/apexcharts/apexcharts.min.js"></script>
-	<script src="assets2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="assets2/vendor/chart.js/chart.umd.js"></script>
-	<script src="assets2/vendor/echarts/echarts.min.js"></script>
-	<script src="assets2/vendor/quill/quill.min.js"></script>
-	<script src="assets2/vendor/simple-datatables/simple-datatables.js"></script>
-	<script src="assets2/vendor/tinymce/tinymce.min.js"></script>
-	<script src="assets2/vendor/php-email-form/validate.js"></script>
+	<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/vendor/chart.js/chart.umd.js"></script>
+	<script src="assets/vendor/echarts/echarts.min.js"></script>
+	<script src="assets/vendor/quill/quill.min.js"></script>
+	<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+	<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+	<script src="assets/vendor/php-email-form/validate.js"></script>
 
 	<!-- Template Main JS File -->
-	<script src="assets2/js/main.js"></script>
+	<script src="assets/js/main.js"></script>
 
-	<!-- ========================================= 에셋2 -->
+	<!-- ========================================= 에셋 -->
 
 </body>
 
