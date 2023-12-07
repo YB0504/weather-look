@@ -37,6 +37,7 @@ public class ReDailyController {
 	// 댓글 저장
 	@RequestMapping("rdInsert")
 	public String sInsert(ReDaily rb, Model model) {
+		System.out.println("댓글 작성");
 		rds.insert(rb);
 		return "redirect:rdlist?post_id="+rb.getPost_id();	 // 부모글 번호를 get방식으로 전달
 	}

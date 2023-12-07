@@ -13,7 +13,7 @@ public class RegionSTNResolver {
 		return regionMap.get(region);
 	}
 
-	public static String getRegion(double latitude, double longitude) {
+	public static String getRegion(Double latitude, Double longitude) {
 		String apiKey = "4865a8281adb66fbb6b078bde2205414";
 		String region = null;
 		String apiUrl = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?input_coord=WGS84&output_coord=WGS84&y=" + latitude + "&x=" + longitude;
