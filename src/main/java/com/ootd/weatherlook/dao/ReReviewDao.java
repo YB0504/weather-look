@@ -8,6 +8,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ootd.weatherlook.controller.ReReview;
 import com.ootd.weatherlook.model.ReReviewDTO;
+import com.ootd.weatherlook.model.ReplyReportDTO;
+import com.ootd.weatherlook.model.ReviewReportDTO;
 
 @Repository
 public class ReReviewDao {
@@ -34,4 +36,9 @@ public class ReReviewDao {
 	public void reReplyInsert(ReReviewDTO reReview) {
 		session.insert("reReplyInsert", reReview);
 	}
+
+	public void reReportInsert(ReplyReportDTO replyReport) {
+		session.insert("reReportInsert", replyReport);
+	}
+
 }

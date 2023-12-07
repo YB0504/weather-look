@@ -7,10 +7,10 @@ import org.apache.ibatis.type.Alias;
 import lombok.Data;
 
 @Data
-@Alias("reviewReport")
-public class ReviewReportDTO {
+@Alias("replyReport")
+public class ReplyReportDTO {
 	private int report_id;
 	private String reason;
-	private int post_id;
 	private Date report_date;
+    private int re_id;
 }

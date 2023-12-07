@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import com.ootd.weatherlook.controller.ReReview;
 import com.ootd.weatherlook.dao.ReReviewDao;
 import com.ootd.weatherlook.model.ReReviewDTO;
+import com.ootd.weatherlook.model.ReplyReportDTO;
+import com.ootd.weatherlook.model.ReviewReportDTO;
 
 @Service
 public class ReReviewService {
@@ -34,4 +36,9 @@ public class ReReviewService {
 	public void reReplyInsert(ReReviewDTO reReview) {
 		reDao.reReplyInsert(reReview);
 	}
+
+	public void reReportInsert(ReplyReportDTO replyReport) {
+		reDao.reReportInsert(replyReport);
+	}
+
 }

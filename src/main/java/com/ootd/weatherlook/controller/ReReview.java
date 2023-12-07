@@ -8,9 +8,12 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ootd.weatherlook.model.ReReviewDTO;
+import com.ootd.weatherlook.model.ReplyReportDTO;
 import com.ootd.weatherlook.model.ReviewDTO;
 import com.ootd.weatherlook.service.ReReviewService;
 import com.ootd.weatherlook.service.ReviewService;
@@ -82,5 +85,32 @@ public class ReReview {
 
         return "redirect:reReviewList?post_id=" + reReview.getPost_id();
     }
+	
+	// 댓글 신고
+	@RequestMapping("sendReReport")
+	public String sendReport(int re_id, Model model) throws Exception {
+		System.out.println("댓글 신고하기 폼");
+
+		model.addAttribute("re_id", re_id);
+		return "review/sendReReport";
+	}
+
+	@RequestMapping("reReportSuccess")
+	public String reportSuccess(@ModelAttribute ReplyReportDTO replyReport,
+	                            @RequestParam("re_id") int re_id, Model model) throws Exception {
+
+		System.out.println("reReportInsert");
+
+		replyReport.setRe_id(re_id);
+
+		rrs.reReportInsert(replyReport);
+
+		System.out.println("댓글 신고 완료");
+
+		model.addAttribute("report", "댓글에 대한 신고가 완료 되었습니다.");
+
+		return "review/sendReReport";
+
+	}
 	
 }

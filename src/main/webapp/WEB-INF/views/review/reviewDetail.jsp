@@ -16,13 +16,13 @@
                     location.href='likeInsert?post_id=${review.post_id}&nick=${sessionScope.nick}&page=${page}'
                 }
             });
-                $.post('reInsert', frmData, function (data) {
+/*                 $.post('reInsert', frmData, function (data) {
                     //모델어트리뷰트 어노테이션 dto객체 생성해서 값 받을 수 있다.
                     $('#slist').html(data);	//새로 달린 댓글을 받아와서 slist 출력
                  //   reReviewForm.re_content.value = '';
                     $("#re_content").val("").focus();
                     
-                });
+                }); */
             $('#heart_fill').click(function() {
                 var heart = confirm("추천을 취소하시겠습니까?");
                 if(heart){
@@ -44,6 +44,42 @@
                 }
             });
         });
+	</script>
+	<script>
+          $(function () {
+
+                $('#slist').load('reReviewList?post_id=${review.post_id}')
+
+                $('#repInsert').click(function () {
+                    if (!reReviewForm.re_content.value) {
+                        alert('댓글을 입력 하세요.');
+                        reReviewForm.re_content.focus();
+                        return false;
+                    }
+                    var frmData = $('form').serialize();
+
+                    $.post('reInsert', frmData, function (data) {
+                        //모델어트리뷰트 어노테이션 dto객체 생성해서 값 받을 수 있다.
+                        $('#slist').html(data);	//새로 달린 댓글을 받아와서 slist 출력
+                        reReviewForm.re_content.value = '';
+                    });
+                });
+            });
+            
+            function delcheck() {
+
+                var result = confirm("정말 삭제하시겠습니까?");
+                if (result) {
+                    location.href = 'reviewDelete?post_id=${review.post_id}&page=${page}'
+
+                    return false;
+                }
+            }
+            
+        	// 신고 팝업 열기
+       		function openReportPopup(postid) {
+        		window.open('sendReport?post_id=' + postid, '신고하기', 'width=450,height=500');
+        	}
 	</script>
 </head>
 <body>

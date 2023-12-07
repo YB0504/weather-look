@@ -32,9 +32,9 @@
 <script type="text/javascript">
 
 	$(function() {
-		$('.edit1').click(function() { // 클래스값이 edit1으로 되어있는 값을 구해와라(수정버튼)
-			var id  = $(this).attr('id');  // rno(this는 여러개수정버튼 중에 사용자가 선택한 수정버튼, id변수에 저장),id=번호값
-			var txt = $('#td_'+id).text(); // replytext
+		$('.edit1').click(function() {
+			var id  = $(this).attr('id');
+			var txt = $('#td_'+id).text();
 			$('#td_'+id).html("<textarea rows='3' cols='30' id='tt_"+id+"'>"+txt
 				+"</textarea>");
 			$('#btn_'+id).html(
@@ -63,11 +63,12 @@
 		});
 	}
 	
+	// 댓글의 답글버튼 클릭 시
     $('.reply').click(function() {
         var reId = $(this).attr('id');
         var $replyForm = $('#replyForm_'+reId);
 
-        if ($replyForm.length == 0) {
+        if ($replyForm.length === 0) {
             var formHtml = '<tr class="reply-form" id="replyForm_'+reId+'">';
             formHtml += '<td colspan="4">';
             formHtml += '<div>';
@@ -81,8 +82,10 @@
             formHtml += '</tr>';
 
             $(this).closest('tr').after(formHtml);
+            $('#replyForm_'+reId+' input[name="re_content"]').focus();
         } else {
             $replyForm.toggle();
+            $('#replyForm_'+reId+' input[name="re_content"]').focus();
         }
     });
     
@@ -115,10 +118,12 @@
             }
         });
     }
-/* 	// 신고 팝업 열기
-	function openReportPopup(reid) {
-		window.open('sendReport?re_id=' + reid, '신고하기', 'width=450,height=500');
-	} */
+    
+    // 신고 팝업 열기
+	function openReReportPopup(reid) {
+		window.open('sendReReport?re_id=' + reid, '신고하기', 'width=450,height=500');
+	}
+    
 </script>
 </head>
 <body>
@@ -145,7 +150,7 @@
 							<input type="button" value="삭제"	 onclick="del(${rb.re_id},${rb.post_id})">
 						</c:if>
 						<c:if test="${rb.nick ne sessionScope.nick }">
-							<input type="button" value="신고" onclick="openReportPopup(${rb.re_id}">
+							<input type="button" value="신고" onclick="openReReportPopup(${rb.re_id})">
 						</c:if>
 					</td>
 				</tr>
