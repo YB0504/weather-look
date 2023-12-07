@@ -35,7 +35,7 @@
 	</insert>
 	
 	<update id="reviewUpdate" parameterType="review">
-		update review set title=#{title}, content=#{content}, review_file=#{review_file, jdbcType=VARCHAR}, reg_date=sysdate
+		update review set title=#{title}, content=#{content}, review_file=#{review_file, jdbcType=VARCHAR}, reg_date=sysdate, ITEM_TYPE=#{item_type}
 		where post_id=#{post_id}
 	</update>
 

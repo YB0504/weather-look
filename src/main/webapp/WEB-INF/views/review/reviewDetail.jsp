@@ -1,143 +1,190 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ include file="header.jsp" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>상세 페이지</title>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+	<title>Components / Cards - NiceAdmin Bootstrap Template</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
+
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+
+	<!-- Google Fonts -->
+	<link href="https://fonts.gstatic.com" rel="preconnect">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	      rel="stylesheet">
+
+	<!-- Vendor CSS Files -->
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+	<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+	<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+	<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+	<!-- Template Main CSS File -->
+	<link href="assets/css/style.css" rel="stylesheet">
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 	<script>
-        $(function(){
-            $('#heart').click(function() {
+        $(function () {
+            $('#slist').load('crlist?post_id=${comm.post_id}')
+
+            $('#heart').click(function () {
                 var heart = confirm("추천 하시겠습니까?");
                 if(heart){
                     location.href='likeInsert?post_id=${review.post_id}&nick=${sessionScope.nick}&page=${page}'
                 }
             });
-/*                 $.post('reInsert', frmData, function (data) {
-                    //모델어트리뷰트 어노테이션 dto객체 생성해서 값 받을 수 있다.
-                    $('#slist').html(data);	//새로 달린 댓글을 받아와서 slist 출력
-                 //   reReviewForm.re_content.value = '';
-                    $("#re_content").val("").focus();
-                    
-                }); */
-            $('#heart_fill').click(function() {
-                var heart = confirm("추천을 취소하시겠습니까?");
-                if(heart){
+
+            $('#heart-fill').click(function () {
+                var heartfill = confirm("추천을 취소하시겠습니까?");
+                if(heartfill){
                     location.href='likeDelete?post_id=${review.post_id}&page=${page}&like_id=${like.like_id}'
                 }
             });
 
-            $('#scrap').click(function() {
-                var heart = confirm("스크랩 하시겠습니까?");
-                if(heart){
+            $('#scrap').click(function () {
+                var scrap = confirm("스크랩 하시겠습니까?");
+                if(scrap){
                     location.href='scrapInsert?post_id=${review.post_id}&nick=${sessionScope.nick}&page=${page}'
                 }
             });
 
-            $('#scrap_fill').click(function() {
-                var heart = confirm("스크랩을 취소하시겠습니까?");
-                if(heart){
+            $('#scrap-fill').click(function () {
+                var scrapfill = confirm("스크랩을 취소하시겠습니까?");
+                if(scrapfill){
                     location.href='scrapDelete?post_id=${review.post_id}&page=${page}&scrap_id=${scrap.scrap_id}'
                 }
             });
-        });
-	</script>
-	<script>
-          $(function () {
 
-                $('#slist').load('reReviewList?post_id=${review.post_id}')
+            $('#slist').load('reReviewList?post_id=${review.post_id}')
 
-                $('#repInsert').click(function () {
-                    if (!reReviewForm.re_content.value) {
-                        alert('댓글을 입력 하세요.');
-                        reReviewForm.re_content.focus();
-                        return false;
-                    }
-                    var frmData = $('form').serialize();
-
-                    $.post('reInsert', frmData, function (data) {
-                        //모델어트리뷰트 어노테이션 dto객체 생성해서 값 받을 수 있다.
-                        $('#slist').html(data);	//새로 달린 댓글을 받아와서 slist 출력
-                        reReviewForm.re_content.value = '';
-                    });
-                });
-            });
-            
-            function delcheck() {
-
-                var result = confirm("정말 삭제하시겠습니까?");
-                if (result) {
-                    location.href = 'reviewDelete?post_id=${review.post_id}&page=${page}'
-
+            $('#repInsert').click(function () {
+                if (!reReviewForm.re_content.value) {
+                    alert('댓글을 입력 하세요.');
+                    reReviewForm.re_content.focus();
                     return false;
                 }
+                var frmData = $('form').serialize();
+
+                $.post('reInsert', frmData, function (data) {
+                    $('#slist').html(data);
+                    reReviewForm.re_content.value = '';
+                });
+            });
+        });
+
+        function delcheck() {
+            var result = confirm("정말 삭제하시겠습니까?");
+            if (result) {
+                location.href = 'reviewDelete?post_id=${review.post_id}&page=${page}'
+
+                return false;
             }
-            
-        	// 신고 팝업 열기
-       		function openReportPopup(postid) {
-        		window.open('sendReport?post_id=' + postid, '신고하기', 'width=450,height=500');
-        	}
+        }
+
+        // 신고 팝업 열기
+        function openReportPopup(postid) {
+            window.open('sendReport?post_id=' + postid, '신고하기', 'width=450,height=500');
+        }
 	</script>
 </head>
+
 <body>
-<div align="center">
-<table border=1 width=400>
-	<caption>상세 페이지</caption>
-	<tr>
-		<td>작성자</td>
-		<td>${review.nick }</td>
-	</tr>
-	<tr>
-		<td>제목</td>
-		<td>${review.title }</td>
-	</tr>
-	<tr>
-		<td>좋아요</td>
-		<td>
-			<c:if test="${empty like}">
-				<i id="heart" class="bi bi-heart"></i>
-			</c:if>
-			<c:if test="${not empty like}">
-				<i id="heart_fill" class="bi bi-heart-fill" style="color: red"></i>
-			</c:if>
-		</td>
-	</tr>
-	<tr>
-		<td>스크랩</td>
-		<td>
-			<c:if test="${empty scrap}">
-				<i id="scrap" class="bi bi-bookmark"></i>
-			</c:if>
-			<c:if test="${not empty scrap}">
-				<i id="scrap_fill" class="bi bi-bookmark-fill" style="color: dodgerblue"></i>
-			</c:if>
-		</td>
-	</tr>
-	<tr>
-		<td colspan=2 align=center>
-			<input type="button" value="목록"
-			       onClick="location.href='reviewList?page=${page}'">
-		<c:if test="${not empty sessionScope.nick and sessionScope.nick eq review.nick}">
-			<input type="button" value="수정"
-			       onClick="location.href='reviewUpdateForm?post_id=${review.post_id}&page=${page}'">
-			<input type="button" value="삭제" onclick="delcheck()">
-		</c:if>
-		<c:if test="${not empty sessionScope.nick and sessionScope.nick ne review.nick}">
-			<input type="button" value="신고" onclick="openReportPopup(${review.post_id})">
-		</c:if>
-		</td>
-	</tr>
-</table><br>
-<form name="reReviewForm" id="reReviewForm">
-	<input type="hidden" name="nick" value="${sessionScope.nick}">
-	<input type="hidden" name="post_id" value="${review.post_id}"> 댓글 :
-	<textarea rows="3" cols="50" name="re_content" id="re_content"></textarea>
-	<input type="button" value="확인" id="repInsert">
-</form>
-	<div id="slist"></div>
-</div>
+
+<jsp:include page="../include/header.jsp"/>
+
+<main id="main" class="main">
+	<section class="section container">
+		<div class="row align-items-top col-8" style="margin: 0 auto">
+			<div class="pagetitle">
+				<h1><a href="reviewList">Review</a></h1>
+				<nav>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item">${review.item_type}</li>
+					</ol>
+				</nav>
+			</div>
+			<div class="card">
+				<div class="d-flex justify-content-between align-items-center">
+					<h1 class="card-title ml-auto">${review.title}</h1>
+					<c:if test="${review.nick eq sessionScope.nick}">
+						<span class="mr-auto">
+							<a style="color: #1a1d20" class="btn btn-link edit1" onClick="location.href='reviewUpdateForm?post_id=${review.post_id}&page=${page}'">수정</a>
+							<a style="color: #1a1d20" class="btn btn-link" onclick="delcheck()">삭제</a>
+						</span>
+					</c:if>
+				</div>
+				<div class="d-flex justify-content-between align-items-center" style="margin-left: 20px; color: #2c0b0e">
+					<span class="ml-auto">${review.nick}</span>
+					<span class="mr-auto"><fmt:formatDate value="${review.reg_date }" pattern="yyyy-MM-dd"/> | 조회수 ${review.read_count}</span>
+				</div>
+				<hr>
+				<div class="card-body" style="min-height: 500px">
+					<img src="upload/${review.review_file}" style="width: 100%; margin: 0 auto">
+					<pre style="margin-top: 20px">${review.content}</pre>
+				</div>
+				<!--좋아요, 스크랩, 신고-->
+				<div class="d-flex justify-content-end align-items-center" style="padding: 10px; color: #2c0b0e">
+					<c:if test="${not empty like}">
+						<span class="mr-auto">
+							<i class="bi bi-heart-fill" id="heart-fill" style="color : #FF0000; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					</c:if>
+					<c:if test="${empty like}">
+						<span class="mr-auto">
+							<i class="bi bi-heart" id="heart" style="color : #FF0000; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					</c:if>
+					<c:if test="${not empty scrap}">
+						<span class="mr-auto">
+							<i class="bi bi-bookmark-fill" id="scrap-fill" style="color : #3B5998; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					</c:if>
+					<c:if test="${empty scrap}">
+						<span class="mr-auto">
+							<i class="bi bi-bookmark" id="scrap" style="color : #3B5998; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					</c:if>
+					<i class="bi bi-exclamation-circle" style="font-size: 35px; color: #1a1d20"></i>
+				</div>
+			</div>
+		</div>
+
+		<!--댓글-->
+		<div class="col-md-8 offset-md-1 col-lg-8 offset-lg-1" style="margin: 0 auto">
+			<div class="title-box-d">
+				<h3 class="title-d">Comments</h3>
+			</div>
+			<form name="reReviewForm" id="reReviewForm" class="container mt-1 mb-5" style="padding: 0">
+				<input type="hidden" name="nick" value="${sessionScope.nick}">
+				<input type="hidden" name="post_id" value="${review.post_id}">
+				<div class="row">
+					<div class="col-md-11 mb-2">
+						<textarea class="form-control" style="height: 50px;" name="re_content"></textarea>
+					</div>
+					<div class="col-md-1 mb-2" style="padding: 0">
+						<button type="button" class="btn btn-primary btn-block" style=" width: 60px; height: 50px; font-size: 17px" id="repInsert">확인</button>
+					</div>
+				</div>
+			</form>
+			<div id="slist"></div>
+		</div>
+	</section>
+
+</main><!-- End #main -->
+
+<jsp:include page="../include/footer.jsp"/>
+
 </body>
+
 </html>
