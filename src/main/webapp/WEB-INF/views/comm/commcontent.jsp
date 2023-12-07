@@ -1,189 +1,146 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>상세 페이지</title>
- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-<script>
-function delcheck(){
-	var result = confirm("정말 삭제하시겠습니까?");
-	if(result){
-		location.href='commdelete?post_id=${comm.post_id}&page=${page}'	
-	
-		return false;
-	}
-	
-}
-function delfail(){
-	alert("삭제 권한이 없습니다.");
-}
-	
-</script>
+	<meta charset="utf-8">
+	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-<script>
-$(function(){
-	
-	$('#slist').load('crlist?post_id=${comm.post_id}')
-	
-	$('#repInsert').click(function(){
-		if(!frm.re_content.value){
-			alert('댓글을 입력하세요.');
-			frm.re_content.focus();
-			return false;
-		}
-		var frmData = $('form').serialize();
-		
-		$.post('crInsert', frmData, function(data){
-			
-			$('#slist').html(data);
-			frm.re_content.value = '';
-		});
-	});
-});
-</script>
-<script>
-$(function(){
-	
-  $('#heart').click(function() {
-  var heart = confirm("추천 하시겠습니까?");
-  if(heart)  
-		location.href='commlikeinsert?post_id=${comm.post_id}&nick=${sessionScope.nick}&page=${page}'  
-  });
-});
-</script>
-<script>
-$(function(){
-	
-	$('#heart-fill').click(function(){
-		var heartfill = confirm("추천을 취소하시겠습니까?");
-		if(heartfill)
-			location.href = 'commlikedelete?post_id=${commlike.post_id}&like_id=${commlike.like_id}&page=${page}'
-	});
-});
-</script>
- <script>
-$(function(){
-	
-  $('#scrap').click(function() {
-  var heart = confirm("스크랩 하시겠습니까?");
-  if(heart)  
-		location.href='commscrapinsert?post_id=${comm.post_id}&nick=${sessionScope.nick}&page=${page}'  
-  });
-});
-</script>
-<script>
-$(function(){
-	
-	$('#scrap-fill').click(function(){
-		var heartfill = confirm("스크랩을 취소하시겠습니까?");
-		if(heartfill)
-			location.href = 'commscrapdelete?post_id=${commscrap.post_id}&scrap_id=${commscrap.scrap_id}&page=${page}'
-	});
-});
-</script>
-<script>
-	function updatebutton(){
-		alert("수정 권한이 없습니다");
-	}
+	<title>Components / Cards - NiceAdmin Bootstrap Template</title>
+	<meta content="" name="description">
+	<meta content="" name="keywords">
 
-</script> 
+	<!-- Favicons -->
+	<link href="assets/img/favicon.png" rel="icon">
+	<link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+	<!-- Google Fonts -->
+	<link href="https://fonts.gstatic.com" rel="preconnect">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	      rel="stylesheet">
+
+	<!-- Vendor CSS Files -->
+	<link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+	<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+	<link href="assets/vendor/boxicons/css/boxicons.min.css" rel="stylesheet">
+	<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+	<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+	<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+	<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+	<!-- Template Main CSS File -->
+	<link href="assets/css/style.css" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="js/commcontent.js"></script>
+	<script>
+        $(function () {
+            $('#slist').load('crlist?post_id=${comm.post_id}')
+
+            $('#heart').click(function () {
+                var heart = confirm("추천 하시겠습니까?");
+                if (heart) location.href = 'commlikeinsert?post_id=${comm.post_id}&nick=${sessionScope.nick}&page=${page}'
+            });
+
+            $('#heart-fill').click(function () {
+                var heartfill = confirm("추천을 취소하시겠습니까?");
+                if (heartfill) location.href = 'commlikedelete?post_id=${commlike.post_id}&like_id=${commlike.like_id}&page=${page}'
+            });
+
+            $('#scrap').click(function () {
+                var heart = confirm("스크랩 하시겠습니까?");
+                if (heart) location.href = 'commscrapinsert?post_id=${comm.post_id}&nick=${sessionScope.nick}&page=${page}'
+            });
+
+            $('#scrap-fill').click(function () {
+                var heartfill = confirm("스크랩을 취소하시겠습니까?");
+                if (heartfill) location.href = 'commscrapdelete?post_id=${commscrap.post_id}&scrap_id=${commscrap.scrap_id}&page=${page}'
+            });
+        });
+	</script>
 </head>
+
 <body>
 
-<table border = 1 width = 400  align = "center">
-		<caption>게시글 상세정보</caption>
-				<tr>
-				<td>머리말</td>
-				<td>
-				<c:if test="${comm.category == 'question' }">질문</c:if>
-				<c:if test="${comm.category == 'talk' }">수다</c:if>
-				</td>
-			</tr>
-			<tr>
-				<td>제목</td>
-				<td>${comm.title}</td>
-			</tr>
-			<tr>
-				<td>작성자</td>
-				<td>${comm.nick}</td>
-			</tr>
-			<tr>
-				<td>조회수</td>
-				<td>${comm.read_count}</td>
-			</tr>			
-			<tr>
-				<td>날짜</td>
-				<td>
-				<fmt:formatDate value="${comm.reg_date }"
-					pattern = "yyyy-MM-dd HH:mm:ss"/>
-				</td>
-			</tr>
-			<tr>
-				<td>내용</td>
-				<td><pre>${comm.content}</pre></td>
-			</tr>
-			<tr>
-			<td colspan =2 align = center>
-			<input type="button" value="목록"
-onClick="location.href='commlist?page=${page}'"	>
- 
- <c:choose>
- 	<c:when test="${sessionScope.nick == comm.nick}">
-			<input type="button" value="수정"
-onClick="location.href='commupdateform?post_id=${comm.post_id}&page=${page}'">
- 	</c:when>
- 	<c:otherwise>
-	<input type="button" value="수정"
-onclick="updatebutton()">
-		
- 	</c:otherwise>
- </c:choose>
- 
- 
- <c:choose>
- <c:when test="${sessionScope.nick == comm.nick }">
-			<input type="button" value="삭제" onClick="delcheck()"> 				
- </c:when>
- <c:otherwise>
-			<input type="button" value="삭제" onClick="delfail()"> 				
- </c:otherwise>
- </c:choose>		 
-</td>
-</tr>
-	</table><p>   
-	<div>
- 	session : ${sessionScope.nick }<br>
- 	like_id : ${commlike.like_id }
- </div>
-  <div align="center">
-	<c:if test="${not empty commlike}">
-		<i class="bi bi-heart-fill" style = "color : red" id="heart-fill"></i>	
-	</c:if>      
-	<c:if test="${empty commlike}">
- 	<i class="bi bi-heart" id="heart" ></i>	 	
- 	</c:if>
-	<c:if test="${not empty commscrap}">
-	<i class="bi bi-bookmark-fill" id = "scrap-fill" style = "color : blue"></i> 
-	</c:if>
-	<c:if test="${empty commscrap}">	
-	<i class="bi bi-bookmark" id = "scrap" ></i> 
-	</c:if>
-	
-</div>
-		<div align = "center">
-		<form name="frm" id="frm">
-			<input type="hidden" name="nick" value="${sessionScope.nick}">
-			<input type="hidden" name="post_id" value="${comm.post_id}"> 댓글 :
-			<textarea rows="3" cols="50" name="re_content"></textarea>
-			<input type="button" value="확인" id="repInsert">
-		</form>
-		<div id = "slist"></div>
-	</div>
+<jsp:include page="../include/header.jsp"/>
+
+<main id="main" class="main">
+	<section class="section container">
+		<div class="row align-items-top col-8" style="margin: 0 auto">
+			<div class="pagetitle">
+				<h1>Community</h1>
+				<nav>
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item">${comm.category}</li>
+					</ol>
+				</nav>
+			</div>
+			<div class="card">
+				<div>
+					<h1 class="card-title">${comm.title}</h1>
+				</div>
+				<div class="d-flex justify-content-between align-items-center" style="margin-left: 20px; color: #2c0b0e">
+					<span class="ml-auto">${comm.nick}</span>
+					<span class="mr-auto"><fmt:formatDate value="${comm.reg_date }" pattern="yyyy-MM-dd"/> | 조회수 ${comm.read_count}</span>
+				</div>
+				<hr>
+				<div class="card-body" style="min-height: 500px">
+					<pre>${comm.content}</pre>
+				</div>
+				<!--좋아요, 스크랩, 신고-->
+				<div class="d-flex justify-content-end align-items-center" style="padding: 10px; color: #2c0b0e">
+					<c:if test="${not empty commlike}">
+						<span class="mr-auto">
+							<i class="bi bi-heart-fill" id="heart-fill" style="color : #FF0000; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					</c:if>
+					<c:if test="${empty commlike}">
+						<span class="mr-auto">
+							<i class="bi bi-heart" id="heart" style="color : #FF0000; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					</c:if>
+					<c:if test="${not empty commscrap}">
+						<span class="mr-auto">
+							<i class="bi bi-bookmark-fill" id="scrap-fill" style="color : #3B5998; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					</c:if>
+					<c:if test="${empty commscrap}">
+						<span class="mr-auto">
+							<i class="bi bi-bookmark" id="scrap" style="color : #3B5998; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
+						</span>
+					</c:if>
+					<i class="bi bi-exclamation-circle" style="font-size: 35px; color: #1a1d20"></i>
+				</div>
+			</div>
+		</div>
+
+		<!--댓글-->
+		<div class="col-md-8 offset-md-1 col-lg-8 offset-lg-1" style="margin: 0 auto">
+			<div class="title-box-d">
+				<h3 class="title-d">Comments</h3>
+			</div>
+			<form name="frm" id="frm" class="container mt-1 mb-5" style="padding: 0">
+				<input type="hidden" name="nick" value="${sessionScope.nick}">
+				<input type="hidden" name="post_id" value="${comm.post_id}">
+				<div class="row">
+					<div class="col-md-11 mb-2">
+						<textarea class="form-control" style="height: 50px;" name="re_content"></textarea>
+					</div>
+					<div class="col-md-1 mb-2" style="padding: 0">
+						<button type="button" class="btn btn-primary btn-block" style=" width: 60px; height: 50px; font-size: 17px" id="repInsert">확인</button>
+					</div>
+				</div>
+			</form>
+			<div id="slist"></div>
+		</div>
+	</section>
+
+</main><!-- End #main -->
+
+<jsp:include page="../include/footer.jsp"/>
+
 </body>
+
 </html>

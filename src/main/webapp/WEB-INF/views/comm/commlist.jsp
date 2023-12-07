@@ -47,14 +47,10 @@
 
 <!-- ======= Main ======= -->
 <main id="main" class="main">
-
-	<div class="pagetitle" style="margin-bottom: 30px">
-		<h1>활동내역</h1>
-		<nav>
-			<ol class="breadcrumb">
-				<li class="breadcrumb-item"><a href="index.html">좋아요</a></li>
-			</ol>
-		</nav>
+	<div class="pagetitle"
+	     style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+		<h1 style="margin: 0;">Community</h1>
+		<a href="commform" style="text-decoration: none;"><i class="bi bi-pencil-fill"></i>&nbsp;글쓰기</a>
 	</div><!-- End Page Title -->
 
 	<section class="section dashboard">
@@ -67,22 +63,22 @@
 				<th class="col-md-1">날짜</th>
 				<th class="col-md-1">조회수</th>
 				</thead>
-				<c:if test="${empty commlist}">
+				<c:if test="${empty commList}">
 			</table>
 			<br>
-			좋아요한 글이 없습니다
+			게시판에 글이 없습니다
 			</c:if>
-			<c:if test="${not empty commlist}">
+			<c:if test="${not empty commList}">
 				<c:set var="num" value="${listCount-(page-1)*10}"/>
 				<tbody>
-				<c:forEach var="comm" items="${commlist}">
+				<c:forEach var="comm" items="${commList}">
 					<tr>
 						<td>
 							<c:out value="${num}"/>
 							<c:set var="num" value="${num-1}"/>
 						</td>
 						<td>
-							<a href="commcontent?post_id=${b.post_id}&page=${page}">${comm.title}</a>
+							<a href="commcontent?post_id=${comm.post_id}&page=${page}">${comm.title}</a>
 						</td>
 						<td>${comm.nick}</td>
 						<td>
@@ -96,35 +92,36 @@
 				</table>
 
 				<%--paging--%>
-				<!-- 페이지 처리 -->
-				<center>
-					<!-- 1 페이지로 이동 -->
-					<a href="commlist?page=1" style="text-decoration:none"> << </a>
-
-					<!-- 이전 블럭으로 이동 -->
-					<c:if test="${startPage > 10}">
-						<a href="commlist?page=${startPage - 10}">[이전]</a>
-					</c:if>
-
-					<!-- 각 블력에 10개의 페이지 출력 -->
-					<c:forEach var="i" begin="${startPage}" end="${endPage}">
-						<c:if test="${i == page }"> <!-- 현재 페이지 -->
-							[${i}]
+				<div style="display: flex; justify-content: center;">
+					<ul class="pagination">
+						<!-- 이전 블럭으로 이동 -->
+						<c:if test="${startPage > 10}">
+							<li class="page-item disabled">
+								<a class="page-link" href="commlist?page=${startPage - 10}" tabindex="-1" aria-disabled="true">&laquo;</a>
+							</li>
 						</c:if>
-						<c:if test="${i != page }"> <!-- 현재 페이지가 아닌경우 -->
-							<a href="commlist?page=${i}">[${i}]</a>
+
+						<!-- 각 블럭에 10개의 페이지 출력 -->
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<c:if test="${i == page }"> <!-- 현재 페이지 -->
+								<li class="page-item active" aria-current="page">
+									<a class="page-link" href="">${i}</a>
+								</li>
+							</c:if>
+							<c:if test="${i != page }"> <!-- 현재 페이지가 아닌 경우 -->
+								<li class="page-item"><a class="page-link" href="commlist?page=${i}">${i}</a></li>
+							</c:if>
+						</c:forEach>
+
+						<!-- 다음 블럭으로 이동 -->
+						<c:if test="${endPage < pageCount}">
+							<li class="page-item">
+								<a class="page-link" href="commlist?page=${startPage + 10}">&raquo;</a>
+							</li>
 						</c:if>
-					</c:forEach>
+					</ul>
+				</div>
 
-					<!-- 다음 블럭으로 이동 -->
-					<c:if test="${endPage < pageCount}">
-						<a href="commlist?page=${startPage + 10}">[다음]</a>
-					</c:if>
-
-					<!-- 마지막 페이지로 이동 -->
-					<a href="commlist?page=${pageCount}" style="text-decoration:none"> >> </a>
-
-				</center>
 			</c:if>
 		</div>
 	</section>

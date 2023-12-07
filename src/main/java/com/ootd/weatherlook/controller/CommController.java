@@ -48,7 +48,7 @@ public class CommController {
 	public String commform(HttpSession session) {
 		System.out.println("CommController.commform");
 		session.setAttribute("nick", "준혁");
-		return "index";
+		return "comm/commform";
 	}
 	
 	@RequestMapping("commwrite")

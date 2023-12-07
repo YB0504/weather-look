@@ -122,7 +122,7 @@
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link collapsed" href="#">
+			<a class="nav-link collapsed" href="commlist">
 				<i class="bi bi-chat-left-text"></i>
 				<span>커뮤니티</span>
 			</a>
