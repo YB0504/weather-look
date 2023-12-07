@@ -94,10 +94,15 @@ public class DailyController {
 	}
 	
 	@RequestMapping("dailylist")
-	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "templow", required = false) Double templow,
+			@RequestParam(value = "temphigh", required = false) Double temphigh,
+			@RequestParam(value = "temp", required = false) Double temp,
+			Model model) {
+
 		System.out.println("DailyController.dailylist");
 
-		int limit = 10;
+		int limit = 9;
 		int startRow = (page - 1) * limit + 1;
 		int endRow = page * limit;
 		
@@ -107,10 +112,10 @@ public class DailyController {
 		List<Daily> dailyList = service.getDailylist(page);
 		System.out.println("dailyList:"+ dailyList);
 	
-		int pageCount = listCount/limit+((listCount%10 == 0)?0:1);
+		int pageCount = listCount/limit+((listCount%limit == 0)?0:1);
 		
-		int startPage = ((page-1)/10) * limit + 1;
-		int endPage = startPage + 10 - 1;
+		int startPage = ((page-1)/limit) * limit + 1;
+		int endPage = startPage + limit - 1;
 		
 		if(endPage > pageCount)
 			endPage = pageCount;
