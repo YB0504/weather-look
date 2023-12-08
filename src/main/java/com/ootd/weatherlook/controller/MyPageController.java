@@ -19,12 +19,6 @@ import java.util.UUID;
 public class MyPageController {
 	private final MyPageService myPageService;
 
-	@RequestMapping("/")
-	String main() {
-		System.out.println("MyPageController.main");
-		return "redirect:/myPage";
-	}
-
 	@RequestMapping("/myPage")
 	String myPage(Model model, HttpSession session) {
 		System.out.println("MyPageController.myPage");

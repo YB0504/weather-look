@@ -213,7 +213,7 @@ public class LoginController {
 				
 				System.out.println("로그인 성공");
 				
-				return "member/main";
+				return "redirect:commlist";
 				
 			} else {	// 비밀번호 불일치 
 				

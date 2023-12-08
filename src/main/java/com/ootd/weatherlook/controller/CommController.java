@@ -31,12 +31,6 @@ public class CommController {
 	@Autowired
 	private CommScrapService css;
 
-	@RequestMapping("/")
-	public String main() {
-		System.out.println("CommController.main");
-		return "redirect:commform";
-	}
-
 	@RequestMapping("commform")
 	public String commform(HttpSession session) {
 		System.out.println("CommController.commform");
@@ -48,9 +42,7 @@ public class CommController {
 	public String commwrite(@ModelAttribute Community comm,
 							HttpSession session,
 							Model model) {
-		
-		
-		
+
 		int result = cs.commInsert(comm);
 		
 		session.setAttribute("nick",comm.getNick());

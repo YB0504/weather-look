@@ -30,12 +30,6 @@ public class Review {
 	@Autowired
 	private ReviewService service;
 
-	@RequestMapping("/")
-	String main() {
-		System.out.println("review Controller In");
-		return "redirect:review";
-	}
-
 	@RequestMapping("review")
 	String reviewMain(Model model, HttpSession session) {
 		System.out.println("Session Setting In");

@@ -1,4 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" language="java" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -176,5 +178,15 @@
 				<span>회원탈퇴</span>
 			</a>
 		</li>
+
+		<c:if test="${sessionScope.nick eq 'master'}">
+			<li class="nav-heading" style="margin-top: 40px">Admin</li>
+			<li class="nav-item">
+				<a class="nav-link collapsed" href="report">
+					<i class="bi bi-person-dash"></i>
+					<span>관리자 페이지</span>
+				</a>
+			</li>
+		</c:if>
 	</ul>
 </aside><!-- End Sidebar-->
