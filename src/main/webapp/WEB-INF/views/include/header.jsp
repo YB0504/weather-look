@@ -43,7 +43,6 @@
 					<li>
 						<hr class="dropdown-divider">
 					</li>
-<<<<<<< HEAD
 
 					<li>
 						<a class="dropdown-item d-flex align-items-center" href="users-profile.html">
@@ -180,7 +179,6 @@
 				<span>회원탈퇴</span>
 			</a>
 		</li>
-
 		<c:if test="${sessionScope.nick eq 'master'}">
 			<li class="nav-heading" style="margin-top: 40px">Admin</li>
 			<li class="nav-item">
