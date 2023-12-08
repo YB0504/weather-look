@@ -1,11 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jun
-  Date: 2023/12/04
-  Time: 3:36 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!-- ======= Header ======= -->
 <header id="header" class="header fixed-top d-flex align-items-center">
 
@@ -121,7 +114,7 @@
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link collapsed" href="#">
+			<a class="nav-link collapsed" href="commlist">
 				<i class="bi bi-chat-left-text"></i>
 				<span>커뮤니티</span>
 			</a>

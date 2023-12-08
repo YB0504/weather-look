@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="comm">
+    
+    <!-- 글 작성 -->
+   <insert id = "commInsert" parameterType="comm">
+   insert into community values(community_seq.nextval,#{title},0,sysdate,#{content},#{category, jdbcType=VARCHAR},#{nick})
+   </insert>
+	
+	<!-- 글 개수 구해오기 -->
+	<select id="getCommCount" resultType="int">
+		select count(*) from community
+	</select>
+
+	<!-- 글 목록 구해오기 -->
+	<select id="getCommList" parameterType="int" resultType="comm">
+		<![CDATA[
+		select * from (select rownum rnum, comm.* from (
+		select * from community order by post_id desc) comm)
+		where rnum >= ((#{page}-1) * 10 + 1) and rnum <= (#{page} * 10)	
+		]]>
+	</select>
+	
+	<update id="commUpdateCount" parameterType="int">
+		update community set read_count = read_count + 1
+		where post_id=#{post_id}
+	</update>
+	
+	<select id="getCommunity" parameterType="int" resultType="comm">
+		select * from community where post_id=#{post_id}
+	</select>
+	
+	<update id = "commUpdate" parameterType="comm">
+		update community set nick=#{nick}, title=#{title}, content=#{content}, category=#{category, jdbcType=VARCHAR} where post_id=#{post_id}
+	</update>
+	
+	<delete id="commDelete" parameterType="int">
+		delete from community where post_id=${post_id}
+	</delete>
+	
+	<insert id="commLikeInsert" parameterType="commlike">
+	insert into community_like values(community_like_seq.nextval,#{post_id},#{nick})
+	</insert>
+	
+	<select id="getCommLike" parameterType="commlike" resultType="commlike">
+		select * from community_like where post_id=#{post_id} and nick=#{nick}
+	</select>
+	
+	<delete id="commLikeDelete" parameterType="int">
+		delete from community_like where like_id=#{like_id}
+	</delete>
+	
+	<select id="getCommScrap" parameterType="commscrap" resultType="commscrap">
+		select * from community_scrap where post_id=#{post_id} and nick=#{nick}
+	</select>
+
+	<insert id="commScrapInsert" parameterType="commscrap">
+		insert into community_scrap values(community_scrap_seq.nextval,#{post_id},#{nick})
+	</insert>
+	
+	<delete id="commScrapDelete">
+		delete from community_scrap where scrap_id=#{scrap_id}
+	</delete>
+	
+	<insert id="reportInsert" parameterType="communityReport">
+		insert into community_report (report_id, reason, post_id, report_date)
+		values (community_report_seq.nextval, #{reason}, #{post_id}, sysdate)
+	</insert>
+	
+	
+</mapper>
+
+	
+
+
