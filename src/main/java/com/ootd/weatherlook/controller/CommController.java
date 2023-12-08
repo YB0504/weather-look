@@ -7,24 +7,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.context.annotation.SessionScope;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.ootd.weatherlook.model.CommReportDTO;
 import com.ootd.weatherlook.model.Community;
 import com.ootd.weatherlook.model.CommunityLike;
 import com.ootd.weatherlook.model.CommunityScrap;
 import com.ootd.weatherlook.service.CommLikeService;
 import com.ootd.weatherlook.service.CommScrapService;
 import com.ootd.weatherlook.service.CommService;
-
-import lombok.extern.log4j.Log4j;
 
 @Controller
 public class CommController {
@@ -174,6 +167,32 @@ public class CommController {
 		model.addAttribute("page", page);
 		
 		return"redirect:commlist";
+	}
+	
+	@RequestMapping("commReport")
+	public String commReport(int post_id, Model model) throws Exception {
+		System.out.println("신고하기 폼");
+
+		model.addAttribute("post_id", post_id);
+		return "comm/commReport";
+	}
+
+	@RequestMapping("commReportIn")
+	public String commReportIn(@ModelAttribute CommReportDTO communityReport,
+	                            @RequestParam("post_id") int post_id, Model model) throws Exception {
+
+		System.out.println("reportInsert");
+
+		communityReport.setPost_id(post_id);
+
+		cs.reportInsert(communityReport);
+
+		System.out.println("신고 완료");
+
+		model.addAttribute("report", "게시글에 대한 신고가 완료 되었습니다.");
+
+		return "comm/commReport";
+
 	}
 	
 

@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ootd.weatherlook.model.CommReportDTO;
 import com.ootd.weatherlook.model.Community;
 
 @Repository
@@ -47,6 +48,10 @@ public class CommDao {
 	public int commDelete(int post_id) {
 		// TODO Auto-generated method stub
 		return session.delete("commDelete", post_id);
+	}
+
+	public void reportInsert(CommReportDTO communityReport) {
+		session.insert("reportInsert", communityReport);
 	}
 
 	

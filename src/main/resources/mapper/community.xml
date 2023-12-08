@@ -63,6 +63,13 @@
 	<delete id="commScrapDelete">
 		delete from community_scrap where scrap_id=#{scrap_id}
 	</delete>
+	
+	<insert id="reportInsert" parameterType="communityReport">
+		insert into community_report (report_id, reason, post_id, report_date)
+		values (community_report_seq.nextval, #{reason}, #{post_id}, sysdate)
+	</insert>
+	
+	
 </mapper>
 
 	

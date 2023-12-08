@@ -2,20 +2,22 @@ package com.ootd.weatherlook.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ootd.weatherlook.model.CommReReportDTO;
+import com.ootd.weatherlook.model.CommReportDTO;
 import com.ootd.weatherlook.model.Community;
 import com.ootd.weatherlook.model.CommunityRe;
 import com.ootd.weatherlook.service.CommReService;
 import com.ootd.weatherlook.service.CommService;
-
-import ch.qos.logback.core.util.SystemInfo;
 
 @Controller
 public class CommReController {
@@ -59,6 +61,47 @@ public class CommReController {
 		return "redirect:crlist?post_id="+ cr.getPost_id();
 	}
 	
+	// 대댓글 작성
+	@RequestMapping("commReplyInsert")
+    public String commReplyInsert(CommunityRe cr, HttpSession session, 
+            HttpServletRequest request, Model model) throws Exception {
+        System.out.println("대댓글 작성 완료");
+        
+        System.out.println("re_level" +cr.getRe_level());
+        System.out.println("re_step" +cr.getRe_step());
+
+        String nick = (String) session.getAttribute("nick");
+        cr.setNick(nick);
+
+        crs.commReplyInsert(cr);
+
+        return "redirect:crlist?post_id=" + cr.getPost_id();
+    }
 	
+	@RequestMapping("commReReport")
+	public String commReReport(int re_id, Model model) throws Exception {
+		System.out.println("댓글 신고하기 폼");
+
+		model.addAttribute("re_id", re_id);
+		return "comm/commReReport";
+	}
+
+	@RequestMapping("commReReportIn")
+	public String commReReportIn(@ModelAttribute CommReReportDTO commReReport,
+	                            @RequestParam("re_id") int re_id, Model model) throws Exception {
+
+		System.out.println("reportInsert");
+
+		commReReport.setRe_id(re_id);
+
+		crs.reReportInsert(commReReport);
+
+		System.out.println("신고 완료");
+
+		model.addAttribute("report", "댓글에 대한 신고가 완료 되었습니다.");
+
+		return "comm/commReReport";
+
+	}
 	
 }

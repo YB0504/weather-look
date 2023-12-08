@@ -4,7 +4,9 @@
 <mapper namespace="commre">
   
   <select id= "rlist" parameterType="int" resultType="commre">
-  	select * from community_reply where post_id=#{post_id} order by re_id
+  		select * from (select commReply.* from  
+	  	(select * from community_reply order by re_ref asc,re_step desc) commReply) 
+	    where post_id = #{post_id} order by re_ref, re_regdate
   </select>
   
   <insert id = "rinsert" parameterType="commre">
@@ -19,6 +21,17 @@
    <delete id="rdelete" parameterType="int">
    		delete from community_reply where re_id=#{re_id}
    </delete>
+   
+	<insert id="commReplyInsert" parameterType="commre">
+    	insert into community_reply values (community_reply_seq.nextval, #{re_content},
+      	#{re_ref}, #{re_level}+1, #{re_step}+1, sysdate, #{nick}, #{post_id})
+	</insert>
+	
+	<insert id="reReportInsert" parameterType="commReReport">
+		insert into re_comm_report (report_id, reason, re_id, report_date)
+		values (re_comm_report_seq.nextval, #{reason}, #{re_id}, sysdate)
+	</insert>
+   
 </mapper>
 
 	

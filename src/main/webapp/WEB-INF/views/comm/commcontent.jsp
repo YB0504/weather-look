@@ -58,7 +58,13 @@
                 var heartfill = confirm("스크랩을 취소하시겠습니까?");
                 if (heartfill) location.href = 'commscrapdelete?post_id=${commscrap.post_id}&scrap_id=${commscrap.scrap_id}&page=${page}'
             });
+            
         });
+	</script>
+	<script>
+		function openReportPopup(postid) {
+    		window.open('commReport?post_id=' + postid, '신고하기', 'width=450,height=500');
+    	}
 	</script>
 </head>
 
@@ -70,7 +76,7 @@
 	<section class="section container">
 		<div class="row align-items-top col-8" style="margin: 0 auto">
 			<div class="pagetitle">
-				<h1>Community</h1>
+				<h1><a href="commlist">Community</a></h1>
 				<nav>
 					<ol class="breadcrumb">
 						<li class="breadcrumb-item">${comm.category}</li>
@@ -111,7 +117,9 @@
 							<i class="bi bi-bookmark" id="scrap" style="color : #3B5998; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 						</span>
 					</c:if>
-					<i class="bi bi-exclamation-circle" style="font-size: 35px; color: #1a1d20"></i>
+					<c:if test="${sessionScope.nick ne comm.nick }">
+						<i class="bi bi-exclamation-circle" onclick="openReportPopup(${comm.post_id})" style="font-size: 35px; color: #1a1d20"></i>					
+					</c:if>
 				</div>
 			</div>
 		</div>

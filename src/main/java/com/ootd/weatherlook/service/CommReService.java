@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ootd.weatherlook.dao.CommReDao;
+import com.ootd.weatherlook.model.CommReReportDTO;
 import com.ootd.weatherlook.model.CommunityRe;
 
 @Service
@@ -34,6 +35,14 @@ public class CommReService {
 	public void delete(int re_id) {
 		// TODO Auto-generated method stub
 		crd.delete(re_id);
+	}
+
+	public void commReplyInsert(CommunityRe cr) {
+		crd.commReplyInsert(cr);
+	}
+
+	public void reReportInsert(CommReReportDTO commReReport) {
+		crd.reReportInsert(commReReport);
 	}
 
 	
