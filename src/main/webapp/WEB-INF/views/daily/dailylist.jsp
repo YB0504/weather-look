@@ -1,83 +1,252 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-         pageEncoding="UTF-8" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
-	<meta charset="UTF-8">
-	<title>게시판 목록</title>
+<meta charset="UTF-8">
+<title>게시판 목록</title>
+
+<meta content="" name="description">
+<meta content="" name="keywords">
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<!-- 에셋 ========================================= -->
+
+<!-- Favicons -->
+<!--   <link href="assets/img/favicon.png" rel="icon">
+  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+
+<!-- Google Fonts -->
+<link href="https://fonts.gstatic.com" rel="preconnect">
+<link
+	href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
+	rel="stylesheet">
+
+<!-- Vendor CSS Files -->
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
+<link href="assets/vendor/boxicons/css/boxicons.min.css"
+	rel="stylesheet">
+<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
+
+<!-- Template Main CSS File -->
+<link href="assets/css/style.css" rel="stylesheet">
+
+
+<!-- ========================================= 에셋 -->
+
+
+
+<link href="css/mainpage.css" rel="stylesheet">
+
+
 </head>
+
+
+
+
 <body>
-<table border=1 align="center" width=800>
-	<caption>데일리 목록</caption>
-	<tr>
-		<th>번호</th>
-		<th>제목</th>
-		<th>작성자</th>
-		<th>날짜</th>
-		<th>조회수</th>
-	</tr>
 
-	<!-- 화면 출력 번호  변수 정의 -->
-	<c:set var="num" value="${listCount-(page-1)*10}"/>
+	<%@ include file="../include/header.jsp"%>
+	<%@ include file="../include/address.jsp"%>
+	<main id="main">
 
-	<!-- 반복문 시작 -->
-	<c:forEach var="b" items="${dailyList}">
-		<tr align="center">
-			<td>
-					${num }
-				<!-- 번호 출력 부분 -->
-				<c:set var="num" value="${num-1}"/>
-			</td>
-			<td>
-				<!-- 제목 출력 부분 -->
-				<a href="dailycontent?post_id=${b.post_id}&page=${page}">
-						${b.title} </a>
-			</td>
-			<td>${b.nick}</td>
-			<td><fmt:formatDate value="${b.reg_date}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
-			<td>${b.read_count}</td>
-		</tr>
+		<section>
+			<div class="titlebox">
+				<div class="pagetitle">
+					<h1>DailyLook</h1>
+					<nav>
+						<ol class="breadcrumb">
+							<li class="breadcrumb-item">${listcount }개의 글</li>
+						</ol>
+					</nav>
+				</div>
+			</div>
 
-	</c:forEach>
+			<!-- 날씨 조건 박스 =====================> -->
 
-</table>
-<a href="dailyform">글쓰기</a>
-<!-- 페이지 처리 -->
-<center>
-	<c:if test="${listCount > 0 }">
+	<script>
+						$(function() {
+							$('#region').val("${region}")
+						});
+						$(function() {
+							$('#temp').val("${temp}")
+						});
+						
+						 $(document).ready(function() {
+						        // 해당 값이 존재하는 경우에만 설정
+						        if ("${region}" !== "") {
+						            $('#region').val("${region}");
+						        }
 
-		<!-- 1 페이지로 이동 -->
-		<a href="dailylist?page=1" style="text-decoration: none"> << </a>
+						        if ("${temp}" !== "") {
+						            $('#temp').val("${temp}");
+						        }
 
-		<!-- 이전 블럭으로 이동 -->
-		<c:if test="${startPage > 10}">
-			<a href="dailylist?page=${startPage - 10}">[이전]</a>
-		</c:if>
+						        $('#searchLink').click(function() {
+						            var selectedRegion = $('#region').val();
+						            var enteredTemperature = $('#temp').val();
+						            var deviation = 5;
+						            var templow = parseInt(enteredTemperature, 10) - parseInt(deviation);
+						            var temphigh = parseInt(enteredTemperature, 10) + parseInt(deviation);
 
-		<!-- 각 블력에 10개의 페이지 출력 -->
-		<c:forEach var="i" begin="${startPage}" end="${endPage}">
-			<c:if test="${i == page }">
-				<!-- 현재 페이지 -->
-				[${i}]
-			</c:if>
-			<c:if test="${i != page }">
-				<!-- 현재 페이지가 아닌경우 -->
-				<a href="dailylist?page=${i}">[${i}]</a>
-			</c:if>
-		</c:forEach>
+						            var url = "dailylist?page=1";
 
-		<!-- 다음 블럭으로 이동 -->
-		<c:if test="${endPage < pageCount}">
-			<a href="dailylist?page=${startPage + 10}">[다음]</a>
-		</c:if>
+						            if (selectedRegion) {
+						                url += "&region=" + encodeURIComponent(selectedRegion);
+						            }
 
-		<!-- 마지막 페이지로 이동 -->
-		<a href="dailylist?page=${pageCount}" style="text-decoration: none">
-			>> </a>
+						            if (enteredTemperature) {
+						                url += "&templow=" + templow;
+						                url += "&temphigh=" + temphigh;
+						            }
 
-	</c:if>
-</center>
+						            window.location.href = url;
+						        });
+						    });
+						
+						
+					</script>
+					
+
+
+			<div class="weatherconditionbox">
+
+
+
+
+				<div class="weathercondition">
+
+				
+					
+					<div class="weathercondition_region">
+						<div class="weathercondition_text">지역</div>
+						<div class="weathercondition_condition">
+							<select id="region" class="form-select">
+								<option value="">선택</option>
+								<c:forEach var="a" items="${address }">
+									<option value="${a }">${a }</option>
+								</c:forEach>
+							</select>
+						</div>
+					</div>
+
+
+
+					<div class="weathercondition_temperature">
+						<div class="weathercondition_text">기온</div>
+						<div class="weathercondition_condition">
+							<input name = "temp" id="temp" type="number" class="form-control">
+						</div>
+					</div>
+					
+					
+					
+
+					<div class="weathercondition_search">
+					  <a href="#" id="searchLink">
+							<div class="icon">
+								<i class="bi bi-search"></i>
+							</div>
+						</a>
+					</div>
+					
+					
+					
+					<div class="weathercondition_write">
+						<a href="dailyform">
+							<div class="icon">
+								<i class="bi bi-pencil-square"></i>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+
+			<!-- <===================== 날씨 조건 박스 -->
+
+
+
+			<!-- 3x3 썸네일 출력 ==============> -->
+
+			<div class="maincard">
+				<c:forEach var="r" items="${dailyList}" varStatus="i">
+					<div class="card-body">
+						<a href="dailycontent?post_id=${r.post_id}&page=${page}"
+							class="maincardlink"> <img src="images/img_${i.index }.jpg">
+							<div class="maincardinfo">
+								<p>${r.title}</p>
+								<span>${r.nick}</span>
+							</div>
+						</a>
+					</div>
+				</c:forEach>
+			</div>
+			<!-- <============== 3x3 썸네일 출력 -->
+
+
+
+
+
+			<!-- 페이징 ==============> -->
+
+			<div style="display: flex; justify-content: center;">
+				<ul class="pagination">
+					<c:if test="${startPage > 10}">
+						<li class="page-item disabled"><a class="page-link"
+							href="dailylist?page=${startpage - 10}&region=${region }&templow=${templow}&temphigh=${temphigh}" tabindex="-1"
+							aria-disabled="true">&laquo;</a></li>
+					</c:if>
+
+					<c:forEach var="i" begin="${startPage}" end="${endPage}">
+						<c:if test="${i == page }">
+							<li class="page-item active" aria-current="page"><a
+								class="page-link" href="">${i}</a></li>
+						</c:if>
+						<c:if test="${i != page }">
+							<li class="page-item"><a class="page-link"
+								href="dailylist?page=${i}&region=${region }&templow=${templow}&temphigh=${temphigh}">${i}</a></li>
+						</c:if>
+					</c:forEach>
+
+					<c:if test="${endPage < pageCount}">
+						<li class="page-item"><a class="page-link"
+							href="dailylist?page=${startPage + 10}&region=${region }&templow=${templow}&temphigh=${temphigh}">&raquo;</a></li>
+					</c:if>
+				</ul>
+			</div>
+
+			<!--  <============== 페이징 -->
+
+		</section>
+	</main>
+
+	<!-- 에셋 ========================================= -->
+
+	<!-- Vendor JS Files -->
+	<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/vendor/chart.js/chart.umd.js"></script>
+	<script src="assets/vendor/echarts/echarts.min.js"></script>
+	<script src="assets/vendor/quill/quill.min.js"></script>
+	<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+	<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+	<script src="assets/vendor/php-email-form/validate.js"></script>
+
+	<!-- Template Main JS File -->
+	<script src="assets/js/main.js"></script>
+
+	<!-- ========================================= 에셋 -->
+
 </body>
 </html>

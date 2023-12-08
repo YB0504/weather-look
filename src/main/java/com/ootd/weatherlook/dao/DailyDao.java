@@ -21,14 +21,20 @@ public class DailyDao {
 		return session.insert("insert", daily);
 	}
 
-	public int getCount() {
-		return session.selectOne("count");
+	// ========== 선홍 수정: dailylist ===========
+	
+	public int getCount(Search search) {
+		// TODO Auto-generated method stub
+		return session.selectOne("dailyns.count", search);
 	}
 
-	public List<Daily> getDailyList(int page) {
-		return session.selectList("list", page);
+	public List<Daily> getDailyList(Search search) {
+		// TODO Auto-generated method stub
+		return session.selectList("dailyns.list", search);
 	}
 
+	// ========== 선홍 수정: dailylist ===========
+	
 	public Daily getDaily(int post_id) {
 		return session.selectOne("content", post_id);
 	}

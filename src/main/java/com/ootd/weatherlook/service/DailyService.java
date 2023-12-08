@@ -21,14 +21,19 @@ public class DailyService {
 		return dao.insert(daily);
 	}
 
-	public int getCount() {
-		return dao.getCount();
+	// ========== 선홍 수정: dailylist ===========
+	
+	public int getCount(Search search) {
+		return dao.getCount(search);
 	}
 	
-	public List<Daily> getDailylist(int page) {
-		return dao.getDailyList(page);
+	public List<Daily> getDailylist(Search search) {
+		return dao.getDailyList(search);
 	}
 
+
+	// ========== 선홍 수정: dailylist ===========
+	
 	public Daily getDaily(int post_id) {
 		return dao.getDaily(post_id);
 	}

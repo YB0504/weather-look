@@ -8,22 +8,69 @@
 		values(daily_seq.nextval, #{title}, 0, sysdate, #{content}, #{temperature, jdbcType=VARCHAR}, #{latitude, jdbcType=VARCHAR}, #{longitude, jdbcType=VARCHAR}, #{nick}, #{region, jdbcType=VARCHAR}, #{daily_file, jdbcType=VARCHAR})
 	</insert>
 
-	<select id="count" resultType="int">
-		select count(*) from daily
+
+
+<!-- ========== 선홍 수정: dailylist =========== -->
+
+		<select id="count" parameterType="search" resultType="int">
+		select count(*) from(
+		select rownum rnum, d1.* from (
+		select * from
+		daily
+
+		<where>
+			<if test="weather.region != null and weather.region != ''">
+				region like '%' || #{weather.region} || '%'
+			</if>
+
+			<if
+				test="weather.region != null and weather.region != '' and weather.temperature != null and weather.temperature != ''">
+				and
+			</if>
+
+			<if
+				test="weather.temperature != null and weather.temperature != ''">
+				temperature between
+				(#{weather.lowest}) and
+				(#{weather.highest})
+			</if>
+		</where>
+
+		order by reg_date desc) d1)
+
+
 	</select>
 
-	<select id="list" parameterType="int" resultType="daily">
-    	<![CDATA[
-    	select * from (select rownum rnum, daily.* from (
-   	 	select * from daily order by post_id desc) daily)
-    	where rnum >= ((#{page}-1) * 10 + 1) and rnum <= (#{page} * 10)
-    	]]>
+	<select id="list" parameterType="search" resultType="daily">
+		select * from(
+		select rownum rnum, d1.* from (
+		select * from daily
+
+		<where>
+			<if test="weather.region != null and weather.region != ''">
+				region like '%' || #{weather.region} || '%'
+			</if>
+
+			<if
+				test="weather.region != null and weather.region != '' and weather.temperature != null and weather.temperature != ''">
+				and
+			</if>
+
+			<if
+				test="weather.temperature != null and weather.temperature != ''">
+				temperature between
+				(#{weather.lowest}) and
+				(#{weather.highest})
+			</if>
+		</where>
+
+		order by reg_date desc) d1)
+		where rnum &gt;= #{startrow} and rnum &lt;=
+		#{endrow}
+
 	</select>
 
-    <update id="hit" parameterType="int">
-		update daily set read_count = read_count + 1
-		where post_id=#{post_id}
-	</update>
+<!-- ========== 선홍 수정: dailylist =========== -->
 
 	<select id="content" parameterType="int" resultType="daily">
 		select * from daily where post_id=#{post_id}
