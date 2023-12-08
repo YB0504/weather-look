@@ -57,8 +57,12 @@ public class ReReview {
 	// 댓글 수정
 	@RequestMapping("reUpdate")
 	public String reUpdate(ReReviewDTO reReview, Model model)throws Exception {
+		
+		ReReviewDTO reviewRep = rrs.getRevReply(reReview.getRe_id());
+		reviewRep.setRe_content(reReview.getRe_content());
+		
 		System.out.println("댓글 수정 완료");
-		rrs.reUpdate(reReview);
+		rrs.reUpdate(reviewRep);
 		return "redirect:reReviewList?post_id="+reReview.getPost_id();
 	}
 	

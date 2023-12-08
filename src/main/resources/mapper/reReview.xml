@@ -18,7 +18,7 @@
 	<!-- 댓글 수정 -->
 	<update id="reUpdate" parameterType="reviewReply">
 		update review_reply set re_content=#{re_content},
-			re_regdate=sysdate where re_id=#{re_id}
+			re_regdate=#{re_regdate} where re_id=#{re_id}
 	</update>
 	
 	<!-- 댓글 삭제 -->
@@ -37,5 +37,9 @@
 		insert into re_review_report (report_id, reason, re_id, report_date)
 		values (re_review_report_seq.nextval, #{reason}, #{re_id}, sysdate)
 	</insert>
+	
+	<select id="getRevReply" parameterType="int" resultType="reviewReply">
+		select * from review_reply where re_id=#{re_id}
+	</select>
 
 </mapper>

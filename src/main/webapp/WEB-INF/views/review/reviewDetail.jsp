@@ -36,7 +36,6 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script>
         $(function () {
-            $('#slist').load('crlist?post_id=${review.post_id}')
 
             $('#heart').click(function () {
                 var heart = confirm("추천 하시겠습니까?");
@@ -155,7 +154,9 @@
 							<i class="bi bi-bookmark" id="scrap" style="color : #3B5998; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 						</span>
 					</c:if>
-					<i class="bi bi-exclamation-circle" style="font-size: 35px; color: #1a1d20"></i>
+					<c:if test="${sessionScope.nick ne review.nick }">
+						<i class="bi bi-exclamation-circle" onclick="openReportPopup(${review.post_id})" style="font-size: 35px; color: #1a1d20"></i>
+					</c:if>
 				</div>
 			</div>
 		</div>

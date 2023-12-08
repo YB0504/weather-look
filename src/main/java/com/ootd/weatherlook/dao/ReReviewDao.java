@@ -40,5 +40,9 @@ public class ReReviewDao {
 	public void reReportInsert(ReplyReportDTO replyReport) {
 		session.insert("reReportInsert", replyReport);
 	}
+	
+	public ReReviewDTO getRevReply(int re_id) {
+		return session.selectOne("getRevReply", re_id);
+	}
 
 }

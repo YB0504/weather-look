@@ -40,5 +40,9 @@ public class ReReviewService {
 	public void reReportInsert(ReplyReportDTO replyReport) {
 		reDao.reReportInsert(replyReport);
 	}
+	
+	public ReReviewDTO getRevReply(int re_id) {
+		return reDao.getRevReply(re_id);
+	}
 
 }

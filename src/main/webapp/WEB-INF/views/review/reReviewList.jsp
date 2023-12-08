@@ -41,6 +41,72 @@
                 });
             }
         }
+        
+        $('.reply').click(function () {
+            var reId = $(this).attr('id');
+            var $replyForm = $('#replyForm_' + reId);
+
+            // 이미 답글 입력 창이 존재하는지 확인
+            if ($replyForm.length === 0) {
+                var formHtml = '<li>';
+                formHtml += '<div class="comment-details" id="replyForm_' + reId + '">';
+                formHtml += '<input type="hidden" name="re_ref" value="' + reId + '">';
+                formHtml += '<input type="hidden" name="re_level" value="0">';
+                formHtml += '<input type="hidden" name="re_step" value="0">';
+                formHtml += '<input type="text" placeholder="답글을 입력하세요" name="re_content">';
+                formHtml += '<button class="btn btn-primary" onclick="reReplyInsert(' + reId + ')">등록</button>';
+                formHtml += '<button class="btn btn-primary" onclick="cancelReply(' + reId + ')">취소</button>';  // 추가된 부분
+                formHtml += '</div>';
+                formHtml += '</li>';
+
+                $(this).closest('li').after(formHtml);
+                $('#replyForm_' + reId + ' input[name="re_content"]').focus();
+            } else {
+                // 이미 답글 입력 창이 존재하면 숨김
+                $replyForm.toggle();
+
+                $('#replyForm_' + reId + ' input[name="re_content"]').focus();
+            }
+        });
+        
+        function cancelReply(reId) {
+        	$('#replyForm_' + reId).hide().find('input[name="re_content"]').val('');
+        	lst();
+        }
+        
+        function reReplyInsert(reId) {
+            var reContent = $('input[name="re_content"]').val();
+            var reRef = $('input[name="re_ref"]').val();
+            var reLevel = $('input[name="re_level"]').val();
+            var reStep = $('input[name="re_step"]').val();
+            var post_id = "${review.post_id}";
+
+            var formData = {
+                "re_content": reContent,
+                "re_ref": reRef,
+                "re_level": reLevel,
+                "re_step": reStep,
+                "post_id": post_id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: "reReplyInsert",
+                data: formData,
+                success: function(data) {
+                    // 서버에서 반환한 데이터 처리 (댓글 목록 갱신)
+                    $('#slist').html(data);
+                },
+                error: function(error) {
+                    // 에러 처리
+                    console.log("Error:", error);
+                }
+            });
+        }
+        
+        function openReReportPopup(reId) {
+        	window.open('sendReReport?re_id=' + reId, '신고하기', 'width=450,height=500');
+        }
 	</script>
 </head>
 <body>
@@ -58,10 +124,13 @@
 						<span class="date-span"><fmt:formatDate value="${rb.re_regdate }" pattern="yyyy-MM-dd"/></span>
 						<p id="p_${rb.re_id}" class="comment-description">${rb.re_content}</p>
 						<div id="btn_${rb.re_id}">
-							<a class="btn btn-link">댓글</a>
+							<a class="btn btn-link reply" id="${rb.re_id}">댓글</a>
 							<c:if test="${rb.nick eq sessionScope.nick}">
 								<a class="btn btn-link edit1" id="${rb.re_id}">수정</a>
 								<a class="btn btn-link" onclick="del(${rb.re_id},${rb.post_id})">삭제</a>
+							</c:if>
+							<c:if test="${rb.nick ne sessionScope.nick }">
+								<a class="btn btn-link" onclick="openReReportPopup(${rb.re_id})">신고</a>
 							</c:if>
 						</div>
 					</div>
@@ -77,10 +146,12 @@
 						<span class="date-span"><fmt:formatDate value="${rb.re_regdate }" pattern="yyyy-MM-dd"/></span>
 						<p id="p_${rb.re_id}" class="comment-description">${rb.re_content}</p>
 						<div id="btn_${rb.re_id}">
-							<a class="btn btn-link">댓글</a>
 							<c:if test="${rb.nick eq sessionScope.nick}">
 								<a class="btn btn-link edit1" id="${rb.re_id}">수정</a>
 								<a class="btn btn-link" onclick="del(${rb.re_id},${rb.post_id})">삭제</a>
+							</c:if>
+							<c:if test="${rb.nick ne sessionScope.nick }">
+								<a class="btn btn-link" onclick="openReReportPopup(${rb.re_id})">신고</a>
 							</c:if>
 						</div>
 					</div>
