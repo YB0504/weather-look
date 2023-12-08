@@ -2,12 +2,13 @@ package com.ootd.weatherlook.service;
 
 import java.util.List;
 
+import com.ootd.weatherlook.model.LikeDTO;
+import com.ootd.weatherlook.model.ScrapDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ootd.weatherlook.dao.DailyDao;
 import com.ootd.weatherlook.model.Daily;
-import com.ootd.weatherlook.model.Dailylike;
 
 @Service
 public class DailyService {
@@ -40,13 +41,31 @@ public class DailyService {
 		return dao.delete(post_id);
 	}
 
-	public int likecount(Dailylike dailylike) {
-		return dao.likecount(dailylike);
-	}
-
 	public void updatecount(int post_id) {
 		dao.updatecount(post_id);
 	}
 
-	
+	public void likeInsert(LikeDTO likeDTO) {
+		dao.likeInsert(likeDTO);
+	}
+
+	public void likeDelete(int like_id) {
+		dao.likeDelete(like_id);
+	}
+
+	public LikeDTO isLike(LikeDTO likeDTO) {
+		return dao.isLike(likeDTO);
+	}
+
+	public void scrapInsert(ScrapDTO scrapDTO) {
+		dao.scrapInsert(scrapDTO);
+	}
+
+	public void scrapDelete(int scrap_id) {
+		dao.scrapDelete(scrap_id);
+	}
+
+	public ScrapDTO isScrap(ScrapDTO scrapDTO) {
+		return dao.isScrap(scrapDTO);
+	}
 }

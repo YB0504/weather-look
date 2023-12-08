@@ -1,11 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: jun
-  Date: 2023/12/06
-  Time: 6:57 PM
-  To change this template use File | Settings | File Templates.
---%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html; charset=UTF-8" language="java" %>
 <!-- ======= Footer ======= -->
 <footer id="footer" class="footer">
 	<div class="copyright">

@@ -9,6 +9,8 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import com.ootd.weatherlook.model.LikeDTO;
+import com.ootd.weatherlook.model.ScrapDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,21 +20,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ootd.weatherlook.model.Daily;
-import com.ootd.weatherlook.model.Dailylike;
 import com.ootd.weatherlook.service.DailyService;
-import com.ootd.weatherlook.service.DailylikeService;
 
 import feature.RegionSTNResolver;
 import feature.RegionTemperatureResolver;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class DailyController {
 
 	@Autowired
 	private DailyService service;
-	
-	@Autowired
-	private DailylikeService dService;
 	
 	@RequestMapping("/")
 	public String main() {
@@ -136,38 +134,31 @@ public class DailyController {
 								   HttpSession session,
 								   Model model) {
 		System.out.println("DailyController.dailycontent");
+		String nick = (String)session.getAttribute("nick");
+
 		service.updatecount(post_id);
 		Daily daily = service.getDaily(post_id);
 		String content = daily.getContent().replace("\n", "<br>");
-		
-		String nick = (String)session.getAttribute("nick");
-		Dailylike dailylike = new Dailylike();
-		dailylike.setPost_id(post_id);
-		dailylike.setNick("준혁");		
-		
-		// 좋아요 선태여부 체크
-		int like_count = service.likecount(dailylike);  //  선택 : like_count = 1
-														//  미선택 : like_count = 0
-		
-		Map map = new HashMap();
-		map.put("post_id", post_id);
-		map.put("nick", "준혁");
-		
-		List<Dailylike> list = dService.getList(map);	
-		System.out.println("좋아요 목록"+ list);
-		int result = 0;
-		if(!list.isEmpty()) {
-			Dailylike dl = list.get(0);
-			if(dl != null) {
-				model.addAttribute("dailylike",dl);
-			}
-		}		
-		
-		model.addAttribute("like_count",like_count);
+
 		model.addAttribute("daily",daily);
 		model.addAttribute("content",content);
 		model.addAttribute("page", page);
-		
+
+		//like 관련 코드
+		LikeDTO likeDTO = new LikeDTO();
+		likeDTO.setPost_id(post_id);
+		likeDTO.setNick(nick);
+
+		LikeDTO like = service.isLike(likeDTO);
+		model.addAttribute("like", like);
+
+		//scrap 관련 코드
+		ScrapDTO scrapDTO = new ScrapDTO();
+		scrapDTO.setPost_id(post_id);
+		scrapDTO.setNick(nick);
+
+		ScrapDTO scrap = service.isScrap(scrapDTO);
+		model.addAttribute("scrap", scrap);
 		return "daily/dailycontent";
 	}		
 
@@ -269,9 +260,103 @@ public class DailyController {
 		
 		return"redirect:dailylist";
 	}
-	
-	
-		
-	
-	
+
+	@RequestMapping("dailyLikeInsert")
+	public String dailyLikeInsert(@RequestParam("post_id") int post_id,
+	                         @RequestParam("page") String page,
+	                         HttpSession session,
+	                         RedirectAttributes redirectAttributes) {
+		System.out.println("DailyController.dailyLikeInsert");
+		LikeDTO likeDTO = new LikeDTO();
+		String nick = (String) session.getAttribute("nick");
+
+		//log
+		System.out.println("post_id = " + post_id);
+		System.out.println("page = " + page);
+		System.out.println("nick = " + nick);
+
+		//insert
+		likeDTO.setNick(nick);
+		likeDTO.setPost_id(post_id);
+
+		service.likeInsert(likeDTO);
+
+		//redirect
+		redirectAttributes.addAttribute("post_id", post_id);
+		redirectAttributes.addAttribute("page", page);
+
+		return "redirect:dailycontent";
+	}
+
+	@RequestMapping("dailyLikeDelete")
+	public String dailyLikeDelete(@RequestParam("post_id") int post_id,
+	                         @RequestParam("page") String page,
+	                         @RequestParam("like_id") int like_id,
+	                         RedirectAttributes redirectAttributes) {
+		System.out.println("DailyController.dailyLikeDelete");
+
+		//log
+		System.out.println("post_id = " + post_id);
+		System.out.println("page = " + page);
+		System.out.println("like_id = " + like_id);
+
+		//delete
+		service.likeDelete(like_id);
+
+		//redirect
+		redirectAttributes.addAttribute("post_id", post_id);
+		redirectAttributes.addAttribute("page", page);
+
+		return "redirect:dailycontent";
+	}
+
+	@RequestMapping("dailyScrapInsert")
+	public String dailyScrapInsert(@RequestParam("post_id") int post_id,
+	                          @RequestParam("page") String page,
+	                          HttpSession session,
+	                          RedirectAttributes redirectAttributes) {
+		System.out.println("DailyController.dailyScrapInsert");
+
+		ScrapDTO scrapDTO = new ScrapDTO();
+		String nick = (String) session.getAttribute("nick");
+
+		//log
+		System.out.println("post_id = " + post_id);
+		System.out.println("page = " + page);
+		System.out.println("nick = " + nick);
+
+		//insert
+		scrapDTO.setNick(nick);
+		scrapDTO.setPost_id(post_id);
+
+		service.scrapInsert(scrapDTO);
+
+		//redirect
+		redirectAttributes.addAttribute("post_id", post_id);
+		redirectAttributes.addAttribute("page", page);
+
+		return "redirect:dailycontent";
+	}
+
+	@RequestMapping("dailyScrapDelete")
+	public String dailyScrapDelete(@RequestParam("post_id") int post_id,
+	                          @RequestParam("page") String page,
+	                          @RequestParam("scrap_id") int scrap_id,
+	                          RedirectAttributes redirectAttributes) {
+		System.out.println("DailyController.scrapDelete");
+
+		//log
+		System.out.println("post_id = " + post_id);
+		System.out.println("page = " + page);
+		System.out.println("scrap_id = " + scrap_id);
+
+		//delete
+		service.scrapDelete(scrap_id);
+
+		//redirect
+		redirectAttributes.addAttribute("post_id", post_id);
+		redirectAttributes.addAttribute("page", page);
+
+		return "redirect:dailycontent";
+	}
 }

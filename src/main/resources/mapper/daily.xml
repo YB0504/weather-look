@@ -39,6 +39,29 @@
 		delete from daily where post_id=${post_id}
 	</delete>
 
+	<insert id="likeInsert" parameterType="like">
+		insert into DAILY_LIKE(like_id, nick, post_id) values (DAILY_LIKE_SEQ.nextval, #{nick}, #{post_id})
+	</insert>
+
+	<delete id="likeDelete" parameterType="int">
+		delete from DAILY_LIKE where LIKE_ID=#{like_id}
+	</delete>
+
+	<select id="isLike" parameterType="like" resultType="like">
+		select * from DAILY_LIKE where POST_ID=#{post_id} and NICK=#{nick}
+	</select>
+
+	<insert id="scrapInsert" parameterType="scrap">
+		insert into DAILY_SCRAP(SCRAP_ID, nick, post_id) values (DAILY_SCRAP_SEQ.nextval, #{nick}, #{post_id})
+	</insert>
+
+	<delete id="scrapDelete" parameterType="int">
+		delete from DAILY_SCRAP where SCRAP_ID=#{scrap_id}
+	</delete>
+
+	<select id="isScrap" parameterType="scrap" resultType="scrap">
+		select * from DAILY_SCRAP where POST_ID=#{post_id} and NICK=#{nick}
+	</select>
 </mapper>
 
 

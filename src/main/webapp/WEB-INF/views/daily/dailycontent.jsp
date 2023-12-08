@@ -1,4 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!DOCTYPE html>
@@ -40,44 +41,44 @@
             $('#heart').click(function () {
                 var heart = confirm("추천 하시겠습니까?");
                 if(heart){
-                    location.href='likeInsert?post_id=${daily.post_id}&nick=${sessionScope.nick}&page=${page}'
+                    location.href='dailyLikeInsert?post_id=${daily.post_id}&nick=${sessionScope.nick}&page=${page}'
                 }
             });
 
             $('#heart-fill').click(function () {
                 var heartfill = confirm("추천을 취소하시겠습니까?");
                 if(heartfill){
-                    location.href='likeDelete?post_id=${daily.post_id}&page=${page}&like_id=${like.like_id}'
+                    location.href='dailyLikeDelete?post_id=${daily.post_id}&page=${page}&like_id=${like.like_id}'
                 }
             });
 
             $('#scrap').click(function () {
                 var scrap = confirm("스크랩 하시겠습니까?");
                 if(scrap){
-                    location.href='scrapInsert?post_id=${daily.post_id}&nick=${sessionScope.nick}&page=${page}'
+                    location.href='dailyScrapInsert?post_id=${daily.post_id}&nick=${sessionScope.nick}&page=${page}'
                 }
             });
 
             $('#scrap-fill').click(function () {
                 var scrapfill = confirm("스크랩을 취소하시겠습니까?");
                 if(scrapfill){
-                    location.href='scrapDelete?post_id=${daily.post_id}&page=${page}&scrap_id=${scrap.scrap_id}'
+                    location.href='dailyScrapDelete?post_id=${daily.post_id}&page=${page}&scrap_id=${scrap.scrap_id}'
                 }
             });
 
             $('#slist').load('rdlist?post_id=${daily.post_id}')
 
             $('#repInsert').click(function () {
-                if (!reReviewForm.re_content.value) {
+                if (!replyForm.re_content.value) {
                     alert('댓글을 입력 하세요.');
-                    reReviewForm.re_content.focus();
+                    replyForm.re_content.focus();
                     return false;
                 }
                 var frmData = $('form').serialize();
 
                 $.post('rdInsert', frmData, function (data) {
                     $('#slist').html(data);
-                    reReviewForm.re_content.value = '';
+                    replyForm.re_content.value = '';
                 });
             });
         });
@@ -164,7 +165,7 @@
 			<div class="title-box-d">
 				<h3 class="title-d">Comments</h3>
 			</div>
-			<form name="reReviewForm" id="reReviewForm" class="container mt-1 mb-5" style="padding: 0">
+			<form name="replyForm" id="replyForm" class="container mt-1 mb-5" style="padding: 0">
 				<input type="hidden" name="nick" value="${sessionScope.nick}">
 				<input type="hidden" name="post_id" value="${daily.post_id}">
 				<div class="row">
