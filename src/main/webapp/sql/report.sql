@@ -66,3 +66,85 @@ order by report_date desc;
 delete from daily where post_id = 62;
 
 commit;
+
+
+
+--½Å°í ´ñ±Û---------------------------------------------------
+
+select * from re_comm_report;
+select * from re_daily_report;
+select * from re_review_report;
+
+
+select * from(
+select rownum rnum, re_re1.* from
+(select 're_review_report' type_name, re_r_r.*,
+re_r.re_content, re_r.nick, re_r.post_id
+from re_review_report re_r_r  
+left join
+review_reply re_r
+on
+re_r_r.re_id = re_r.re_id
+
+union
+
+select 're_comm_report' type_name, re_c_r.*,
+re_c.re_content, re_c.nick, re_c.post_id
+from re_comm_report re_c_r  
+left join
+community_reply re_c
+on
+re_c_r.re_id = re_c.re_id
+
+union
+
+select 're_daily_report' type_name, re_d_r.*,
+re_d.re_content, re_d.nick, re_d.post_id
+from re_daily_report re_d_r  
+left join
+daily_reply re_d
+on
+re_d_r.re_id = re_d.re_id) re_re1
+
+order by report_date desc)
+where rnum between 1 and 10
+;
+
+
+-- ½Å°íµÈ ´ñ±Û °¹¼ö count
+
+
+select count(*) from
+(select 're_review_report' type_name, re_r_r.*,
+re_r.re_content, re_r.nick, re_r.post_id
+from re_review_report re_r_r  
+left join
+review_reply re_r
+on
+re_r_r.re_id = re_r.re_id
+
+union
+
+select 're_comm_report' type_name, re_c_r.*,
+re_c.re_content, re_c.nick, re_c.post_id
+from re_comm_report re_c_r  
+left join
+community_reply re_c
+on
+re_c_r.re_id = re_c.re_id
+
+union
+
+select 're_daily_report' type_name, re_d_r.*,
+re_d.re_content, re_d.nick, re_d.post_id
+from re_daily_report re_d_r  
+left join
+daily_reply re_d
+on
+re_d_r.re_id = re_d.re_id) re_re1
+
+order by report_date desc
+
+;
+
+

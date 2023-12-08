@@ -17,10 +17,6 @@ public interface MainDao {
 	public List<SearchResult> getSearchList(Search search);
 	public int getSearchCount(Search search);
 	
-	public List<MainBoard> getWeatherList(Search search);
-	public int getweathercount(Search search);
 	
-	public List<Report> getReportList(Search search);
-	public int getReportCount(Search search);
 	
 }

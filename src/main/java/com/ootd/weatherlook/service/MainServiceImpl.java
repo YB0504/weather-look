@@ -62,42 +62,5 @@ public class MainServiceImpl implements MainService {
 		return mainDao.getMainCount(search);
 	}
 
-	@Override
-	public List<MainBoard> getWeatherList(Search search) {
-		// TODO Auto-generated method stub
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
-		return mainDao.getWeatherList(search);
-	}
-	
-	@Override
-	public int getweatherCount(Search search) {
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
-		return mainDao.getweathercount(search);
-	}
-
-	@Override
-	public List<Report> getReportList(Search search) {
-		// TODO Auto-generated method stub
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
-		return mainDao.getReportList(search);
-	}
-
-	@Override
-	public int getReportCount(Search search) {
-		// TODO Auto-generated method stub
-		return mainDao.getReportCount(search);
-	}
 
 }

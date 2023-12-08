@@ -16,19 +16,19 @@
 	rel="stylesheet">
 
 <!-- Vendor CSS Files -->
-<link href="assets2/vendor/bootstrap/css/bootstrap.min.css"
+<link href="assets/vendor/bootstrap/css/bootstrap.min.css"
 	rel="stylesheet">
-<link href="assets2/vendor/bootstrap-icons/bootstrap-icons.css"
+<link href="assets/vendor/bootstrap-icons/bootstrap-icons.css"
 	rel="stylesheet">
-<link href="assets2/vendor/boxicons/css/boxicons.min.css"
+<link href="assets/vendor/boxicons/css/boxicons.min.css"
 	rel="stylesheet">
-<link href="assets2/vendor/quill/quill.snow.css" rel="stylesheet">
-<link href="assets2/vendor/quill/quill.bubble.css" rel="stylesheet">
-<link href="assets2/vendor/remixicon/remixicon.css" rel="stylesheet">
-<link href="assets2/vendor/simple-datatables/style.css" rel="stylesheet">
+<link href="assets/vendor/quill/quill.snow.css" rel="stylesheet">
+<link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
+<link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
+<link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
 
 <!-- Template Main CSS File -->
-<link href="assets2/css/style.css" rel="stylesheet">
+<link href="assets/css/style.css" rel="stylesheet">
 
 <script src = "js/reported.js"></script>
 
@@ -78,45 +78,53 @@
 			</c:forEach>
 	
 		</table>
-		<div align="center">
-			<c:if test="${page <=1 }">
-				
-			</c:if>
+		
+		
+			<!-- 페이징 ==============> -->
 
-			<c:if test="${page > 1 }">
-				<a href="report?page=${page-1}">[이전]</a>&nbsp;
-			</c:if>
+			<div style="display: flex; justify-content: center;">
+				<ul class="pagination">
+					<c:if test="${startpage > 10}">
+						<li class="page-item disabled"><a class="page-link"
+							href="report?page=${startpage - 10}" tabindex="-1"
+							aria-disabled="true">&laquo;</a></li>
+					</c:if>
 
-			<c:forEach var="a" begin="${startpage}" end="${endpage}">
-				<c:if test="${a == page }">
-					[${a}]
-				</c:if>
-				<c:if test="${a != page }">
-					<a href="report?page=${a}">[${a}]</a>&nbsp;
-				</c:if>
-			</c:forEach>
+					<c:forEach var="i" begin="${startpage}" end="${endpage}">
+						<c:if test="${i == page }">
+							<li class="page-item active" aria-current="page"><a
+								class="page-link" href="">${i}</a></li>
+						</c:if>
+						<c:if test="${i != page }">
+							<li class="page-item"><a class="page-link"
+								href="report?page=${i}">${i}</a></li>
+						</c:if>
+					</c:forEach>
 
-			<c:if test="${page >= maxpage }">
-				[다음] 
-			</c:if>
-			<c:if test="${page < maxpage }">
-				<a href="report?page=${page+1}">[다음]</a>
-			</c:if>
-		</div>
+					<c:if test="${endpage < maxpage}">
+						<li class="page-item"><a class="page-link"
+							href="report?page=${startpage + 10}">&raquo;</a></li>
+					</c:if>
+				</ul>
+			</div>
+
+			<!--  <============== 페이징 -->
+	
+		
 
 	</main>
 
 	<!-- Vendor JS Files -->
-	<script src="assets2/vendor/apexcharts/apexcharts.min.js"></script>
-	<script src="assets2/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="assets2/vendor/chart.js/chart.umd.js"></script>
-	<script src="assets2/vendor/echarts/echarts.min.js"></script>
-	<script src="assets2/vendor/quill/quill.min.js"></script>
-	<script src="assets2/vendor/simple-datatables/simple-datatables.js"></script>
-	<script src="assets2/vendor/tinymce/tinymce.min.js"></script>
-	<script src="assets2/vendor/php-email-form/validate.js"></script>
+	<script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
+	<script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<script src="assets/vendor/chart.js/chart.umd.js"></script>
+	<script src="assets/vendor/echarts/echarts.min.js"></script>
+	<script src="assets/vendor/quill/quill.min.js"></script>
+	<script src="assets/vendor/simple-datatables/simple-datatables.js"></script>
+	<script src="assets/vendor/tinymce/tinymce.min.js"></script>
+	<script src="assets/vendor/php-email-form/validate.js"></script>
 
 	<!-- Template Main JS File -->
-	<script src="assets2/js/main.js"></script>
+	<script src="assets/js/main.js"></script>
 </body>
 </html>

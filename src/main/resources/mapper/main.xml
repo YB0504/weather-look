@@ -139,60 +139,6 @@
 
 
 
-	<!-- ========== reportpage ========== -->
-
-	<select id="reportlist" parameterType="search"
-		resultType="report">
-
-		select * from (
-		select rownum rnum, re2.* from(
-		select re1.*
-		from
-		(select daily_report.*, 'daily' as type_name, daily.title from
-		daily_report
-		left join daily
-		on daily_report.post_id = daily.post_id
-		union
-		select review_report.*, 'review' as type_name, review.title from
-		review_report
-		left join review
-		on review_report.post_id = review.post_id
-		union
-		select community_report.*, 'community' as type_name,
-		community.title from
-		community_report
-		left join community
-		on
-		community_report.post_id = community.post_id) re1
-		order by report_date
-		desc) re2)
-		where rnum &gt;= #{startrow} and rnum &lt;=
-		#{endrow}
-
-	</select>
-
-	<select id="reportcount" parameterType="search" resultType="int">
-		select count(*) reports from
-		(select daily_report.*, 'daily' as
-		type_name, daily.title from daily_report
-		left join daily
-		on
-		daily_report.post_id = daily.post_id
-		union
-		select review_report.*,
-		'review' as type_name, review.title from
-		review_report
-		left join review
-		on review_report.post_id = review.post_id
-		union
-		select
-		community_report.*, 'community' as type_name, community.title from
-		community_report
-		left join community
-		on community_report.post_id =
-		community.post_id)
-		order by report_date desc
-	</select>
 
 
 </mapper>

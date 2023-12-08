@@ -24,9 +24,6 @@ import com.ootd.weatherlook.service.ReportServiceImpl;
 
 @Controller
 public class ReportController {
-
-	@Autowired
-	private MainServiceImpl mainpageservice;
 	
 	@Autowired
 	private ReportServiceImpl reportservice;
@@ -59,7 +56,7 @@ public class ReportController {
 		search.setEndrow(endrow);
 		search.setPage(page);
 		
-		int listcount = mainpageservice.getReportCount(search);
+		int listcount = reportservice.getReportCount(search);
 		
 		int maxpage = listcount / numberset + ((listcount % numberset == 0) ? 0 : 1);
 		int startpage = ((page - 1) / pageset) * numberset + 1; 
@@ -68,7 +65,7 @@ public class ReportController {
 			endpage = maxpage;
 		
 
-		reportlist = mainpageservice.getReportList(search);
+		reportlist = reportservice.getReportList(search);
 		System.out.println("reportlist : " + reportlist);
 		model.addAttribute("reportlist", reportlist);
 		model.addAttribute("startpage", startpage);

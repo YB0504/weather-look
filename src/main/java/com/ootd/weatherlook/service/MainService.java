@@ -17,10 +17,6 @@ public interface MainService {
 	public int getSearchCount(Search search);
 	
 	
-	public List<MainBoard> getWeatherList(Search search);
-	public int getweatherCount(Search search);
-	
-	public List<Report> getReportList(Search search);
-	public int getReportCount(Search search);
+
  	
 }

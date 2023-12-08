@@ -60,42 +60,6 @@ public class MainDaoImpl implements MainDao {
 		// <- 트래킹
 		return session.selectOne("main.searchcount", search);
 	}
-
-	@Override
-	public List<MainBoard> getWeatherList(Search search) {
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
-		return session.selectList("main.weather", search);
-	}
-
-	@Override
-	public int getweathercount(Search search) {
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
-		return session.selectOne("main.weathercount",search);
-	}
 	
-	@Override
-	public List<Report> getReportList(Search search) {
-		// TODO Auto-generated method stub
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
-		return session.selectList("main.reportlist", search);
-	}
-
-	@Override
-	public int getReportCount(Search search) {
-		// TODO Auto-generated method stub
-		return session.selectOne("main.reportcount", search);
-	}
-
+	
 }
