@@ -6,6 +6,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ootd.weatherlook.model.DailyReReportDTO;
 import com.ootd.weatherlook.model.ReDaily;
 
 @Repository
@@ -30,6 +31,16 @@ public class ReDailyDao {
 	public void update(ReDaily rb) {
 		// TODO Auto-generated method stub
 		ress.update("rupdate", rb);
+	}
+
+	public void dailyReplyInsert(ReDaily rb) {
+		// TODO Auto-generated method stub
+		ress.insert("dailyReplyInsert", rb);
+	}
+
+	public void reReportInsert(DailyReReportDTO dailyReReport) {
+		// TODO Auto-generated method stub
+		ress.insert("reReportInsert", dailyReReport);
 	}
 	
 }

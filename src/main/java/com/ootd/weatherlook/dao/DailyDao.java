@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.DailyReportDTO;
 import com.ootd.weatherlook.model.LikeDTO;
 import com.ootd.weatherlook.model.ScrapDTO;
 import com.ootd.weatherlook.model.Search;
@@ -74,5 +75,10 @@ public class DailyDao {
 
 	public ScrapDTO isScrap(ScrapDTO scrapDTO) {
 		return session.selectOne("isScrap", scrapDTO);
+	}
+
+	public void reportInsert(DailyReportDTO dailyReport) {
+		// TODO Auto-generated method stub
+		session.insert("reportInsert", dailyReport);
 	}
 }

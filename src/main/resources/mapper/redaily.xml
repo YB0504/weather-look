@@ -22,19 +22,15 @@
 			re_regdate=sysdate where re_id=#{re_id}
 	</update>
 
-	<!-- <insert id="insert" parameterType="daily"> 
-	insert into daily values(daily_seq.nextval,#{title},0,sysdate,#{content},10,36,128,'준혁') 
-		</insert> <select id="count" resultType="int"> select count(*) from daily 
-		</select> <select id="list" parameterType="int" resultType="daily"> <![CDATA[ 
-		select * from (select rownum rnum, daily.* from ( select * from daily order 
-		by post_id desc) daily) where rnum >= ((#{page}-1) * 10 + 1) and rnum <= 
-		(#{page} * 10) ]]> </select> <update id="hit" parameterType="int"> update 
-		daily set read_count = read_count + 1 where post_id=#{post_id} </update> 
-		<select id="content" parameterType="int" resultType="daily"> select * from 
-		daily where post_id=#{post_id} </select> <update id="update" parameterType="daily"> 
-		update daily set nick=#{nick}, title=#{title}, content=#{content}, reg_date=sysdate 
-		where post_id=#{post_id} </update> <delete id="delete" parameterType="int"> 
-		delete from daily where post_id=${post_id} </delete> -->
+	<insert id="dailyReplyInsert" parameterType="redaily">
+    	insert into daily_reply values (daily_reply_seq.nextval, #{re_content},
+      	#{re_ref}, #{re_level}+1, #{re_step}+1, sysdate, #{nick}, #{post_id})
+	</insert>
+	
+	<insert id="reReportInsert" parameterType="dailyReReport">
+		insert into re_daily_report (report_id, reason, re_id, report_date)
+		values (re_daily_report_seq.nextval, #{reason}, #{re_id}, sysdate)
+	</insert>
 
 </mapper>
 

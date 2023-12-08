@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.DailyReportDTO;
 import com.ootd.weatherlook.model.LikeDTO;
 import com.ootd.weatherlook.model.ScrapDTO;
 import com.ootd.weatherlook.model.Search;
@@ -41,7 +42,7 @@ public class DailyController {
 	@RequestMapping("dailyform")
 	public String dailyform(HttpSession session) {
 		System.out.println("DailyController.dailyform");
-		session.setAttribute("nick", "준혁");
+		session.setAttribute("nick", "혜림");
 		return "daily/dailyform";
 	}
 	
@@ -402,4 +403,33 @@ public class DailyController {
 
 		return "redirect:dailycontent";
 	}
+	
+		// 신고하기
+		@RequestMapping("dailyReport")
+		public String dailyReport(int post_id, Model model) throws Exception {
+			System.out.println("신고하기 폼");
+
+			model.addAttribute("post_id", post_id);
+			return "daily/dailyReport";
+		}
+
+		@RequestMapping("dailyReportIn")
+		public String dailyReportIn(@ModelAttribute DailyReportDTO dailyReport,
+		                            @RequestParam("post_id") int post_id, Model model) throws Exception {
+
+			System.out.println("reportInsert");
+
+			dailyReport.setPost_id(post_id);
+
+			service.reportInsert(dailyReport);
+
+			System.out.println("신고 완료");
+
+			model.addAttribute("report", "게시글에 대한 신고가 완료 되었습니다.");
+
+			return "daily/dailyReport";
+
+		}	
+		
+	
 }

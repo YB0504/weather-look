@@ -94,7 +94,7 @@
 
         // 신고 팝업 열기
         function openReportPopup(postid) {
-            window.open('sendReport?post_id=' + postid, '신고하기', 'width=450,height=500');
+            window.open('dailyReport?post_id=' + postid, '신고하기', 'width=450,height=500');
         }
 	</script>
 </head>
@@ -155,7 +155,9 @@
 							<i class="bi bi-bookmark" id="scrap" style="color : #3B5998; font-size: 35px"></i>&nbsp;&nbsp;&nbsp;&nbsp;
 						</span>
 					</c:if>
-					<i class="bi bi-exclamation-circle" style="font-size: 35px; color: #1a1d20"></i>
+					<c:if test="${sessionScope.nick ne daily.nick }">
+						<i class="bi bi-exclamation-circle" onclick="openReportPopup(${daily.post_id})" style="font-size: 35px; color: #1a1d20"></i>
+					</c:if>
 				</div>
 			</div>
 		</div>

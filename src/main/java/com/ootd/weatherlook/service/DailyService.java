@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ootd.weatherlook.dao.DailyDao;
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.DailyReportDTO;
 import com.ootd.weatherlook.model.LikeDTO;
 import com.ootd.weatherlook.model.ScrapDTO;
 import com.ootd.weatherlook.model.Search;
@@ -73,5 +74,10 @@ public class DailyService {
 
 	public ScrapDTO isScrap(ScrapDTO scrapDTO) {
 		return dao.isScrap(scrapDTO);
+	}
+
+	public void reportInsert(DailyReportDTO dailyReport) {
+		// TODO Auto-generated method stub
+		dao.reportInsert(dailyReport);
 	}
 }

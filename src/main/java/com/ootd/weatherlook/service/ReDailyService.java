@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ootd.weatherlook.dao.ReDailyDao;
+import com.ootd.weatherlook.model.DailyReReportDTO;
 import com.ootd.weatherlook.model.ReDaily;
 
 @Service
@@ -33,6 +34,18 @@ public class ReDailyService {
 	public void update(ReDaily rb) {
 		// TODO Auto-generated method stub
 		rdd.update(rb);
+	}
+
+
+	public void dailyReplyInsert(ReDaily rb) {
+		// TODO Auto-generated method stub
+		rdd.dailyReplyInsert(rb);
+	}
+
+
+	public void reReportInsert(DailyReReportDTO dailyReReport) {
+		// TODO Auto-generated method stub
+		rdd.reReportInsert(dailyReReport);
 	}
 	
 	
