@@ -156,6 +156,8 @@ public class MainController {
 	@RequestMapping("detail")
 	public String detail(HttpServletRequest request, Model model) {
 		
+		int page = 1;
+		
 		// 트래킹 ->
 		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
 		StackTraceElement caller = stackTrace[1];
@@ -167,12 +169,20 @@ public class MainController {
 		System.out.println("type_name : " + type_name);
 		System.out.println("post_id : " + post_id);
 		
-		if(type_name.equals("daily"))
+		if(type_name.equals("daily")) {
 			System.out.println("daily 게시판 실행");
-		if(type_name.equals("review"))
+			return "redirect:dailycontent?post_id="+post_id+"&page="+page ;
+		}
+		
+		if(type_name.equals("review")) {
 			System.out.println("review 게시판 실행");
-		if(type_name.equals("community"))
+			return "redirect:reviewDetail?post_id="+post_id+"&page="+page  ;
+		}
+		
+		if(type_name.equals("community")) {
 			System.out.println("community 게시판 실행");
+			return "redirect:commcontent?post_id="+post_id+"&page="+page  ;
+		}
 		
 		
 		return "";

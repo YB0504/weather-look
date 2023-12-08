@@ -28,54 +28,54 @@ public class ReviewDao{
 	}
 
 	public void getReviewInsert(ReviewDTO review) {
-		session.insert("reviewInsert", review);
+		session.insert("review.reviewInsert", review);
 	}
 
 	public List<ReviewDTO> getReviewList(int page) {
-		return session.selectList("list", page);
+		return session.selectList("review.list", page);
 	}
 	
 	public void getUpdateCount(int post_id) {
-		session.update("updateCount", post_id);
+		session.update("review.updateCount", post_id);
 	}
 
 	public ReviewDTO getReview(int post_id) {
-		return session.selectOne("content", post_id);
+		return session.selectOne("review.content", post_id);
 	}
 
 	public void reportInsert(ReviewReportDTO reviewReport) {
-		session.insert("reportInsert", reviewReport);
+		session.insert("review.reportInsert", reviewReport);
 	}
 
 	public int reviewUpdate(ReviewDTO review) {
-		return session.update("reviewUpdate", review);
+		return session.update("review.reviewUpdate", review);
 	}
 
 	public int reviewDelete(int post_id) {
-		return session.delete("reviewDelete", post_id);
+		return session.delete("review.reviewDelete", post_id);
 	}
 
 	public void likeInsert(LikeDTO likeDTO) {
-		session.insert("likeInsert", likeDTO);
+		session.insert("review.likeInsert", likeDTO);
 	}
 
 	public void likeDelete(int like_id) {
-		session.delete("likeDelete", like_id);
+		session.delete("review.likeDelete", like_id);
 	}
 
 	public LikeDTO isLike(LikeDTO likeDTO) {
-		return session.selectOne("isLike", likeDTO);
+		return session.selectOne("review.isLike", likeDTO);
 	}
 
 	public void scrapInsert(ScrapDTO scrapDTO) {
-		session.insert("scrapInsert", scrapDTO);
+		session.insert("review.scrapInsert", scrapDTO);
 	}
 
 	public void scrapDelete(int scrap_id) {
-		session.delete("scrapDelete", scrap_id);
+		session.delete("review.scrapDelete", scrap_id);
 	}
 
 	public ScrapDTO isScrap(ScrapDTO scrapDTO) {
-		return session.selectOne("isScrap", scrapDTO);
+		return session.selectOne("review.isScrap", scrapDTO);
 	}
 }

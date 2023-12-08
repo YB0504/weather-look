@@ -30,15 +30,6 @@ public class Review {
 	@Autowired
 	private ReviewService service;
 
-	@RequestMapping("review")
-	String reviewMain(Model model, HttpSession session) {
-		System.out.println("Session Setting In");
-		String nick = "준혁";
-
-		// 닉네임으로 세션 설정
-		session.setAttribute("nick", nick);
-		return "redirect:reviewList";
-	}
 
 	@RequestMapping("reviewInsertForm")
 	public String reviewInsertForm() {
