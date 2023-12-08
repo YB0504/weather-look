@@ -158,71 +158,63 @@ public class LoginController {
 			
 			MemberDTO logink2 = service.kakaoLoginCheck(nick);
 			session.setAttribute("nick",logink2.getNick());	// 회원 등록 후 세션 설정
-			session.setAttribute("id", logink2.getId());
 			
 			System.out.println("카톡카톡!!!!!");
 			model.addAttribute("member", kakao);
 			
-			return "member/main";
+			return "redirect:main";
 			
 		}else if(kakaoCheck.getNick().equals(nick))  // 등록되어 있는 회원
 			
 			System.out.println("카카오 로그인 성공");
 			
 			session.setAttribute("nick", nick);
-			session.setAttribute("id", id);
 			MemberDTO member = service.kakaoLoginCheck(nick);
 			model.addAttribute("member", member);
-			return "member/main";
+			return "redirect:main";
 			
 	}
 
 	// 로그인 성공
-	@RequestMapping("main")
+	@RequestMapping("login")
 	public String login(String id, String passwd, HttpSession session, Model model)throws Exception {
-		
+
 		System.out.println("로그인 인증");
-		
+
 		int result = 0;
-		
+
 		MemberDTO member = service.login(id);
-		
+
 		if(member == null) {	// 가입되지 않은 회원
-			
+
 			result = 1;
-			
+
 			model.addAttribute("result", result);
-			
+
 			return "member/loginResult";
-			
+
 		} else {
-			
+
 			if("master".equals(id) && member.getPasswd().equals(passwd)) {
-				
-				session.setAttribute("id", id);
 				session.setAttribute("nick", member.getNick());
-				session.setAttribute("profile_image", member.getProfile_image());
-				
+
 				return "member/adminPage";
-				
+
 			}else if(member.getPasswd().equals(passwd)) {	// 비밀번호 일치 session 설정
-				
-				session.setAttribute("id", id);
 				session.setAttribute("nick", member.getNick());
-				session.setAttribute("profile_image", member.getProfile_image());
-				
+
 				System.out.println("로그인 성공");
-				
-				return "redirect:commlist";
-				
-			} else {	// 비밀번호 불일치 
-				
+
+				return "redirect:main";
+
+			} else {	// 비밀번호 불일치
+
 				result = 2;
-				
+
 				model.addAttribute("result", result);
-				
+
 				System.out.println("로그인 실패");
-				
+
 				return "member/loginResult";
 			}
 		}

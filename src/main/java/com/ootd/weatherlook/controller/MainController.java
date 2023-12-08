@@ -28,19 +28,6 @@ public class MainController {
 	@Autowired
 	private MainServiceImpl mainpageservice;
 
-	@RequestMapping("/")
-	public String test() {
-
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
-
-		return "redirect:main";
-	}
-
-
 	@RequestMapping("main")
 	public String mainpage(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 

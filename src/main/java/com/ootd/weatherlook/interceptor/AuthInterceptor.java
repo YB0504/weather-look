@@ -12,8 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class AuthInterceptor implements HandlerInterceptor{
 
 	@Override
-	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
-			throws Exception {
+	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		// TODO Auto-generated method stub
 		
 		HttpSession session = request.getSession();
@@ -21,12 +20,11 @@ public class AuthInterceptor implements HandlerInterceptor{
 		Object nick = request.getAttribute("nick");
 		System.out.println("preHandler 동작 확인");
 				
-//		if(session.getAttribute("nick") == null) {
-//			response.sendRedirect("loginform");
-//			return false;
-//		}
+		if(session.getAttribute("nick") == null) {
+			response.sendRedirect("loginform");
+			return false;
+		}
 		return true;
-		
 	}
 
 	

@@ -22,7 +22,7 @@ public class ReviewDao{
 		
 		// 구해온 게시글 개수를 count에 저장하여 리턴
 		int count = 0;	
-		count = ((Integer) session.selectOne("postCount")).intValue();
+		count = ((Integer) session.selectOne("review.postCount")).intValue();
 
 		return count;
 	}

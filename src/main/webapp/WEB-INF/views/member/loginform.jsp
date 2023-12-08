@@ -103,7 +103,7 @@ function kakaoLogout() {
 									<p class="text-center small">Enter your e-mail & password to login</p>
 								</div>
 ​
-								<form class="row g-3 needs-validation" action="main" novalidate>
+								<form class="row g-3 needs-validation" action="login" novalidate>
 ​
 									<div class="col-12">
 										<label for="id" class="form-label">E-mail</label>
