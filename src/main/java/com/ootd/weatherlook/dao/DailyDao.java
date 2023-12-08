@@ -2,13 +2,14 @@ package com.ootd.weatherlook.dao;
 
 import java.util.List;
 
-import com.ootd.weatherlook.model.LikeDTO;
-import com.ootd.weatherlook.model.ScrapDTO;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.LikeDTO;
+import com.ootd.weatherlook.model.ScrapDTO;
+import com.ootd.weatherlook.model.Search;
 
 @Repository
 public class DailyDao {

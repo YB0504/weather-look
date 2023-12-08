@@ -2,13 +2,14 @@ package com.ootd.weatherlook.service;
 
 import java.util.List;
 
-import com.ootd.weatherlook.model.LikeDTO;
-import com.ootd.weatherlook.model.ScrapDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ootd.weatherlook.dao.DailyDao;
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.LikeDTO;
+import com.ootd.weatherlook.model.ScrapDTO;
+import com.ootd.weatherlook.model.Search;
 
 @Service
 public class DailyService {
