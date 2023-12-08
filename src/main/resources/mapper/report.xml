@@ -3,7 +3,6 @@
 
 <mapper namespace="report">
 
-	<!-- ========== reportpage ========== -->
 
 	<select id="reportlist" parameterType="search"
 		resultType="report">
