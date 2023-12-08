@@ -11,6 +11,7 @@
 --------------------------------------------------------------*/
 :root {
 <<<<<<< HEAD
+<<<<<<< HEAD
   scroll-behavior: smooth;
 }
 
@@ -29,6 +30,8 @@ a:hover {
   color: #717ff5;
   text-decoration: none;
 =======
+=======
+>>>>>>> review
     scroll-behavior: smooth;
 }
 
@@ -46,7 +49,10 @@ a {
 a:hover {
     color: #717ff5;
     text-decoration: none;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 h1,
@@ -56,16 +62,21 @@ h4,
 h5,
 h6 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   font-family: "Nunito", sans-serif;
 =======
     font-family: "Nunito", sans-serif;
 >>>>>>> community
+=======
+    font-family: "Nunito", sans-serif;
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Main
 --------------------------------------------------------------*/
 #main {
+<<<<<<< HEAD
 <<<<<<< HEAD
   margin-top: 60px;
   padding: 20px 30px;
@@ -77,6 +88,8 @@ h6 {
     padding: 20px;
   }
 =======
+=======
+>>>>>>> review
     margin-top: 60px;
     padding: 20px 30px;
     transition: all 0.3s;
@@ -86,13 +99,17 @@ h6 {
     #main {
         padding: 20px;
     }
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Page Title
 --------------------------------------------------------------*/
 .pagetitle {
+<<<<<<< HEAD
 <<<<<<< HEAD
   margin-bottom: 10px;
 }
@@ -103,6 +120,8 @@ h6 {
   font-weight: 600;
   color: #012970;
 =======
+=======
+>>>>>>> review
     margin-bottom: 10px;
 }
 
@@ -111,13 +130,17 @@ h6 {
     margin-bottom: 0;
     font-weight: 600;
     color: #012970;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Back to top button
 --------------------------------------------------------------*/
 .back-to-top {
+<<<<<<< HEAD
 <<<<<<< HEAD
   position: fixed;
   visibility: hidden;
@@ -147,6 +170,8 @@ h6 {
   visibility: visible;
   opacity: 1;
 =======
+=======
+>>>>>>> review
     position: fixed;
     visibility: hidden;
     opacity: 0;
@@ -174,7 +199,10 @@ h6 {
 .back-to-top.active {
     visibility: visible;
     opacity: 1;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
@@ -182,6 +210,7 @@ h6 {
 --------------------------------------------------------------*/
 /* Dropdown menus */
 .dropdown-menu {
+<<<<<<< HEAD
 <<<<<<< HEAD
   border-radius: 4px;
   padding: 10px 0;
@@ -191,6 +220,8 @@ h6 {
   border: 0;
   box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
 =======
+=======
+>>>>>>> review
     border-radius: 4px;
     padding: 10px 0;
     animation-name: dropdown-animate;
@@ -198,11 +229,15 @@ h6 {
     animation-fill-mode: both;
     border: 0;
     box-shadow: 0 5px 30px 0 rgba(82, 63, 105, 0.2);
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 .dropdown-menu .dropdown-header,
 .dropdown-menu .dropdown-footer {
+<<<<<<< HEAD
 <<<<<<< HEAD
   text-align: center;
   font-size: 15px;
@@ -267,6 +302,8 @@ h6 {
     opacity: 0;
   }
 =======
+=======
+>>>>>>> review
     text-align: center;
     font-size: 15px;
     padding: 10px 25px;
@@ -329,11 +366,15 @@ h6 {
     0% {
         opacity: 0;
     }
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Light Backgrounds */
 .bg-primary-light {
+<<<<<<< HEAD
 <<<<<<< HEAD
   background-color: #cfe2ff;
   border-color: #cfe2ff;
@@ -368,6 +409,8 @@ h6 {
   background-color: #d3d3d4;
   border-color: #d3d3d4;
 =======
+=======
+>>>>>>> review
     background-color: #cfe2ff;
     border-color: #cfe2ff;
 }
@@ -400,26 +443,36 @@ h6 {
 .bg-dark-light {
     background-color: #d3d3d4;
     border-color: #d3d3d4;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Card */
 .card {
+<<<<<<< HEAD
 <<<<<<< HEAD
   margin-bottom: 30px;
   border: none;
   border-radius: 5px;
   box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
 =======
+=======
+>>>>>>> review
     margin-bottom: 30px;
     border: none;
     border-radius: 5px;
     box-shadow: 0px 0 30px rgba(1, 41, 112, 0.1);
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 .card-header,
 .card-footer {
+<<<<<<< HEAD
 <<<<<<< HEAD
   border-color: #ebeef4;
   background-color: #fff;
@@ -448,6 +501,8 @@ h6 {
 .card-img-overlay {
   background-color: rgba(255, 255, 255, 0.6);
 =======
+=======
+>>>>>>> review
     border-color: #ebeef4;
     background-color: #fff;
     color: #798eb3;
@@ -471,15 +526,23 @@ h6 {
 
 .card-body {
     padding: 0 20px 20px 20px;
+<<<<<<< HEAD
+=======
+    font-size: 20px;
+>>>>>>> review
 }
 
 .card-img-overlay {
     background-color: rgba(255, 255, 255, 0.6);
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Alerts */
 .alert-heading {
+<<<<<<< HEAD
 <<<<<<< HEAD
   font-weight: 500;
   font-family: "Poppins", sans-serif;
@@ -489,10 +552,16 @@ h6 {
     font-family: "Poppins", sans-serif;
     font-size: 20px;
 >>>>>>> community
+=======
+    font-weight: 500;
+    font-family: "Poppins", sans-serif;
+    font-size: 20px;
+>>>>>>> review
 }
 
 /* Close Button */
 .btn-close {
+<<<<<<< HEAD
 <<<<<<< HEAD
   background-size: 25%;
 }
@@ -501,17 +570,23 @@ h6 {
   outline: 0;
   box-shadow: none;
 =======
+=======
+>>>>>>> review
     background-size: 25%;
 }
 
 .btn-close:focus {
     outline: 0;
     box-shadow: none;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Accordion */
 .accordion-item {
+<<<<<<< HEAD
 <<<<<<< HEAD
   border: 1px solid #ebeef4;
 }
@@ -542,6 +617,8 @@ h6 {
   color: #3e4f6f;
   font-size: 15px;
 =======
+=======
+>>>>>>> review
     border: 1px solid #ebeef4;
 }
 
@@ -570,11 +647,15 @@ h6 {
     padding: 0 0 15px 0;
     color: #3e4f6f;
     font-size: 15px;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Breadcrumbs */
 .breadcrumb {
+<<<<<<< HEAD
 <<<<<<< HEAD
   font-size: 14px;
   font-family: "Nunito", sans-serif;
@@ -599,6 +680,8 @@ h6 {
   color: #51678f;
   font-weight: 600;
 =======
+=======
+>>>>>>> review
     font-size: 14px;
     font-family: "Nunito", sans-serif;
     color: #899bbd;
@@ -621,11 +704,15 @@ h6 {
 .breadcrumb .active {
     color: #51678f;
     font-weight: 600;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Bordered Tabs */
 .nav-tabs-bordered {
+<<<<<<< HEAD
 <<<<<<< HEAD
   border-bottom: 2px solid #ebeef4;
 }
@@ -635,6 +722,8 @@ h6 {
   border: none;
   color: #2c384e;
 =======
+=======
+>>>>>>> review
     border-bottom: 2px solid #ebeef4;
 }
 
@@ -642,11 +731,15 @@ h6 {
     margin-bottom: -2px;
     border: none;
     color: #2c384e;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 .nav-tabs-bordered .nav-link:hover,
 .nav-tabs-bordered .nav-link:focus {
+<<<<<<< HEAD
 <<<<<<< HEAD
   color: #4154f1;
 }
@@ -656,6 +749,8 @@ h6 {
   color: #4154f1;
   border-bottom: 2px solid #4154f1;
 =======
+=======
+>>>>>>> review
     color: #4154f1;
 }
 
@@ -663,13 +758,17 @@ h6 {
     background-color: #fff;
     color: #4154f1;
     border-bottom: 2px solid #4154f1;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Header
 --------------------------------------------------------------*/
 .logo {
+<<<<<<< HEAD
 <<<<<<< HEAD
   line-height: 1;
 }
@@ -751,6 +850,8 @@ h6 {
   transition: 0.3s;
   width: 100%;
 =======
+=======
+>>>>>>> review
     line-height: 1;
 }
 
@@ -830,11 +931,15 @@ h6 {
     border-radius: 3px;
     transition: 0.3s;
     width: 100%;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 .header .search-form input:focus,
 .header .search-form input:hover {
+<<<<<<< HEAD
 <<<<<<< HEAD
   outline: none;
   box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
@@ -851,6 +956,8 @@ h6 {
 .header .search-form button i {
   color: #012970;
 =======
+=======
+>>>>>>> review
     outline: none;
     box-shadow: 0 0 10px 0 rgba(1, 41, 112, 0.15);
     border: 1px solid rgba(1, 41, 112, 0.3);
@@ -865,13 +972,17 @@ h6 {
 
 .header .search-form button i {
     color: #012970;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Header Nav
 --------------------------------------------------------------*/
 .header-nav ul {
+<<<<<<< HEAD
 <<<<<<< HEAD
   list-style: none;
 }
@@ -1008,6 +1119,8 @@ h6 {
 .header-nav .profile .dropdown-item:hover {
   background-color: #f6f9ff;
 =======
+=======
+>>>>>>> review
     list-style: none;
 }
 
@@ -1142,13 +1255,17 @@ h6 {
 
 .header-nav .profile .dropdown-item:hover {
     background-color: #f6f9ff;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Sidebar
 --------------------------------------------------------------*/
 .sidebar {
+<<<<<<< HEAD
 <<<<<<< HEAD
   position: fixed;
   top: 60px;
@@ -1180,6 +1297,8 @@ h6 {
 .sidebar::-webkit-scrollbar-thumb {
   background-color: #aab7cf;
 =======
+=======
+>>>>>>> review
     position: fixed;
     top: 60px;
     left: 0;
@@ -1209,11 +1328,15 @@ h6 {
 
 .sidebar::-webkit-scrollbar-thumb {
     background-color: #aab7cf;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 @media (min-width: 1200px) {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   #main,
   #footer {
@@ -1226,6 +1349,8 @@ h6 {
     left: 0;
   }
 =======
+=======
+>>>>>>> review
     #main,
     #footer {
         margin-left: 300px;
@@ -1236,11 +1361,15 @@ h6 {
     .toggle-sidebar .sidebar {
         left: 0;
     }
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 @media (min-width: 1200px) {
 
+<<<<<<< HEAD
 <<<<<<< HEAD
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
@@ -1344,6 +1473,8 @@ h6 {
   line-height: 0;
   border-radius: 50%;
 =======
+=======
+>>>>>>> review
     .toggle-sidebar #main,
     .toggle-sidebar #footer {
         margin-left: 0;
@@ -1445,11 +1576,15 @@ h6 {
     margin-right: 8px;
     line-height: 0;
     border-radius: 50%;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 .sidebar-nav .nav-content a:hover,
 .sidebar-nav .nav-content a.active {
+<<<<<<< HEAD
 <<<<<<< HEAD
   color: #4154f1;
 }
@@ -1457,12 +1592,17 @@ h6 {
 .sidebar-nav .nav-content a.active i {
   background-color: #4154f1;
 =======
+=======
+>>>>>>> review
     color: #4154f1;
 }
 
 .sidebar-nav .nav-content a.active i {
     background-color: #4154f1;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
@@ -1470,6 +1610,7 @@ h6 {
 --------------------------------------------------------------*/
 /* Filter dropdown */
 .dashboard .filter {
+<<<<<<< HEAD
 <<<<<<< HEAD
   position: absolute;
   right: 0px;
@@ -1483,6 +1624,8 @@ h6 {
   transition: 0.3s;
   font-size: 16px;
 =======
+=======
+>>>>>>> review
     position: absolute;
     right: 0px;
     top: 15px;
@@ -1494,11 +1637,15 @@ h6 {
     padding-bottom: 5px;
     transition: 0.3s;
     font-size: 16px;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 .dashboard .filter .icon:hover,
 .dashboard .filter .icon:focus {
+<<<<<<< HEAD
 <<<<<<< HEAD
   color: #4154f1;
 }
@@ -1520,6 +1667,8 @@ h6 {
 .dashboard .filter .dropdown-item {
   padding: 8px 15px;
 =======
+=======
+>>>>>>> review
     color: #4154f1;
 }
 
@@ -1539,11 +1688,15 @@ h6 {
 
 .dashboard .filter .dropdown-item {
     padding: 8px 15px;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Info Cards */
 .dashboard .info-card {
+<<<<<<< HEAD
 <<<<<<< HEAD
   padding-bottom: 10px;
 }
@@ -1579,6 +1732,8 @@ h6 {
   color: #ff771d;
   background: #ffecdf;
 =======
+=======
+>>>>>>> review
     padding-bottom: 10px;
 }
 
@@ -1612,11 +1767,15 @@ h6 {
 .dashboard .customers-card .card-icon {
     color: #ff771d;
     background: #ffecdf;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Activity */
 .dashboard .activity {
+<<<<<<< HEAD
 <<<<<<< HEAD
   font-size: 14px;
 }
@@ -1695,6 +1854,8 @@ h6 {
   color: #777777;
   margin-left: 95px;
 =======
+=======
+>>>>>>> review
     font-size: 14px;
 }
 
@@ -1771,11 +1932,15 @@ h6 {
     font-size: 14px;
     color: #777777;
     margin-left: 95px;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Recent Sales */
 .dashboard .recent-sales {
+<<<<<<< HEAD
 <<<<<<< HEAD
   font-size: 14px;
 }
@@ -1795,6 +1960,8 @@ h6 {
 .dashboard .recent-sales .dataTable-bottom {
   padding: 10px 0 0 0;
 =======
+=======
+>>>>>>> review
     font-size: 14px;
 }
 
@@ -1812,11 +1979,15 @@ h6 {
 
 .dashboard .recent-sales .dataTable-bottom {
     padding: 10px 0 0 0;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /* Top Selling */
 .dashboard .top-selling {
+<<<<<<< HEAD
 <<<<<<< HEAD
   font-size: 14px;
 }
@@ -1837,6 +2008,8 @@ h6 {
   border-radius: 5px;
   max-width: 60px;
 =======
+=======
+>>>>>>> review
     font-size: 14px;
 }
 
@@ -1855,13 +2028,17 @@ h6 {
 .dashboard .top-selling img {
     border-radius: 5px;
     max-width: 60px;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Icons list page
 --------------------------------------------------------------*/
 .iconslist {
+<<<<<<< HEAD
 <<<<<<< HEAD
   display: grid;
   max-width: 100%;
@@ -1894,6 +2071,8 @@ h6 {
   white-space: nowrap;
   color: #666;
 =======
+=======
+>>>>>>> review
     display: grid;
     max-width: 100%;
     grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
@@ -1924,13 +2103,17 @@ h6 {
     text-overflow: ellipsis;
     white-space: nowrap;
     color: #666;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Profie Page
 --------------------------------------------------------------*/
 .profile .profile-card img {
+<<<<<<< HEAD
 <<<<<<< HEAD
   max-width: 120px;
 }
@@ -1981,6 +2164,8 @@ h6 {
 .profile .profile-edit img {
   max-width: 120px;
 =======
+=======
+>>>>>>> review
     max-width: 120px;
 }
 
@@ -2029,13 +2214,17 @@ h6 {
 
 .profile .profile-edit img {
     max-width: 120px;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # F.A.Q Page
 --------------------------------------------------------------*/
 .faq .basic h6 {
+<<<<<<< HEAD
 <<<<<<< HEAD
   font-size: 18px;
   font-weight: 600;
@@ -2045,6 +2234,8 @@ h6 {
 .faq .basic p {
   color: #6980aa;
 =======
+=======
+>>>>>>> review
     font-size: 18px;
     font-weight: 600;
     color: #4154f1;
@@ -2052,13 +2243,17 @@ h6 {
 
 .faq .basic p {
     color: #6980aa;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Contact
 --------------------------------------------------------------*/
 .contact .info-box {
+<<<<<<< HEAD
 <<<<<<< HEAD
   padding: 28px 30px;
 }
@@ -2122,6 +2317,8 @@ h6 {
   border-top-color: #eee;
   animation: animate-loading 1s linear infinite;
 =======
+=======
+>>>>>>> review
     padding: 28px 30px;
 }
 
@@ -2183,26 +2380,36 @@ h6 {
     border: 3px solid #18d26e;
     border-top-color: #eee;
     animation: animate-loading 1s linear infinite;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 .contact .php-email-form input,
 .contact .php-email-form textarea {
+<<<<<<< HEAD
 <<<<<<< HEAD
   border-radius: 0;
   box-shadow: none;
   font-size: 14px;
   border-radius: 0;
 =======
+=======
+>>>>>>> review
     border-radius: 0;
     box-shadow: none;
     font-size: 14px;
     border-radius: 0;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 .contact .php-email-form input:focus,
 .contact .php-email-form textarea:focus {
+<<<<<<< HEAD
 <<<<<<< HEAD
   border-color: #4154f1;
 }
@@ -2237,6 +2444,8 @@ h6 {
     transform: rotate(360deg);
   }
 =======
+=======
+>>>>>>> review
     border-color: #4154f1;
 }
 
@@ -2269,13 +2478,17 @@ h6 {
     100% {
         transform: rotate(360deg);
     }
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Error 404
 --------------------------------------------------------------*/
 .error-404 {
+<<<<<<< HEAD
 <<<<<<< HEAD
   padding: 30px;
 }
@@ -2310,6 +2523,8 @@ h6 {
     max-width: 50%;
   }
 =======
+=======
+>>>>>>> review
     padding: 30px;
 }
 
@@ -2511,13 +2726,17 @@ h6 {
     background-color: #2eca6a;
     bottom: 20px;
     left: 0;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }
 
 /*--------------------------------------------------------------
 # Footer
 --------------------------------------------------------------*/
 .footer {
+<<<<<<< HEAD
 <<<<<<< HEAD
   padding: 20px 0;
   font-size: 14px;
@@ -2536,6 +2755,8 @@ h6 {
   font-size: 13px;
   color: #012970;
 =======
+=======
+>>>>>>> review
     padding: 20px 0;
     font-size: 14px;
     transition: all 0.3s;
@@ -2552,5 +2773,8 @@ h6 {
     text-align: center;
     font-size: 13px;
     color: #012970;
+<<<<<<< HEAD
 >>>>>>> community
+=======
+>>>>>>> review
 }

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reReview">
+	
+	<!-- 댓글 목록 -->
+	<select id="reReviewList" parameterType="int" resultType="reviewReply">
+		select * from (select reReply.* from  
+	  	(select * from review_reply order by re_ref asc,re_step desc) reReply) 
+	    where post_id = #{post_id} order by re_ref, re_regdate
+	</select>
+	
+	<!-- 댓글 입력 -->
+	<insert id="reInsert" parameterType="reviewReply">
+		insert into review_reply values (review_reply_seq.nextval,#{re_content},review_reply_seq.nextval,0,0,sysdate,#{nick},#{post_id})
+	</insert>
+	
+	<!-- 댓글 수정 -->
+	<update id="reUpdate" parameterType="reviewReply">
+		update review_reply set re_content=#{re_content},
+			re_regdate=#{re_regdate} where re_id=#{re_id}
+	</update>
+	
+	<!-- 댓글 삭제 -->
+	<delete id="reDelete" parameterType="int">
+		delete from review_reply where re_id=#{re_id}
+	</delete>
+	
+	<!-- 대댓글 입력 -->
+	<insert id="reReplyInsert" parameterType="reviewReply">
+    	insert into review_reply values (review_reply_seq.nextval, #{re_content},
+      	#{re_ref}, #{re_level}+1, #{re_step}+1, sysdate, #{nick}, #{post_id})
+	</insert>
+	
+	<!-- 댓글 신고 -->
+	<insert id="reReportInsert" parameterType="replyReport">
+		insert into re_review_report (report_id, reason, re_id, report_date)
+		values (re_review_report_seq.nextval, #{reason}, #{re_id}, sysdate)
+	</insert>
+	
+	<select id="getRevReply" parameterType="int" resultType="reviewReply">
+		select * from review_reply where re_id=#{re_id}
+	</select>
+
+</mapper>

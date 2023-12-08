@@ -98,16 +98,15 @@
 				<span>메인페이지</span>
 			</a>
 		</li>
-
 		<li class="nav-item">
-			<a class="nav-link collapsed" href="#">
+			<a class="nav-link collapsed" href="dailylist">
 				<i class="bi bi-brightness-alt-high"></i>
 				<span>데일리룩</span>
 			</a>
 		</li>
 
 		<li class="nav-item">
-			<a class="nav-link collapsed" href="#">
+			<a class="nav-link collapsed" href="reviewList">
 				<i class="bi bi-bag-check"></i>
 				<span>쇼핑후기</span>
 			</a>

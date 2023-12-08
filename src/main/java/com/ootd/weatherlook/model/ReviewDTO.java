@@ -5,8 +5,8 @@ import lombok.Data;
 import org.apache.ibatis.type.Alias;
 
 @Data
-@Alias("comm")
-public class Community {
+@Alias("review")
+public class ReviewDTO {
 	private int post_id;
 	private String title;
 	private String read_count;
@@ -14,4 +14,6 @@ public class Community {
 	private String content;
 	private String nick;
 	private String category;
+	private String item_type;
+	private String review_file;
 }
