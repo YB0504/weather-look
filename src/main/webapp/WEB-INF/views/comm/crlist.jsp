@@ -71,6 +71,7 @@
         
         function cancelReply(reId) {
         	$('#replyForm_' + reId).hide().find('input[name="re_content"]').val('');
+        	lst();
         }
 
     function commReplyInsert(reId) {
