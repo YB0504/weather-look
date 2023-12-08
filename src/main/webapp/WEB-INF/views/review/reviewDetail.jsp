@@ -36,7 +36,7 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script>
         $(function () {
-            $('#slist').load('crlist?post_id=${comm.post_id}')
+            $('#slist').load('crlist?post_id=${review.post_id}')
 
             $('#heart').click(function () {
                 var heart = confirm("추천 하시겠습니까?");
