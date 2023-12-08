@@ -21,10 +21,10 @@ public class AuthInterceptor implements HandlerInterceptor{
 		Object nick = request.getAttribute("nick");
 		System.out.println("preHandler 동작 확인");
 				
-		if(session.getAttribute("nick") == null) {
-			response.sendRedirect("loginform");
-			return false;
-		}
+//		if(session.getAttribute("nick") == null) {
+//			response.sendRedirect("loginform");
+//			return false;
+//		}
 		return true;
 		
 	}

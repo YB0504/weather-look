@@ -84,8 +84,14 @@
 				</nav>
 			</div>
 			<div class="card">
-				<div>
-					<h1 class="card-title">${comm.title}</h1>
+				<div class="d-flex justify-content-between align-items-center">
+					<h1 class="card-title ml-auto">${comm.title}</h1>
+					<c:if test="${comm.nick eq sessionScope.nick}">
+						<span class="mr-auto">
+							<a style="color: #1a1d20" class="btn btn-link edit1" onClick="location.href='commupdateform?post_id=${comm.post_id}&page=${page}'">수정</a>
+							<a style="color: #1a1d20" class="btn btn-link" onclick="delcheck()">삭제</a>
+						</span>
+					</c:if>
 				</div>
 				<div class="d-flex justify-content-between align-items-center" style="margin-left: 20px; color: #2c0b0e">
 					<span class="ml-auto">${comm.nick}</span>

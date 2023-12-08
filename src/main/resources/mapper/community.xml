@@ -5,7 +5,7 @@
     
     <!-- 글 작성 -->
    <insert id = "commInsert" parameterType="comm">
-   insert into community values(community_seq.nextval,#{title},0,sysdate,#{content},#{category},#{nick})  
+   insert into community values(community_seq.nextval,#{title},0,sysdate,#{content},#{category, jdbcType=VARCHAR},#{nick})
    </insert>
 	
 	<!-- 글 개수 구해오기 -->
@@ -32,8 +32,7 @@
 	</select>
 	
 	<update id = "commUpdate" parameterType="comm">
-		update community set nick=#{nick}, title=#{title},
-		content=#{content},category=#{category}, reg_date=sysdate where post_id=#{post_id}
+		update community set nick=#{nick}, title=#{title}, content=#{content}, category=#{category, jdbcType=VARCHAR} where post_id=#{post_id}
 	</update>
 	
 	<delete id="commDelete" parameterType="int">
