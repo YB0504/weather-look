@@ -49,7 +49,7 @@
         
         function up(id) {
             var re_content = $('#tt_' + id).val();
-            var formData = "re_id=" + id + '&re_content=' + re_content
+            var formData = "re_id=" + id +'&re_content=' + re_content
                 + "&post_id=${comm.post_id}";
             $.post('repUpdate', formData, function (data) {
                 $('#slist').html(data);

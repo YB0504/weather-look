@@ -121,9 +121,9 @@
 						</c:if>
 					</ul>
 				</div>
-
+		
 			</c:if>
-		</div>
+		</div>	
 	</section>
 </main><!-- End #main -->
 

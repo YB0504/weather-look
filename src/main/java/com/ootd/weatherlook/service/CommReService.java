@@ -45,6 +45,7 @@ public class CommReService {
 		crd.reReportInsert(commReReport);
 	}
 
-	
-	
+	public CommunityRe getReply(int re_id) {
+		return crd.getReply(re_id);
+	}
 }

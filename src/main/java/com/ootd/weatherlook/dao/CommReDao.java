@@ -44,6 +44,7 @@ public class CommReDao {
 		rsession.insert("reReportInsert", commReReport);
 	}
 
-
-	
+	public CommunityRe getReply(int re_id) {
+		return rsession.selectOne("getReply", re_id);
+	}
 }

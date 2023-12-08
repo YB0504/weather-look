@@ -56,7 +56,9 @@ public class CommReController {
 
 	@RequestMapping("repUpdate")
 	public String repUpdate(CommunityRe cr, Model model) {
-		crs.update(cr);
+		CommunityRe commre = crs.getReply(cr.getRe_id());
+		commre.setRe_content(cr.getRe_content());
+		crs.update(commre);
 		System.out.println("repUpdate : ");
 		return "redirect:crlist?post_id="+ cr.getPost_id();
 	}
