@@ -18,5 +18,8 @@ public class Report {
 	private String type_name;
 	private Date report_date;
 	
+	private String re_content;
+	private String re_id;
+	
 
 }

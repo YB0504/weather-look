@@ -31,7 +31,9 @@
 <link href="assets/css/style.css" rel="stylesheet">
 
 <script src = "js/reported.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 </head>
 <body>
@@ -41,11 +43,11 @@
 	<main id="main" class="main">
 
 		<div class="pagetitle">
-			<h1>신고된 게시글</h1>
+			<h1>Reported</h1>
 			<nav>
 				<ol class="breadcrumb">
-					<li class="breadcrumb-item active">글</li>
-					<li class="breadcrumb-item">댓글</li>
+					<li class="breadcrumb-item active"><a href = "reportedpost">글</a></li>
+					<li class="breadcrumb-item"><a href = "reportedreply">댓글</a></li>
 
 				</ol>
 			</nav>
@@ -73,7 +75,7 @@
 					<td>${r.title}</td>
 					<td>${r.reason }</td>
 					<td><input type="button" id="delete" name="delete" value="삭제"
-						onClick="remove('${r.type_name}', '${r.post_id}', '${page}')" /></td>
+						onClick="removepost('${r.type_name}', '${r.post_id}', '${page}')" /></td>
 				</tr>
 			</c:forEach>
 	

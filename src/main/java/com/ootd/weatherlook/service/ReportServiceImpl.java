@@ -14,19 +14,38 @@ public class ReportServiceImpl implements ReportService {
 
 	@Autowired
 	private ReportDao reportDao;
-	
+
 	@Override
 	public void removeDaily(int post_id) {
 		reportDao.removeDaily(post_id);
 	}
+
 	@Override
 	public void removeReview(int post_id) {
 		reportDao.removeReview(post_id);
 	}
+
 	@Override
 	public void removeCommunity(int post_id) {
 		reportDao.removeCommunity(post_id);
 	}
+	
+	@Override
+	public void removeDailyReply(int re_id) {
+		reportDao.removeDailyReply(re_id);
+
+	}
+	@Override
+	public void removeReviewReply(int re_id) {
+		reportDao.removeReviewReply(re_id);
+
+	}
+	@Override
+	public void removeCommunityReply(int re_id) {
+		reportDao.removeCommunityReply(re_id);
+
+	}
+	
 	
 
 	@Override
@@ -44,7 +63,19 @@ public class ReportServiceImpl implements ReportService {
 	public int getReportCount(Search search) {
 		// TODO Auto-generated method stub
 		return reportDao.getReportCount(search);
+
 	}
 
-	
+	@Override
+	public int getReportedReplyCount(Search search) {
+		return reportDao.getReportedReplyCount(search);
+	}
+
+	@Override
+	public List<Report> getReportedReplyList(Search search) {
+		return reportDao.getReportedReplyList(search);
+	}
+
+
+
 }

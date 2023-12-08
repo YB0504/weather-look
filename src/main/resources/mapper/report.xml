@@ -58,26 +58,128 @@
 	</select>
 
 
+	<select id="reportedreplylist" parameterType="search"
+		resultType="report">
+
+		select * from(
+		select rownum rnum, re_re1.* from
+		(select 'review_reply' type_name, re_r_r.*,
+		re_r.re_content, re_r.nick, re_r.post_id
+		from re_review_report re_r_r
+		left join
+		review_reply re_r
+		on
+		re_r_r.re_id = re_r.re_id
+
+		union
+
+		select 'community_reply' type_name, re_c_r.*,
+		re_c.re_content, re_c.nick, re_c.post_id
+		from re_comm_report re_c_r
+		left join
+		community_reply re_c
+		on
+		re_c_r.re_id = re_c.re_id
+
+		union
+
+		select 'daily_reply' type_name, re_d_r.*,
+		re_d.re_content, re_d.nick, re_d.post_id
+		from re_daily_report re_d_r
+		left join
+		daily_reply re_d
+		on
+		re_d_r.re_id = re_d.re_id) re_re1
+
+		order by report_date desc)
+		where rnum &gt;= #{startrow} and rnum &lt;= #{endrow}
+		
+
+	</select>
+
+
+
+	<select id="reportedreplycount" parameterType="search"
+		resultType="int">
+
+
+
+		select count(*) from
+		(select 'review_reply' type_name, re_r_r.*,
+		re_r.re_content, re_r.nick, re_r.post_id
+		from re_review_report re_r_r
+		left join
+		review_reply re_r
+		on
+		re_r_r.re_id = re_r.re_id
+
+		union
+
+		select 'community_reply' type_name, re_c_r.*,
+		re_c.re_content, re_c.nick, re_c.post_id
+		from re_comm_report re_c_r
+		left join
+		community_reply re_c
+		on
+		re_c_r.re_id = re_c.re_id
+
+		union
+
+		select 'daily_reply' type_name, re_d_r.*,
+		re_d.re_content, re_d.nick, re_d.post_id
+		from re_daily_report re_d_r
+		left join
+		daily_reply re_d
+		on
+		re_d_r.re_id = re_d.re_id) re_re1
+
+		order by report_date desc
+
+
+	</select>
+
+
+
+
+
 
 	<delete id="removedaily" parameterType="int">
-	
-	delete from daily where post_id = #{post_id}
-	
+
+		delete from daily where post_id = #{post_id}
+
 	</delete>
-	
+
 	<delete id="removereview" parameterType="int">
-	
-	delete from review where post_id = #{post_id}
-	
+
+		delete from review where post_id = #{post_id}
+
 	</delete>
-	
+
 	<delete id="removecommunity" parameterType="int">
-	
-	delete from community where post_id = #{post_id}
-	
+
+		delete from community where post_id = #{post_id}
+
 	</delete>
-	
-	
+
+	<delete id="removedailyreply" parameterType="int">
+
+		delete from daily_reply where re_id = #{re_id}
+
+	</delete>
+
+	<delete id="removereviewreply" parameterType="int">
+
+		delete from review_reply where re_id = #{re_id}
+
+	</delete>
+
+	<delete id="removecommunityreply" parameterType="int">
+
+		delete from community_reply where re_id = #{re_id}
+
+	</delete>
+
+
 </mapper>
 
 
