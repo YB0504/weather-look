@@ -16,6 +16,7 @@ public class Weather {
 	private double deviation;
 	private int ico;
 	private String day;
+	private String region;
 
 	
 	

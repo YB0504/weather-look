@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.Search;
 
 @Repository
 public class DailyDao {
@@ -19,16 +20,16 @@ public class DailyDao {
 		return session.insert("insert", daily);
 	}
 
-	public int getCount() {
+	public int getCount(Search search) {
 		// TODO Auto-generated method stub
-		return session.selectOne("count");
+		return session.selectOne("dailyns.count", search);
 
 	
 	}
 
-	public List<Daily> getDailyList(int page) {
+	public List<Daily> getDailyList(Search search) {
 		// TODO Auto-generated method stub
-		return session.selectList("list", page);
+		return session.selectList("dailyns.list", search);
 	}
 
 	public void updatecount(int post_id) {

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="dailyns">
+
+	<insert id="insert" parameterType="daily">
+		insert into DAILY(post_id,
+		title, read_count, reg_date, content, temperature, latitude,
+		longitude, nick, region, daily_file)
+		values(daily_seq.nextval,
+		#{title}, 0, sysdate, #{content}, #{temperature, jdbcType=VARCHAR},
+		#{latitude, jdbcType=VARCHAR}, #{longitude, jdbcType=VARCHAR},
+		#{nick}, #{region, jdbcType=VARCHAR}, #{daily_file, jdbcType=VARCHAR})
+	</insert>
+
+	<select id="count" parameterType="search" resultType="int">
+		select count(*) from(
+		select rownum rnum, d1.* from (
+		select * from
+		daily
+
+		<where>
+			<if test="weather.region != null and weather.region != ''">
+				region like '%' || #{weather.region} || '%'
+			</if>
+
+			<if
+				test="weather.region != null and weather.region != '' and weather.temperature != null and weather.temperature != ''">
+				and
+			</if>
+
+			<if
+				test="weather.temperature != null and weather.temperature != ''">
+				temperature between
+				(#{weather.lowest}) and
+				(#{weather.highest})
+			</if>
+		</where>
+
+		order by reg_date desc) d1)
+
+
+	</select>
+
+	<select id="list" parameterType="search" resultType="daily">
+		select * from(
+		select rownum rnum, d1.* from (
+		select * from daily
+
+		<where>
+			<if test="weather.region != null and weather.region != ''">
+				region like '%' || #{weather.region} || '%'
+			</if>
+
+			<if
+				test="weather.region != null and weather.region != '' and weather.temperature != null and weather.temperature != ''">
+				and
+			</if>
+
+			<if
+				test="weather.temperature != null and weather.temperature != ''">
+				temperature between
+				(#{weather.lowest}) and
+				(#{weather.highest})
+			</if>
+		</where>
+
+		order by reg_date desc) d1)
+		where rnum &gt;= #{startrow} and rnum &lt;=
+		#{endrow}
+
+	</select>
+
+	<update id="hit" parameterType="int">
+		update daily set read_count =
+		read_count + 1
+		where post_id=#{post_id}
+	</update>
+
+	<select id="content" parameterType="int" resultType="daily">
+		select *
+		from daily where post_id=#{post_id}
+	</select>
+
+	<update id="update" parameterType="daily">
+		update DAILY
+		set
+		title=#{title}, content=#{content}, TEMPERATURE=#{temperature,
+		jdbcType=VARCHAR}, LATITUDE=#{latitude, jdbcType=VARCHAR},
+		longitude=#{longitude, jdbcType=VARCHAR}, REGION=#{region,
+		jdbcType=VARCHAR}, DAILY_FILE=#{daily_file, jdbcType=VARCHAR},
+		reg_date=sysdate
+		where post_id=#{post_id}
+	</update>
+
+	<delete id="delete" parameterType="int">
+		delete from daily where
+		post_id=${post_id}
+	</delete>
+
+</mapper>

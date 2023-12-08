@@ -83,7 +83,7 @@
 		<li class="nav-item"><a class="nav-link collapsed" href="main">
 				<i class="bi bi-grid-1x2"></i> <span>메인페이지</span>
 		</a></li>
-		<li class="nav-item"><a class="nav-link collapsed" href="#">
+		<li class="nav-item"><a class="nav-link collapsed" href="dailylist">
 				<i class="bi bi-brightness-alt-high"></i> <span>데일리룩</span>
 		</a></li>
 		<li class="nav-item"><a class="nav-link collapsed" href="#">

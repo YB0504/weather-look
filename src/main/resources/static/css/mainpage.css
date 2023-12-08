@@ -74,23 +74,6 @@
 	font-family: "Open Sans", sans-serif;
 }
 
-/* .weather_weekly {
-	display: grid;
-	grid-template-columns: repeat(2, 1fr); 2 columns
-	grid-template-rows: repeat(4, 1fr); 4 rows
-	gap: 10px; Adjust the gap between grid items
-	max-width: 1200px;
-	margin-top: 40px;
-	margin-bottom: 20px;
-	margin: 20px auto 20px auto;
-}
-
-.weather_day {
-	border: 1px solid #ccc; Add border for each day
-	padding: 10px; Add padding for better spacing
-	text-align: center; Center text within each day
-	font-size: 16px;
-} */
 .mainbox {
 	max-width: 900px;
 }
@@ -214,4 +197,66 @@
 	margin-top: 0px;
 	opacity: 1;
 	visibility: visible;
+}
+/* 
+ 하위 내용 dailylist에 적용
+ */
+.weatherconditionbox {
+	width: 900px;
+	margin: 0 auto;
+}
+
+.weathercondition {
+	display: flex;
+	justify-content: space-between;
+}
+
+.weathercondition_region {
+	width: 400px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	margin-left: 10px;
+}
+
+.weathercondition_temperature {
+	width: 400px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: row;
+	margin-left: 10px;
+}
+
+.weathercondition_search {
+	flex: 50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.weathercondition_write {
+	flex: 50;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.weathercondition .icon {
+	font-size: 24px;
+}
+
+.weathercondtion_text {
+	width: 50px;
+}
+
+.weathercondition_condition {
+	width: 350px;
+}
+
+/* 날씨조건박스 종료 */
+.titlebox {
+	width: 900px;
+	margin: 0 auto;
 }

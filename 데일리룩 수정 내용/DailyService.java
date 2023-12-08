@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.ootd.weatherlook.dao.DailyDao;
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.Search;
 
 @Service
 public class DailyService {
@@ -19,12 +20,12 @@ public class DailyService {
 		return dao.insert(daily);
 	}
 
-	public int getCount() {
-		return dao.getCount();
+	public int getCount(Search search) {
+		return dao.getCount(search);
 	}
 	
-	public List<Daily> getDailylist(int page) {
-		return dao.getDailyList(page);
+	public List<Daily> getDailylist(Search search) {
+		return dao.getDailyList(search);
 	}
 
 	public void updatecount(int post_id) {

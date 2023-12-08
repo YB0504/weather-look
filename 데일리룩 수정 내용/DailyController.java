@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ootd.weatherlook.model.Daily;
+import com.ootd.weatherlook.model.Search;
+import com.ootd.weatherlook.model.Weather;
 import com.ootd.weatherlook.service.DailyService;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -81,34 +83,79 @@ public class DailyController {
 		return "daily/insertresult";
 	}
 	
+	
+	
 	@RequestMapping("dailylist")
-	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page,
+			@RequestParam(value = "templow", required = false) Double templow,
+			@RequestParam(value = "temphigh", required = false) Double temphigh,
+			@RequestParam(value = "temp", required = false) Integer temp,
+			@RequestParam(value = "region", required = false, defaultValue = "") String region,
+			Model model) {
+
 		System.out.println("DailyController.dailylist");
 
-		int limit = 10;
-		int startRow = (page - 1) * limit + 1;
-		int endRow = page * limit;
+		int limit = 9;
+		int startrow = (page - 1) * limit + 1;
+		int endrow = page * limit;
 		
-		int listCount = service.getCount();
-		System.out.println("listCount:" + listCount);
+		
+		// 검색조건 설정 ==========>
+		
+		Search search = new Search();
+		Weather weather = new Weather();
+		
+		double deviation = 5;
+		weather.setDeviation(5); // 기온 편차 값 삽입
+		if(templow == null && temphigh == null && temp != null) {
+			weather.setHighest(temp+deviation);
+			weather.setLowest(temp-deviation);
+			weather.setTemperature(temp);
+		}
+		if(templow != null && temphigh != null && temp == null) {
+			temp = (int)(templow + temphigh)/2;
+			weather.setHighest(temphigh);
+			weather.setLowest(templow);
+			weather.setTemperature(temp);
+		}
+		
+		if(region != null) {
+			weather.setRegion(region);
+		}
+
+		search.setWeather(weather);
+		search.setStartrow(startrow);
+		search.setEndrow(endrow);
+		search.setPage(page);
+		
+		
+		// <========== 검색조건 설정 
+		
+		int listcount = service.getCount(search);
+		System.out.println("listCount:" + listcount);
 	
-		List<Daily> dailyList = service.getDailylist(page);
+		List<Daily> dailyList = service.getDailylist(search);
 		System.out.println("dailyList:"+ dailyList);
 	
-		int pageCount = listCount/limit+((listCount%10 == 0)?0:1);
+		int pageCount = listcount/limit+((listcount%limit == 0)?0:1);
 		
-		int startPage = ((page-1)/10) * limit + 1;
-		int endPage = startPage + 10 - 1;
+		int startPage = ((page-1)/limit) * limit + 1;
+		int endPage = startPage + limit - 1;
 		
 		if(endPage > pageCount)
 			endPage = pageCount;
 		
 		model.addAttribute("page", page);
-		model.addAttribute("listCount", listCount);
+		model.addAttribute("listcount", listcount);
 		model.addAttribute("dailyList", dailyList);
 		model.addAttribute("pageCount", pageCount);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
+		
+		model.addAttribute("temp",temp);		
+		model.addAttribute("region",region);
+		model.addAttribute("templow",templow);
+		model.addAttribute("temphigh", temphigh);
 		
 		return "daily/dailylist";
 	}

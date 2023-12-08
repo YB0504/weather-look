@@ -1,7 +1,7 @@
 			    function updateLink(dateId) {
 			        var templow = document.getElementById(dateId + '_templow').textContent.slice(0, -1);
 			        var temphigh = document.getElementById(dateId + '_temphigh').textContent.slice(0, -1);
-			        var link = 'daily?templow=' + templow + '&temphigh=' + temphigh;
+			        var link = 'dailylist?templow=' + templow + '&temphigh=' + temphigh;
 			        window.location.href = link;
 			    }
 			
