@@ -4,7 +4,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,174 +20,146 @@ import com.ootd.weatherlook.service.CommScrapService;
 import com.ootd.weatherlook.service.CommService;
 
 @Controller
+@RequiredArgsConstructor
 public class CommController {
 
-	@Autowired
-	private CommService cs;
-	
-	@Autowired
-	private CommLikeService cls;
-	
-	@Autowired
-	private CommScrapService css;
+	private final CommService cs;
+
+	private final CommLikeService cls;
+
+	private final CommScrapService css;
 
 	@RequestMapping("commform")
-	public String commform(HttpSession session) {
+	public String commform() {
 		System.out.println("CommController.commform");
-		session.setAttribute("nick", "준혁");
 		return "comm/commform";
 	}
-	
-	@RequestMapping("commwrite")
-	public String commwrite(@ModelAttribute Community comm,
-							HttpSession session,
-							Model model) {
 
+	@RequestMapping("commwrite")
+	public String commwrite(@ModelAttribute Community comm, Model model) {
+		System.out.println("CommController.commwrite");
 		int result = cs.commInsert(comm);
-		
-		session.setAttribute("nick",comm.getNick());
-		if(result == 1) System.out.println("글 작성 성공");
-			model.addAttribute("result", result);
-			
+		if (result == 1)
+			System.out.println("글 작성 성공");
+
+		model.addAttribute("result", result);
 		return "comm/insertresult";
 	}
-	
+
 	@RequestMapping("commlist")
-	public String commlist(@RequestParam(value = "page", defaultValue = "1") int page,
-							Model model) {
-	
+	public String commlist(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
+		System.out.println("CommController.commlist");
+
 		int limit = 10;
-		
+
+//		미사용 변수
 		int startRow = (page - 1) * limit + 1;
 		int endRow = page * limit;
-		
+
 		int listCount = cs.getCommCount();
 		System.out.println("listcount");
-		
+
 		List<Community> commList = cs.getCommList(page);
 		System.out.println("commlist");
-		
-		int pageCount = listCount/limit+((listCount%10 == 0)?0:1);
-		
-		int startPage = ((page-1)/10) * limit + 1;	// 1, 11, 21...
-		int endPage = startPage + 10 - 1;			// 10, 20, 30...
-		
-		if(endPage > pageCount)
-			endPage = pageCount;
-		
+
+		int pageCount = listCount / limit + ((listCount % 10 == 0) ? 0 : 1);
+
+		int startPage = ((page - 1) / 10) * limit + 1;
+		int endPage = startPage + 10 - 1;
+
+		if (endPage > pageCount) endPage = pageCount;
+
 		model.addAttribute("page", page);
 		model.addAttribute("listCount", listCount);
 		model.addAttribute("commList", commList);
 		model.addAttribute("pageCount", pageCount);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-		
+
 		return "comm/commlist";
 	}
-	
+
 	@RequestMapping("commcontent")
-	public String commcontent(@RequestParam("post_id") int post_id,
-							  @RequestParam("page") String page,
-							  HttpSession session,
-							  Model model) {
+	public String commcontent(@RequestParam("post_id") int post_id, @RequestParam("page") String page, HttpSession session, Model model) {
+		System.out.println("CommController.commcontent");
+
 		cs.commUpdateCount(post_id);
-		System.out.println("updatecount");
-		
 		Community comm = cs.getCommunity(post_id);
-		
-		CommunityLike likeDTO = new CommunityLike();		
-		likeDTO.setNick((String)session.getAttribute("nick"));
+		String nick = (String) session.getAttribute("nick");
+
+		CommunityLike likeDTO = new CommunityLike();
+		likeDTO.setNick(nick);
 		likeDTO.setPost_id(post_id);
 		CommunityLike commlike = cls.getCommLike(likeDTO);
 		model.addAttribute("commlike", commlike);
-		System.out.println("컴라이크생성");
-		
+
 		CommunityScrap scrapDTO = new CommunityScrap();
-		
-		scrapDTO.setNick((String)session.getAttribute("nick"));
+		scrapDTO.setNick(nick);
 		scrapDTO.setPost_id(post_id);
 		CommunityScrap commscrap = css.getCommScrap(scrapDTO);
 		model.addAttribute("commscrap", commscrap);
-		System.out.println("스크랩");
-		
-		String content = comm.getContent().replace("\n","<br>");
-		
+
+		String content = comm.getContent().replace("\n", "<br>");
 		model.addAttribute("comm", comm);
 		model.addAttribute("content", content);
 		model.addAttribute("page", page);
-		
+
 		return "comm/commcontent";
 	}
-	
+
 	@RequestMapping("commupdateform")
-	public String commupdateform(@RequestParam("post_id") int post_id,
-								 @RequestParam("page") String page,
-								 HttpSession session,
-								 Model model) {
-		System.out.println(session.getAttribute("nick"));
+	public String commupdateform(@RequestParam("post_id") int post_id, @RequestParam("page") String page, Model model) {
+		System.out.println("CommController.commupdateform");
+
 		Community comm = cs.getCommunity(post_id);
 		model.addAttribute("comm", comm);
 		model.addAttribute("page", page);
-		
+
 		return "comm/commupdateform";
 	}
-	
+
 	@RequestMapping("commupdate")
-	public String commupdate(@ModelAttribute Community comm,
-							 @RequestParam("page") String page,
-							 Model model) {
-		
+	public String commupdate(@ModelAttribute Community comm, @RequestParam("page") String page, Model model) {
+		System.out.println("CommController.commupdate");
 		int result = cs.commUpdate(comm);
-		
+
 		model.addAttribute("result", result);
-		model.addAttribute("comm",comm);
-		model.addAttribute("page",page);
-		
-		
+		model.addAttribute("comm", comm);
+		model.addAttribute("page", page);
+
 		return "comm/updateresult";
 	}
-	
-	
+
+
 	@RequestMapping("commdelete")
-	public String commdelete(@ModelAttribute Community comm,
-							 @RequestParam("page") String page,
-							 Model model) {
-		
+	public String commdelete(@ModelAttribute Community comm, @RequestParam("page") String page, Model model) {
+		System.out.println("CommController.commdelete");
+
 		int result = cs.commDelete(comm.getPost_id());
-		
 		model.addAttribute("result", result);
 		model.addAttribute("page", page);
-		
-		return"redirect:commlist";
+
+		return "redirect:commlist";
 	}
-	
+
 	@RequestMapping("commReport")
 	public String commReport(int post_id, Model model) throws Exception {
-		System.out.println("신고하기 폼");
+		System.out.println("CommController.commReport");
 
 		model.addAttribute("post_id", post_id);
+
 		return "comm/commReport";
 	}
 
 	@RequestMapping("commReportIn")
-	public String commReportIn(@ModelAttribute CommReportDTO communityReport,
-	                            @RequestParam("post_id") int post_id, Model model) throws Exception {
-
-		System.out.println("reportInsert");
+	public String commReportIn(@ModelAttribute CommReportDTO communityReport, @RequestParam("post_id") int post_id, Model model) throws Exception {
+		System.out.println("CommController.commReportIn");
 
 		communityReport.setPost_id(post_id);
-
 		cs.reportInsert(communityReport);
-
-		System.out.println("신고 완료");
-
 		model.addAttribute("report", "게시글에 대한 신고가 완료 되었습니다.");
-
 		return "comm/commReport";
-
 	}
-	
-
 }
 
 	

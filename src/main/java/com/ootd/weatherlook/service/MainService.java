@@ -9,14 +9,9 @@ import com.ootd.weatherlook.model.Search;
 import com.ootd.weatherlook.model.SearchResult;
 
 public interface MainService {
-	
-	public List<MainBoard> getMainList(Search search);
-	public int getMainCount(Search search);
+	List<MainBoard> getMainList(Search search);
+	int getMainCount(Search search);
 
-	public List<SearchResult> getSearchList(Search search);
-	public int getSearchCount(Search search);
-	
-	
-
- 	
+	List<SearchResult> getSearchList(Search search);
+	int getSearchCount(Search search);
 }

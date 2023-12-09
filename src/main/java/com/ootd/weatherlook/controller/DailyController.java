@@ -7,6 +7,7 @@ import java.util.UUID;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,31 +29,22 @@ import feature.RegionSTNResolver;
 import feature.RegionTemperatureResolver;
 
 @Controller
+@RequiredArgsConstructor
 public class DailyController {
 
-	@Autowired
-	private DailyService service;
-	
-	@RequestMapping("/")
-	public String main() {
-		System.out.println("DailyController.main");
-		return "redirect:dailyform";
-	}
+	private final DailyService service;
 
 	@RequestMapping("dailyform")
 	public String dailyform(HttpSession session) {
 		System.out.println("DailyController.dailyform");
-		session.setAttribute("nick", "혜림");
+
 		return "daily/dailyform";
 	}
-	
+
 	@RequestMapping("dailywrite")
-	public String dailywrite(@RequestParam("uploadFile") MultipartFile file,
-	                         @RequestParam("imageDate") String imageDate,
-	                         Daily daily,
-							 HttpServletRequest request,
-	                         Model model) {
+	public String dailywrite(@RequestParam("uploadFile") MultipartFile file, @RequestParam("imageDate") String imageDate, Daily daily, HttpServletRequest request, Model model) {
 		System.out.println("DailyController.dailywrite");
+
 		int result;
 		String path = request.getServletContext().getRealPath("upload");
 
@@ -91,44 +83,35 @@ public class DailyController {
 		model.addAttribute("result", result);
 		return "daily/insertresult";
 	}
-	
-	// ========== 선홍 수정: dailylist ===========
-	
-	@RequestMapping("dailylist")
-	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page,
-			@RequestParam(value = "templow", required = false) Double templow,
-			@RequestParam(value = "temphigh", required = false) Double temphigh,
-			@RequestParam(value = "temp", required = false) Integer temp,
-			@RequestParam(value = "region", required = false, defaultValue = "") String region,
-			Model model) {
 
+	@RequestMapping("dailylist")
+	public String dailylist(@RequestParam(value = "page", defaultValue = "1") int page, @RequestParam(value = "templow", required = false) Double templow, @RequestParam(value = "temphigh", required = false) Double temphigh, @RequestParam(value = "temp", required = false) Integer temp, @RequestParam(value = "region", required = false, defaultValue = "") String region, Model model) {
 		System.out.println("DailyController.dailylist");
 
 		int limit = 9;
 		int startrow = (page - 1) * limit + 1;
 		int endrow = page * limit;
-		
-		
+
+
 		// 검색조건 설정 ==========>
-		
 		Search search = new Search();
 		Weather weather = new Weather();
-		
+
 		double deviation = 5;
 		weather.setDeviation(deviation); // 기온 편차 값 삽입
-		if(templow == null && temphigh == null && temp != null) {
-			weather.setHighest(temp+deviation);
-			weather.setLowest(temp-deviation);
+		if (templow == null && temphigh == null && temp != null) {
+			weather.setHighest(temp + deviation);
+			weather.setLowest(temp - deviation);
 			weather.setTemperature(temp);
 		}
-		if(templow != null && temphigh != null && temp == null) {
-			temp = (int)(templow + temphigh)/2;
+		if (templow != null && temphigh != null && temp == null) {
+			temp = (int) (templow + temphigh) / 2;
 			weather.setHighest(temphigh);
 			weather.setLowest(templow);
 			weather.setTemperature(temp);
 		}
-		
-		if(region != null) {
+
+		if (region != null) {
 			weather.setRegion(region);
 		}
 
@@ -136,56 +119,45 @@ public class DailyController {
 		search.setStartrow(startrow);
 		search.setEndrow(endrow);
 		search.setPage(page);
-		
-		
+
+
 		// <========== 검색조건 설정 
-		
+
 		int listcount = service.getCount(search);
-		System.out.println("listCount:" + listcount);
-	
 		List<Daily> dailyList = service.getDailylist(search);
-		System.out.println("dailyList:"+ dailyList);
-	
-		int pageCount = listcount/limit+((listcount%limit == 0)?0:1);
-		
-		int startPage = ((page-1)/limit) * limit + 1;
+		int pageCount = listcount / limit + ((listcount % limit == 0) ? 0 : 1);
+
+		int startPage = ((page - 1) / limit) * limit + 1;
 		int endPage = startPage + limit - 1;
-		
-		if(endPage > pageCount)
-			endPage = pageCount;
-		
+
+		if (endPage > pageCount) endPage = pageCount;
+
 		model.addAttribute("page", page);
 		model.addAttribute("listcount", listcount);
 		model.addAttribute("dailyList", dailyList);
 		model.addAttribute("pageCount", pageCount);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
-		
-		model.addAttribute("temp",temp);		
-		model.addAttribute("region",region);
-		model.addAttribute("templow",templow);
+
+		model.addAttribute("temp", temp);
+		model.addAttribute("region", region);
+		model.addAttribute("templow", templow);
 		model.addAttribute("temphigh", temphigh);
-		
+
 		return "daily/dailylist";
 	}
-		
-	// ========== 선홍 수정: dailylist ===========
-	
-		
+
 	@RequestMapping("dailycontent")
-		public String dailycontent(@RequestParam("post_id") int post_id,
-								   @RequestParam("page") String page,
-								   HttpSession session,
-								   Model model) {
+	public String dailycontent(@RequestParam("post_id") int post_id, @RequestParam("page") String page, HttpSession session, Model model) {
 		System.out.println("DailyController.dailycontent");
-		String nick = (String)session.getAttribute("nick");
+		String nick = (String) session.getAttribute("nick");
 
 		service.updatecount(post_id);
 		Daily daily = service.getDaily(post_id);
 		String content = daily.getContent().replace("\n", "<br>");
 
-		model.addAttribute("daily",daily);
-		model.addAttribute("content",content);
+		model.addAttribute("daily", daily);
+		model.addAttribute("content", content);
 		model.addAttribute("page", page);
 
 		//like 관련 코드
@@ -204,27 +176,20 @@ public class DailyController {
 		ScrapDTO scrap = service.isScrap(scrapDTO);
 		model.addAttribute("scrap", scrap);
 		return "daily/dailycontent";
-	}		
+	}
 
 	@RequestMapping("dailyupdateform")
-	public String dailyupdateform(@RequestParam("post_id") int post_id,
-								  @RequestParam("page") String page,
-								  Model model) {
+	public String dailyupdateform(@RequestParam("post_id") int post_id, @RequestParam("page") String page, Model model) {
 		System.out.println("DailyController.dailyupdateform");
 		Daily daily = service.getDaily(post_id);
 		model.addAttribute("daily", daily);
 		model.addAttribute("page", page);
-		
+
 		return "daily/dailyupdateform";
 	}
-	
+
 	@RequestMapping("dailyupdate")
-	public String dailyupdate(@ModelAttribute Daily daily,
-							  @RequestParam("page") String page,
-							  @RequestParam("uploadFile") MultipartFile file,
-							  @RequestParam("imageDate") String imageDate,
-							  HttpServletRequest request,
-							  Model model) {
+	public String dailyupdate(@ModelAttribute Daily daily, @RequestParam("page") String page, @RequestParam("uploadFile") MultipartFile file, @RequestParam("imageDate") String imageDate, HttpServletRequest request, Model model) {
 		System.out.println("DailyController.dailyupdate");
 		String path = request.getServletContext().getRealPath("upload");
 		Daily storedDaily = service.getDaily(daily.getPost_id());
@@ -232,7 +197,7 @@ public class DailyController {
 
 		if (!file.isEmpty()) {
 			//기존 파일 삭제
-			if (storedDailyFile != null){
+			if (storedDailyFile != null) {
 				File deleteFile = new File(path + "/" + storedDailyFile);
 				deleteFile.delete();
 			}
@@ -264,8 +229,7 @@ public class DailyController {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		else {
+		} else {
 			//새로운 파일이 없을 경우 그대로 유지하기 위해 이전 글 정보를 넣음
 			daily.setDaily_file(storedDailyFile);
 			daily.setLatitude(storedDaily.getLatitude());
@@ -278,46 +242,35 @@ public class DailyController {
 		model.addAttribute("result", result);
 		model.addAttribute("daily", daily);
 		model.addAttribute("page", page);
-		
-		return"redirect:dailylist";
+
+		return "redirect:dailylist";
 	}
 
 	@RequestMapping("dailydelete")
-	public String dailydelete(@ModelAttribute Daily daily,
-							  @RequestParam("page") String page,
-							  HttpServletRequest request,
-							  Model model) {
+	public String dailydelete(@ModelAttribute Daily daily, @RequestParam("page") String page, HttpServletRequest request, Model model) {
 		System.out.println("DailyController.dailydelete");
 
 		String path = request.getServletContext().getRealPath("upload");
 		Daily storedDaily = service.getDaily(daily.getPost_id());
 		String storedDailyFile = storedDaily.getDaily_file();
 
-		if (storedDailyFile != null){
+		if (storedDailyFile != null) {
 			File deleteFile = new File(path + "/" + storedDailyFile);
 			deleteFile.delete();
 		}
 		int result = service.delete(daily.getPost_id());
-		
+
 		model.addAttribute("result", result);
 		model.addAttribute("page", page);
-		
-		return"redirect:dailylist";
+
+		return "redirect:dailylist";
 	}
 
 	@RequestMapping("dailyLikeInsert")
-	public String dailyLikeInsert(@RequestParam("post_id") int post_id,
-	                         @RequestParam("page") String page,
-	                         HttpSession session,
-	                         RedirectAttributes redirectAttributes) {
+	public String dailyLikeInsert(@RequestParam("post_id") int post_id, @RequestParam("page") String page, HttpSession session, RedirectAttributes redirectAttributes) {
 		System.out.println("DailyController.dailyLikeInsert");
 		LikeDTO likeDTO = new LikeDTO();
 		String nick = (String) session.getAttribute("nick");
-
-		//log
-		System.out.println("post_id = " + post_id);
-		System.out.println("page = " + page);
-		System.out.println("nick = " + nick);
 
 		//insert
 		likeDTO.setNick(nick);
@@ -333,16 +286,8 @@ public class DailyController {
 	}
 
 	@RequestMapping("dailyLikeDelete")
-	public String dailyLikeDelete(@RequestParam("post_id") int post_id,
-	                         @RequestParam("page") String page,
-	                         @RequestParam("like_id") int like_id,
-	                         RedirectAttributes redirectAttributes) {
+	public String dailyLikeDelete(@RequestParam("post_id") int post_id, @RequestParam("page") String page, @RequestParam("like_id") int like_id, RedirectAttributes redirectAttributes) {
 		System.out.println("DailyController.dailyLikeDelete");
-
-		//log
-		System.out.println("post_id = " + post_id);
-		System.out.println("page = " + page);
-		System.out.println("like_id = " + like_id);
 
 		//delete
 		service.likeDelete(like_id);
@@ -355,19 +300,11 @@ public class DailyController {
 	}
 
 	@RequestMapping("dailyScrapInsert")
-	public String dailyScrapInsert(@RequestParam("post_id") int post_id,
-	                          @RequestParam("page") String page,
-	                          HttpSession session,
-	                          RedirectAttributes redirectAttributes) {
+	public String dailyScrapInsert(@RequestParam("post_id") int post_id, @RequestParam("page") String page, HttpSession session, RedirectAttributes redirectAttributes) {
 		System.out.println("DailyController.dailyScrapInsert");
 
 		ScrapDTO scrapDTO = new ScrapDTO();
 		String nick = (String) session.getAttribute("nick");
-
-		//log
-		System.out.println("post_id = " + post_id);
-		System.out.println("page = " + page);
-		System.out.println("nick = " + nick);
 
 		//insert
 		scrapDTO.setNick(nick);
@@ -383,16 +320,8 @@ public class DailyController {
 	}
 
 	@RequestMapping("dailyScrapDelete")
-	public String dailyScrapDelete(@RequestParam("post_id") int post_id,
-	                          @RequestParam("page") String page,
-	                          @RequestParam("scrap_id") int scrap_id,
-	                          RedirectAttributes redirectAttributes) {
+	public String dailyScrapDelete(@RequestParam("post_id") int post_id, @RequestParam("page") String page, @RequestParam("scrap_id") int scrap_id, RedirectAttributes redirectAttributes) {
 		System.out.println("DailyController.scrapDelete");
-
-		//log
-		System.out.println("post_id = " + post_id);
-		System.out.println("page = " + page);
-		System.out.println("scrap_id = " + scrap_id);
 
 		//delete
 		service.scrapDelete(scrap_id);
@@ -403,33 +332,24 @@ public class DailyController {
 
 		return "redirect:dailycontent";
 	}
-	
-		// 신고하기
-		@RequestMapping("dailyReport")
-		public String dailyReport(int post_id, Model model) throws Exception {
-			System.out.println("신고하기 폼");
 
-			model.addAttribute("post_id", post_id);
-			return "daily/dailyReport";
-		}
+	@RequestMapping("dailyReport")
+	public String dailyReport(int post_id, Model model) throws Exception {
+		System.out.println("DailyController.dailyReport");
 
-		@RequestMapping("dailyReportIn")
-		public String dailyReportIn(@ModelAttribute DailyReportDTO dailyReport,
-		                            @RequestParam("post_id") int post_id, Model model) throws Exception {
+		model.addAttribute("post_id", post_id);
 
-			System.out.println("reportInsert");
+		return "daily/dailyReport";
+	}
 
-			dailyReport.setPost_id(post_id);
+	@RequestMapping("dailyReportIn")
+	public String dailyReportIn(@ModelAttribute DailyReportDTO dailyReport, @RequestParam("post_id") int post_id, Model model) throws Exception {
+		System.out.println("DailyController.dailyReportIn");
 
-			service.reportInsert(dailyReport);
+		dailyReport.setPost_id(post_id);
+		service.reportInsert(dailyReport);
+		model.addAttribute("report", "게시글에 대한 신고가 완료 되었습니다.");
 
-			System.out.println("신고 완료");
-
-			model.addAttribute("report", "게시글에 대한 신고가 완료 되었습니다.");
-
-			return "daily/dailyReport";
-
-		}	
-		
-	
+		return "daily/dailyReport";
+	}
 }

@@ -72,16 +72,15 @@
 					<td>${r.type_name }</td>
 					<td><fmt:formatDate pattern="yyyy-MM-dd"
 							value="${r.report_date }" /></td>
-					<td>${r.title}</td>
+					<td>
+						<a href="detail?type_name=${r.type_name}&post_id=${r.post_id}">${r.title}</a>
+					</td>
 					<td>${r.reason }</td>
 					<td><input type="button" id="delete" name="delete" value="삭제"
 						onClick="removepost('${r.type_name}', '${r.post_id}', '${page}')" /></td>
 				</tr>
 			</c:forEach>
-	
 		</table>
-		
-		
 			<!-- 페이징 ==============> -->
 
 			<div style="display: flex; justify-content: center;">

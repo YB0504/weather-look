@@ -30,9 +30,10 @@ public class TestController {
 	@RequestMapping("apitest")
 	public String apitest() {
 
-		
+
 		return "weatherapi";
 	}
+
 	@RequestMapping("maintest")
 	public String maintest(@RequestParam(value = "page", defaultValue = "1") int page, HttpServletRequest request, Model model) {
 		// 트래킹 ->
@@ -45,7 +46,7 @@ public class TestController {
 		int numberset = 9;
 		int pageset = 10;
 		int startrow = 1 + (page - 1) * numberset;
-		int endrow = page*numberset;
+		int endrow = page * numberset;
 		List<MainBoard> mainlist = new ArrayList<MainBoard>();
 		Search search = new Search();
 		search.setNumberset(numberset);
@@ -53,15 +54,14 @@ public class TestController {
 		search.setEndrow(endrow);
 		search.setPage(page);
 		// <- 공통 설정
-		
+
 		int listcount = mainpageservice.getMainCount(search);
-		
+
 		// 메인보드 출력물 갯수 연산 ->
 		int maxpage = listcount / numberset + ((listcount % numberset == 0) ? 0 : 1);
-		int startpage = ((page - 1) / pageset) * numberset + 1; 
-		int endpage = startpage + pageset - 1; 
-		if (endpage > maxpage)
-			endpage = maxpage;
+		int startpage = ((page - 1) / pageset) * numberset + 1;
+		int endpage = startpage + pageset - 1;
+		if (endpage > maxpage) endpage = maxpage;
 		// <- 메인보드 출력물 갯수 연산
 		mainlist = mainpageservice.getMainList(search);
 

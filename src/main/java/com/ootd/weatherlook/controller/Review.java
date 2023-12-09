@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import com.ootd.weatherlook.model.LikeDTO;
 import com.ootd.weatherlook.model.ScrapDTO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,70 +26,45 @@ import com.ootd.weatherlook.service.ReviewService;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
+@RequiredArgsConstructor
 public class Review {
 
-	@Autowired
-	private ReviewService service;
-
+	private final ReviewService service;
 
 	@RequestMapping("reviewInsertForm")
 	public String reviewInsertForm() {
-		System.out.println("쇼핑 후기 폼");
+		System.out.println("Review.reviewInsertForm");
+
 		return "review/reviewInsertForm";
 	}
 
 	@RequestMapping("reviewInsert")
-	public String reviewInsert(@ModelAttribute ReviewDTO review, @RequestParam("review_file_form") MultipartFile mf,
-	                           Model model, HttpServletRequest request, HttpSession session) throws Exception {
-		System.out.println("쇼핑 후기 작성");
+	public String reviewInsert(@ModelAttribute ReviewDTO review, @RequestParam("review_file_form") MultipartFile mf, Model model, HttpServletRequest request, HttpSession session) throws Exception {
+		System.out.println("Review.reviewInsert");
 
-		// 로그인한 nick세션 가져오기
 		String nick = (String) session.getAttribute("nick");
-		System.out.println("LoginSession : " + nick);
-
 		String filename = mf.getOriginalFilename(); // 첨부파일명
 		int size = (int) mf.getSize(); // 첨부파일의 크기
 
 		String path = request.getRealPath("upload");
-		System.out.println("mf : " + mf);
-		System.out.println("filename : " + filename);
-		System.out.println("size : " + size);
-		System.out.println("path : " + path);
-
 		int result = 0;
 
 		String newfilename = null;
 
-		if (size > 0) { // 첨부파일이 전송된 경우
-
-			// 파일 중복문제 해결
-			// 확장자 추출
-			String extension = filename.substring(filename.lastIndexOf("."), filename.length());
-			System.out.println("extension:" + extension);
-
-			// 문자형태의 난수 생성하여 저장
+		if (size > 0) {
+			String extension = filename.substring(filename.lastIndexOf("."));
 			UUID uuid = UUID.randomUUID();
-
-			// 랜덤으로 생성된 파일명과 확장자가 합쳐져서 새로 저장
-			newfilename = uuid.toString() + extension;
-			System.out.println("newfilename:" + newfilename);
+			newfilename = uuid + extension;
 
 			if (size > 1000000) {
-
 				result = 1;
-
 				model.addAttribute("result", result);
 
 				return "review/uploadresult";
-
 			}
 
-			// 확장자 오류
-			if (!extension.equals(".jpg") && !extension.equals(".jpeg") && !extension.equals(".gif")
-					    && !extension.equals(".png")) {
-
+			if (!extension.equals(".jpg") && !extension.equals(".jpeg") && !extension.equals(".gif") && !extension.equals(".png")) {
 				result = 2;
-
 				model.addAttribute("result", result);
 
 				return "review/uploadresult";
@@ -96,29 +72,21 @@ public class Review {
 		}
 
 		if (size > 0) { // 첨부파일이 전송된 경우
-
-			// path값과 새로 만들어지 파일명을 실제 업로드 하는 코드
 			mf.transferTo(new File(path + "/" + newfilename));
-
 		}
 
 		review.setNick(nick);
 		review.setReview_file(newfilename);
-
 		service.reviewInsert(review);
-
-		System.out.println("nick : " + nick);
-		System.out.println("글 작성 성공");
 
 		return "redirect:reviewList";
 	}
 
 	@RequestMapping("reviewList")
-	public String reviewList(Model model, HttpSession session, HttpServletRequest request) throws Exception {
-		System.out.println("쇼핑후기 리스트");
+	public String reviewList(Model model, HttpSession session, HttpServletRequest request) {
+		System.out.println("Review.reviewList");
 
 		List<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
-
 		int postCount, page, listSize, maxPage, startPage, endPage;
 
 		String nick = (String) session.getAttribute("nick");
@@ -162,10 +130,7 @@ public class Review {
 	}
 
 	@RequestMapping("reviewDetail")
-	public String reviewDetail(@RequestParam("post_id") int post_id,
-	                           @RequestParam("page") String page,
-	                           HttpSession session,
-	                           Model model) throws Exception {
+	public String reviewDetail(@RequestParam("post_id") int post_id, @RequestParam("page") String page, HttpSession session, Model model) throws Exception {
 		System.out.println("review.reviewDetail");
 
 		String nick = (String) session.getAttribute("nick");
@@ -198,36 +163,28 @@ public class Review {
 	}
 
 	@RequestMapping("sendReport")
-	public String sendReport(int post_id, Model model) throws Exception {
-		System.out.println("신고하기 폼");
+	public String sendReport(int post_id, Model model) {
+		System.out.println("Review.sendReport");
 
 		model.addAttribute("post_id", post_id);
 		return "review/sendReport";
 	}
 
 	@RequestMapping("reportSuccess")
-	public String reportSuccess(@ModelAttribute ReviewReportDTO reviewReport,
-	                            @RequestParam("post_id") int post_id, Model model) throws Exception {
-
-		System.out.println("reportInsert");
+	public String reportSuccess(@ModelAttribute ReviewReportDTO reviewReport, @RequestParam("post_id") int post_id, Model model) {
+		System.out.println("Review.reportSuccess");
 
 		reviewReport.setPost_id(post_id);
-
 		service.reportInsert(reviewReport);
-
-		System.out.println("신고 완료");
-
 		model.addAttribute("report", "게시글에 대한 신고가 완료 되었습니다.");
 
 		return "review/sendReport";
-
 	}
 
 	@RequestMapping("reviewUpdateForm")
-	public String dailyupdateform(@RequestParam("post_id") int post_id,
-	                              @RequestParam("page") String page,
-	                              Model model) {
-		System.out.println("reviewUpdateForm");
+	public String dailyupdateform(@RequestParam("post_id") int post_id, @RequestParam("page") String page, Model model) {
+		System.out.println("Review.dailyupdateform");
+
 		ReviewDTO review = service.getReview(post_id);
 		model.addAttribute("review", review);
 		model.addAttribute("page", page);
@@ -236,12 +193,9 @@ public class Review {
 	}
 
 	@RequestMapping("reviewUpdate")
-	public String reviewUpdate(@ModelAttribute ReviewDTO review,
-	                           @RequestParam("page") String page,
-	                           @RequestParam("uploadFile") MultipartFile file,
-	                           HttpServletRequest request,
-	                           Model model) throws Exception {
-		System.out.println("reviewUpdate");
+	public String reviewUpdate(@ModelAttribute ReviewDTO review, @RequestParam("page") String page, @RequestParam("uploadFile") MultipartFile file, HttpServletRequest request, Model model) throws Exception {
+		System.out.println("Review.reviewUpdate");
+
 		String path = request.getServletContext().getRealPath("upload");
 		ReviewDTO storedReview = service.getReview(review.getPost_id());
 		String storedReviewFile = storedReview.getReview_file();
@@ -274,11 +228,8 @@ public class Review {
 	}
 
 	@RequestMapping("reviewDelete")
-	public String reviewDelete(@ModelAttribute ReviewDTO review,
-	                           @RequestParam("page") String page,
-	                           HttpServletRequest request,
-	                           Model model) {
-		System.out.println("reviewDelete");
+	public String reviewDelete(@ModelAttribute ReviewDTO review, @RequestParam("page") String page, HttpServletRequest request, Model model) {
+		System.out.println("Review.reviewDelete");
 
 		String path = request.getServletContext().getRealPath("upload");
 		ReviewDTO storedReview = service.getReview(review.getPost_id());
@@ -297,17 +248,11 @@ public class Review {
 	}
 
 	@RequestMapping("likeInsert")
-	public String likeInsert(@RequestParam("post_id") int post_id,
-	                         @RequestParam("page") String page,
-	                         HttpSession session,
-	                         RedirectAttributes redirectAttributes) {
+	public String likeInsert(@RequestParam("post_id") int post_id, @RequestParam("page") String page, HttpSession session, RedirectAttributes redirectAttributes) {
+		System.out.println("Review.likeInsert");
+
 		LikeDTO likeDTO = new LikeDTO();
 		String nick = (String) session.getAttribute("nick");
-
-		//log
-		System.out.println("post_id = " + post_id);
-		System.out.println("page = " + page);
-		System.out.println("nick = " + nick);
 
 		//insert
 		likeDTO.setNick(nick);
@@ -323,16 +268,8 @@ public class Review {
 	}
 
 	@RequestMapping("likeDelete")
-	public String likeDelete(@RequestParam("post_id") int post_id,
-	                         @RequestParam("page") String page,
-	                         @RequestParam("like_id") int like_id,
-	                         RedirectAttributes redirectAttributes) {
+	public String likeDelete(@RequestParam("post_id") int post_id, @RequestParam("page") String page, @RequestParam("like_id") int like_id, RedirectAttributes redirectAttributes) {
 		System.out.println("Review.likeDelete");
-
-		//log
-		System.out.println("post_id = " + post_id);
-		System.out.println("page = " + page);
-		System.out.println("like_id = " + like_id);
 
 		//delete
 		service.likeDelete(like_id);
@@ -345,19 +282,11 @@ public class Review {
 	}
 
 	@RequestMapping("scrapInsert")
-	public String scrapInsert(@RequestParam("post_id") int post_id,
-	                         @RequestParam("page") String page,
-	                         HttpSession session,
-	                         RedirectAttributes redirectAttributes) {
+	public String scrapInsert(@RequestParam("post_id") int post_id, @RequestParam("page") String page, HttpSession session, RedirectAttributes redirectAttributes) {
 		System.out.println("Review.scrapInsert");
 
 		ScrapDTO scrapDTO = new ScrapDTO();
 		String nick = (String) session.getAttribute("nick");
-
-		//log
-		System.out.println("post_id = " + post_id);
-		System.out.println("page = " + page);
-		System.out.println("nick = " + nick);
 
 		//insert
 		scrapDTO.setNick(nick);
@@ -373,16 +302,8 @@ public class Review {
 	}
 
 	@RequestMapping("scrapDelete")
-	public String scrapDelete(@RequestParam("post_id") int post_id,
-	                         @RequestParam("page") String page,
-	                         @RequestParam("scrap_id") int scrap_id,
-	                         RedirectAttributes redirectAttributes) {
+	public String scrapDelete(@RequestParam("post_id") int post_id, @RequestParam("page") String page, @RequestParam("scrap_id") int scrap_id, RedirectAttributes redirectAttributes) {
 		System.out.println("Review.scrapDelete");
-
-		//log
-		System.out.println("post_id = " + post_id);
-		System.out.println("page = " + page);
-		System.out.println("scrap_id = " + scrap_id);
 
 		//delete
 		service.scrapDelete(scrap_id);

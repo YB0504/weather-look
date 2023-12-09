@@ -1,5 +1,6 @@
 package com.ootd.weatherlook.dao;
 
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -7,57 +8,60 @@ import org.springframework.stereotype.Repository;
 import com.ootd.weatherlook.model.MemberDTO;
 
 @Repository
+@RequiredArgsConstructor
 public class LoginDao {
-	
-	@Autowired
-	private SqlSession session;
+
+	private final SqlSession session;
 
 	public int idcheck(String id) {
-		
-		int re = -1;	// 가능 ID
-		
-		MemberDTO dto = session.selectOne("idcheck", id);
-		if (dto != null)
-			re = 1;		// 중복id
+		System.out.println("LoginDao.idcheck");
+
+		// 가능 ID: -1, 불가능 ID: 1
+		int re = -1;
+		MemberDTO dto = session.selectOne("member.idcheck", id);
+		if (dto != null) re = 1;
 		
 		return re;
 	}
 
 	public int nickcheck(String nick) {
-		
-		int re = -1;	// 가능 nick
-		
-		MemberDTO dto = session.selectOne("nickcheck", nick);
-		if (dto != null)
-			re = 1;		// 중복nick
+		System.out.println("LoginDao.nickcheck");
+
+		// 가능 nick: -1, 불가능 nick: 1
+		int re = -1;
+		MemberDTO dto = session.selectOne("member.nickcheck", nick);
+		if (dto != null) re = 1;
 		
 		return re;
 	}
 
 	public void insertMember(MemberDTO member) {
-		session.insert("insertmember", member);
+		System.out.println("LoginDao.insertMember");
+		session.insert("member.insertmember", member);
 	}
 
 	public MemberDTO login(String id) {
-		return session.selectOne("login", id);
+		System.out.println("LoginDao.login");
+		return session.selectOne("member.login", id);
 	}
 
 	public MemberDTO kakaoLoginCheck(String nick) {
-		return session.selectOne("kakaoLogin", nick);
+		System.out.println("LoginDao.kakaoLoginCheck");
+		return session.selectOne("member.kakaoLogin", nick);
 	}
 
 	public int kakaologin(MemberDTO kakao) {
-		return session.insert("insertKakao", kakao);
+		System.out.println("LoginDao.kakaologin");
+		return session.insert("member.insertKakao", kakao);
 	}
 
 	public MemberDTO idSearch(MemberDTO mem) {
-		return session.selectOne("idSearch", mem);
+		System.out.println("LoginDao.idSearch");
+		return session.selectOne("member.idSearch", mem);
 	}
 
 	public MemberDTO pwSearch(MemberDTO mem) {
-		return session.selectOne("pwSearch", mem);
+		System.out.println("LoginDao.pwSearch");
+		return session.selectOne("member.pwSearch", mem);
 	}
-
-
-
 }

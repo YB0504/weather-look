@@ -183,7 +183,7 @@
 				<c:forEach var="r" items="${dailyList}" varStatus="i">
 					<div class="card-body">
 						<a href="dailycontent?post_id=${r.post_id}&page=${page}"
-							class="maincardlink"> <img src="images/img_${i.index }.jpg">
+							class="maincardlink"> <img src="upload/${r.daily_file}">
 							<div class="maincardinfo">
 								<p>${r.title}</p>
 								<span>${r.nick}</span>

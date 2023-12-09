@@ -1,37 +1,29 @@
 package com.ootd.weatherlook.service;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.ootd.weatherlook.dao.CommLikeDao;
 import com.ootd.weatherlook.model.CommunityLike;
-import com.ootd.weatherlook.model.CommunityRe;
 
 @Service
+@RequiredArgsConstructor
 public class CommLikeService {
 
-	@Autowired
-	private CommLikeDao cld;
+	private final CommLikeDao cld;
 
 	public int commLikeInsert(CommunityLike commlike) {
-		// TODO Auto-generated method stub
+		System.out.println("CommLikeService.commLikeInsert");
 		return cld.commLikeInsert(commlike);
 	}
 
 	public CommunityLike getCommLike(CommunityLike commlike) {
-		// TODO Auto-generated method stub
+		System.out.println("CommLikeService.getCommLike");
 		return cld.getCommLike(commlike);
 	}
 
 	public void commLikeDelete(int like_id) {
-		// TODO Auto-generated method stub
+		System.out.println("CommLikeService.commLikeDelete");
 		cld.commLikeDelete(like_id);
-
-	}	
-
-
+	}
 }
 	

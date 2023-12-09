@@ -118,9 +118,6 @@
 		<c:forEach var="rb" items="${rdlist}">
 			<c:if test="${rb.re_level eq 0}">
 				<li>
-					<div class="comment-avatar">
-						<img src="assets/img/product-3.jpg" alt="">
-					</div>
 					<div class="comment-details">
 						<h4 class="comment-author" style="font-size: 13px">${rb.nick}</h4>
 						<span class="date-span"><fmt:formatDate value="${rb.re_regdate }" pattern="yyyy-MM-dd"/></span>
@@ -141,9 +138,6 @@
 			</c:if>
 			<c:if test="${rb.re_level > 0}">
 				<li class="comment-children">
-					<div class="comment-avatar">
-						<img src="assets/img/product-3.jpg" alt="">
-					</div>
 					<div class="comment-details">
 						<h4 class="comment-author" style="font-size: 13px">${rb.nick}</h4>
 						<span class="date-span"><fmt:formatDate value="${rb.re_regdate }" pattern="yyyy-MM-dd"/></span>

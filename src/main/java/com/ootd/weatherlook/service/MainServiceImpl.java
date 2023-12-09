@@ -1,66 +1,40 @@
 package com.ootd.weatherlook.service;
 
 import java.util.List;
-import java.util.Map;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import com.ootd.weatherlook.dao.MainDao;
 import com.ootd.weatherlook.model.MainBoard;
-import com.ootd.weatherlook.model.Report;
 import com.ootd.weatherlook.model.Search;
 import com.ootd.weatherlook.model.SearchResult;
 
 @Service
+@RequiredArgsConstructor
 public class MainServiceImpl implements MainService {
 
-	@Autowired
-	private MainDao mainDao;
+	private final MainDao mainDao;
 
 	@Override
 	public List<MainBoard> getMainList(Search search) {
-		// TODO Auto-generated method stub
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
+		System.out.println("MainServiceImpl.getMainList");
 		return mainDao.getMainList(search);
 	}
 
 	@Override
 	public List<SearchResult> getSearchList(Search search) {
-		// TODO Auto-generated method stub
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
+		System.out.println("MainServiceImpl.getSearchList");
 		return mainDao.getSearchList(search);
 	}
 
 	@Override
 	public int getSearchCount(Search search) {
-		// TODO Auto-generated method stub
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
+		System.out.println("MainServiceImpl.getSearchCount");
 		return mainDao.getSearchCount(search);
 	}
 
 	@Override
 	public int getMainCount(Search search) {
-		// TODO Auto-generated method stub
-		// 트래킹 ->
-		StackTraceElement[] stackTrace = Thread.currentThread().getStackTrace();
-		StackTraceElement caller = stackTrace[1];
-		System.out.println("[경로 추적] : " + caller.getClassName() + "." + caller.getMethodName());
-		// <- 트래킹
+		System.out.println("MainServiceImpl.getMainCount");
 		return mainDao.getMainCount(search);
 	}
-
-
 }

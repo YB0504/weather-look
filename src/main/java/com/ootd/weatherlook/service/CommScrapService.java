@@ -1,30 +1,28 @@
 package com.ootd.weatherlook.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import com.ootd.weatherlook.dao.CommScrapDao;
 import com.ootd.weatherlook.model.CommunityScrap;
 
 @Service
+@RequiredArgsConstructor
 public class CommScrapService {
 
-	@Autowired
-	private CommScrapDao csd;
+	private final CommScrapDao csd;
 
 	public int commScrapInsert(CommunityScrap commscrap) {
-		// TODO Auto-generated method stub
+		System.out.println("CommScrapService.commScrapInsert");
 		return csd.commScrapInsert(commscrap);
 	}
 
 	public void commScrapDelete(int scrap_id) {
-		// TODO Auto-generated method stub
+		System.out.println("CommScrapService.commScrapDelete");
 		csd.commScrapDelete(scrap_id);
 	}
 
 	public CommunityScrap getCommScrap(CommunityScrap commscrap) {
-		// TODO Auto-generated method stub
+		System.out.println("CommScrapService.getCommScrap");
 		return csd.getCommScrap(commscrap);
 	}
-	
 }

@@ -1,11 +1,9 @@
 package com.ootd.weatherlook.dao;
 
 import java.util.List;
-
+import lombok.RequiredArgsConstructor;
 import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
 import com.ootd.weatherlook.model.Daily;
 import com.ootd.weatherlook.model.DailyReportDTO;
 import com.ootd.weatherlook.model.LikeDTO;
@@ -13,72 +11,78 @@ import com.ootd.weatherlook.model.ScrapDTO;
 import com.ootd.weatherlook.model.Search;
 
 @Repository
+@RequiredArgsConstructor
 public class DailyDao {
 
-	@Autowired
-	private SqlSession session;
+	private final SqlSession session;
 
 	public int insert(Daily daily) {
-		System.out.println(daily.getNick());
-		return session.insert("insert", daily);
+		System.out.println("DailyDao.insert");
+		return session.insert("dailyns.insert", daily);
 	}
-
-	// ========== 선홍 수정: dailylist ===========
 	
 	public int getCount(Search search) {
-		// TODO Auto-generated method stub
+		System.out.println("DailyDao.getCount");
 		return session.selectOne("dailyns.count", search);
 	}
 
 	public List<Daily> getDailyList(Search search) {
-		// TODO Auto-generated method stub
+		System.out.println("DailyDao.getDailyList");
 		return session.selectList("dailyns.list", search);
 	}
-
-	// ========== 선홍 수정: dailylist ===========
 	
 	public Daily getDaily(int post_id) {
-		return session.selectOne("content", post_id);
+		System.out.println("DailyDao.getDaily");
+		return session.selectOne("dailyns.content", post_id);
 	}
 
 	public int update(Daily daily) {
-		return session.update("update", daily);
+		System.out.println("DailyDao.update");
+		return session.update("dailyns.update", daily);
 	}
 
 	public int delete(int post_id) {
-		return session.delete("delete", post_id);
+		System.out.println("DailyDao.delete");
+		return session.delete("dailyns.delete", post_id);
 	}
 
 	public void updatecount(int post_id) {
-		session.update("hit", post_id);
+		System.out.println("DailyDao.updatecount");
+		session.update("dailyns.hit", post_id);
 	}
 
 	public void likeInsert(LikeDTO likeDTO) {
-		session.insert("likeInsert", likeDTO);
+		System.out.println("DailyDao.likeInsert");
+		session.insert("dailyns.likeInsert", likeDTO);
 	}
 
 	public void likeDelete(int like_id) {
-		session.delete("likeDelete", like_id);
+		System.out.println("DailyDao.likeDelete");
+		session.delete("dailyns.likeDelete", like_id);
 	}
 
 	public LikeDTO isLike(LikeDTO likeDTO) {
-		return session.selectOne("isLike", likeDTO);
+		System.out.println("DailyDao.isLike");
+		return session.selectOne("dailyns.isLike", likeDTO);
 	}
 
 	public void scrapInsert(ScrapDTO scrapDTO) {
-		session.insert("scrapInsert", scrapDTO);
+		System.out.println("DailyDao.scrapInsert");
+		session.insert("dailyns.scrapInsert", scrapDTO);
 	}
 
 	public void scrapDelete(int scrap_id) {
-		session.delete("scrapDelete", scrap_id);
+		System.out.println("DailyDao.scrapDelete");
+		session.delete("dailyns.scrapDelete", scrap_id);
 	}
 
 	public ScrapDTO isScrap(ScrapDTO scrapDTO) {
-		return session.selectOne("isScrap", scrapDTO);
+		System.out.println("DailyDao.isScrap");
+		return session.selectOne("dailyns.isScrap", scrapDTO);
 	}
 
 	public void reportInsert(DailyReportDTO dailyReport) {
-		// TODO Auto-generated method stub
-		session.insert("reportInsert", dailyReport);
+		System.out.println("DailyDao.reportInsert");
+		session.insert("dailyns.reportInsert", dailyReport);
 	}
 }

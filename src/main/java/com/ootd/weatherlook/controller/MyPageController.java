@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -18,14 +19,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class MyPageController {
 	private final MyPageService myPageService;
-
-	@RequestMapping("/myPage")
-	String myPage(Model model, HttpSession session) {
-		System.out.println("MyPageController.myPage");
-		String nick = "준혁";
-		session.setAttribute("nick", nick);
-		return "redirect:myPostList";
-	}
 
 	//	작성글 목록 확인
 	@RequestMapping("/myPostList")
@@ -250,14 +243,14 @@ public class MyPageController {
 				if (updateProfile.equals(storedProfile) || updateProfile.equals("")) {
 					updateMemberVO.setProfile_image(storedProfile);
 					myPageService.updateMember(updateMemberVO);
-					return "redirect:/myPage";
+					return "redirect:/main";
 				}
 
 				//				기본이미지로 변경
 				myPageService.updateMember(updateMemberVO);
 				File deleteFile = new File(path + "/" + storedProfile);
 				deleteFile.delete();
-				return "redirect:/myPage";
+				return "redirect:/main";
 			}
 
 			//			10MB 이상인 파일은 저장하지 않음
@@ -293,7 +286,8 @@ public class MyPageController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return "redirect:/myPage";
+
+		return "redirect:/main";
 	}
 
 	//회원삭제
@@ -306,7 +300,6 @@ public class MyPageController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		//		로그인 form으로 이동 예정
-		return "redirect:/myPage";
+		return "redirect:/loginform";
 	}
 }

@@ -89,7 +89,7 @@
 				<c:forEach var="r" items="${mainlist}" varStatus="i">
 					<div class="card-body">
 						<a href="detail?type_name=${r.type_name}&post_id=${r.post_id}"
-							class="maincardlink"> <img src="images/img_${i.index }.jpg">
+							class="maincardlink"> <img src="upload/${r.image_path}">
 							<div class="maincardinfo">
 								<p>${r.title}</p>
 								<span>${r.type_name}게시판${r.nick}</span>

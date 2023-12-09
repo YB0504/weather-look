@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="UTF-8" ?>
- <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="main">
 
-	<select id="mainlist" parameterType="search"
-		resultType="mainboard">
-		select * from
-		(select rownum rnum, m1.* from
-		(select 'daily'
-		as type_name, post_id, title, nick, reg_date from daily
-		union
-		select
-		'review'
-		as
-		type_name, post_id, title, nick, reg_date from review
-		order
-		by reg_date
-		desc) m1)
-		where rnum &gt;= #{startrow} and rnum &lt;=
-		#{endrow}
+	<select id="mainlist" parameterType="search" resultType="mainboard">
+		select *
+		from (select rownum rnum, m1.*
+		      from (select 'daily' as type_name, post_id, title, nick, reg_date, DAILY_FILE as image_path
+		            from daily
+		            union
+		            select 'review' as type_name, post_id, title, nick, reg_date, REVIEW_FILE as image_path
+		            from review
+		            order by reg_date
+				            desc) m1)
+		where rnum &gt;= #{startrow}
+		  and rnum &lt;=
+		      #{endrow}
 	</select>
 
 	<select id="maincount" parameterType="search" resultType="int">
-		select
-		count(*) maincount from
-		(select 'daily' as type_name, post_id, title,
-		reg_date from daily
-		union
-		select 'review' as type_name, post_id, title,
-		reg_date from review
-		order by reg_date desc)
+		select count(*) maincount
+		from (select 'daily' as type_name,
+		             post_id,
+		             title,
+		             reg_date
+		      from daily
+		      union
+		      select 'review' as type_name,
+		             post_id,
+		             title,
+		             reg_date
+		      from review
+		      order by reg_date desc)
 	</select>
 
 	<!-- 검색페이지 -->
 	<select id="searchlist" parameterType="search"
-		resultType="searchresult">
+	        resultType="searchresult">
 		select * from (
 		select rownum rnum, boards.* from (
 		select 'daily' as
@@ -67,7 +69,7 @@
 				|| '%' OR content LIKE '%' || #{keyword} || '%')
 			</if>
 		</where>
-		 order by reg_date desc
+		order by reg_date desc
 		) boards
 		) where rnum &gt;= #{startrow} and rnum
 		&lt;= #{endrow}
@@ -111,34 +113,33 @@
 
 	<!-- 기온별 데일리룩 -->
 	<select id="weather" parameterType="search"
-		resultType="mainboard">
+	        resultType="mainboard">
 
-		select * from(
-		select rownum rnum, daily.* from daily
-		where temperature &gt;=
-		(#{weather.temperature}-#{weather.deviation}) and
-		temperature &lt;=
-		(#{weather.temperature}+#{weather.deviation})
-		)where rnum &gt;= #{startrow} and rnum &lt;=
-		#{endrow}
+		select *
+		from (select rownum rnum, daily.*
+		      from daily
+		      where temperature &gt;=
+		            (#{weather.temperature} - #{weather.deviation})
+			    and temperature &lt;=
+			        (#{weather.temperature} + #{weather.deviation}))
+		where rnum &gt;= #{startrow}
+		  and rnum &lt;=
+		      #{endrow}
 
 	</select>
 
 	<select id="weathercount" parameterType="search"
-		resultType="int">
+	        resultType="int">
 
-		select count(*) from (
-		select * from daily
-		where temperature &gt;=
-		(#{weather.temperature}-#{weather.deviation}) and
-		temperature &lt;=
-		(#{weather.temperature}+#{weather.deviation})
-		)
+		select count(*)
+		from (select *
+		      from daily
+		      where temperature &gt;=
+		            (#{weather.temperature} - #{weather.deviation})
+			    and temperature &lt;=
+			        (#{weather.temperature} + #{weather.deviation}))
 
 	</select>
-
-
-
 
 
 </mapper>
