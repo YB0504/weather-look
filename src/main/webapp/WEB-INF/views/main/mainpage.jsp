@@ -83,22 +83,23 @@
 
 		<section>
 
-			<!-- 3x3 썸네일 출력 ==============> -->
-
-			<div class="maincard">
-				<c:forEach var="r" items="${mainlist}" varStatus="i">
-					<div class="card-body">
-						<a href="detail?type_name=${r.type_name}&post_id=${r.post_id}"
-							class="maincardlink"> <img src="upload/${r.image_path}">
-							<div class="maincardinfo">
-								<p>${r.title}</p>
-								<span>${r.type_name}게시판${r.nick}</span>
+			<div class="container mt-4" style="max-width: 900px;">
+				<div class="row">
+					<c:forEach var="r" items="${mainlist}" varStatus="i">
+						<div class="col-md-4 mb-4">
+							<div style="max-width: 100%; display: flex; flex-direction: column; align-items: center;">
+								<a href="detail?type_name=${r.type_name}&post_id=${r.post_id}">
+									<img src="upload/${r.image_path}" style="max-width: 100%; height: auto; border-radius: 8px;">
+									<div style="text-align: left; margin-top: 10px;">
+										<span style="font-family: 'Open Sans', sans-serif; color: #e03e2d; display: block; margin-bottom: 2px; font-weight: bold;">#${r.type_name}</span>
+										<span style="font-family: 'Open Sans', sans-serif; color: #000000; display: block; margin-top: 2px; font-weight: bold;">${r.title}</span>
+									</div>
+								</a>
 							</div>
-						</a>
-					</div>
-				</c:forEach>
+						</div>
+					</c:forEach>
+				</div>
 			</div>
-			<!-- <============== 3x3 썸네일 출력 -->
 
 
 			<!-- 페이징 ==============> -->
