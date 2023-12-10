@@ -89,9 +89,6 @@ public class Review {
 		List<ReviewDTO> reviewList = new ArrayList<ReviewDTO>();
 		int postCount, page, listSize, maxPage, startPage, endPage;
 
-		String nick = (String) session.getAttribute("nick");
-		System.out.println("ListSession : " + nick);
-
 		page = 1;
 		listSize = 10; // 한 페이지 출력할 수
 
