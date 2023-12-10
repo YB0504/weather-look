@@ -158,7 +158,7 @@
 									<button type="submit" class="btn btn-primary" style="width: 100%">작성완료</button>
 								</div>
 								<div class="col-sm-2">
-									<button type="button" class="btn btn btn-outline-primary" style="width: 100%" onclick="location.href='dailylist'">목록보기</button>
+									<button type="button" class="btn btn btn-outline-primary" style="width: 100%" onclick="location.href='dailylist'">목록</button>
 								</div>
 							</div>
 						</form>

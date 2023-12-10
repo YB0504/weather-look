@@ -140,7 +140,7 @@
 			</a>
 			<ul id="qnaCarts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
 				<li>
-					<i class="bi bi-circle"></i><span>문의 이메일: example@example.com</span>
+					<span style="font-size: small">문의 이메일: example@example.com</span>
 				</li>
 			</ul>
 		</li><!-- End Charts Nav -->
