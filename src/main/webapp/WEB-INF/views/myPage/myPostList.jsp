@@ -95,27 +95,33 @@
 				</table>
 
 				<%--paging--%>
-				<div id="myPagePagingDiv" align="center">
-					<c:if test="${page <=1 }">
-						[이전]&nbsp;
-					</c:if>
-					<c:if test="${page > 1 }">
-						<a href="myPostList?page=${page-1}">[이전]</a>&nbsp;
-					</c:if>
-					<c:forEach var="a" begin="${startPage}" end="${endPage}">
-						<c:if test="${a == page }">
-							[${a}]
+				<div style="display: flex; justify-content: center;">
+					<ul class="pagination">
+						<!-- 이전 블럭으로 이동 -->
+						<c:if test="${startPage > 10}">
+							<li class="page-item disabled">
+								<a class="page-link" href="myPostList?page=${startPage - 10}" tabindex="-1" aria-disabled="true">&laquo;</a>
+							</li>
 						</c:if>
-						<c:if test="${a != page }">
-							<a href="myPostList?page=${a}">[${a}]</a>&nbsp;
+						<!-- 각 블럭에 10개의 페이지 출력 -->
+						<c:forEach var="i" begin="${startPage}" end="${endPage}">
+							<c:if test="${i == page }"> <!-- 현재 페이지 -->
+								<li class="page-item active" aria-current="page">
+									<a class="page-link" href="">${i}</a>
+								</li>
+							</c:if>
+							<c:if test="${i != page }"> <!-- 현재 페이지가 아닌 경우 -->
+								<li class="page-item"><a class="page-link" href="myPostList?page=${i}">${i}</a></li>
+							</c:if>
+						</c:forEach>
+
+						<!-- 다음 블럭으로 이동 -->
+						<c:if test="${endPage < totalPage}">
+							<li class="page-item">
+								<a class="page-link" href="myPostList?page=${endPage+1}">&raquo;</a>
+							</li>
 						</c:if>
-					</c:forEach>
-					<c:if test="${page >= totalPage }">
-						[다음]
-					</c:if>
-					<c:if test="${page < totalPage }">
-						<a href="myPostList?page=${page+1}">[다음]</a>
-					</c:if>
+					</ul>
 				</div>
 			</c:if>
 		</div>
