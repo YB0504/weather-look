@@ -51,19 +51,11 @@ public class CommController {
 		System.out.println("CommController.commlist");
 
 		int limit = 10;
-
-//		미사용 변수
-		int startRow = (page - 1) * limit + 1;
-		int endRow = page * limit;
-
 		int listCount = cs.getCommCount();
-		System.out.println("listcount");
 
 		List<Community> commList = cs.getCommList(page);
-		System.out.println("commlist");
 
 		int pageCount = listCount / limit + ((listCount % 10 == 0) ? 0 : 1);
-
 		int startPage = ((page - 1) / 10) * limit + 1;
 		int endPage = startPage + 10 - 1;
 

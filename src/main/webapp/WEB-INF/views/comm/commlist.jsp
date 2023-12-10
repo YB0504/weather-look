@@ -47,11 +47,18 @@
 
 <!-- ======= Main ======= -->
 <main id="main" class="main">
-	<div class="pagetitle"
-	     style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
-		<h1 style="margin: 0;">Community</h1>
+	<div class="pagetitle" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+		<div>
+			<h1 style="margin: 0;">Community</h1>
+			<nav>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item">${listCount}개의 글</li>
+				</ol>
+			</nav>
+		</div>
 		<a href="commform" style="text-decoration: none;"><i class="bi bi-pencil-fill"></i>&nbsp;글쓰기</a>
-	</div><!-- End Page Title -->
+	</div>
+
 
 	<section class="section dashboard">
 		<div class="row">
