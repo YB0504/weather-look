@@ -133,7 +133,7 @@
 				<hr class="mb-4">
 				<div align="center">
 					<button class="btn btn-primary btn-lg btn-block" type="submit">수정 완료</button>
-					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="location.href='myPage'">뒤로 가기
+					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="location.href='main'">뒤로 가기
 					</button>
 				</div>
 			</form>
