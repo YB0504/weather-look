@@ -56,7 +56,7 @@
 			<div style="margin: 0 auto">
 				<div class="card" style="padding: 25px 10px 0 10px;">
 					<div class="card-body">
-						<form method=post action="commwrite">
+						<form method=post action="commupdate">
 							<input type="hidden" id="nick" name="nick" value="${sessionScope.nick}">
 							<!--데일리룩은 제외-->
 							<div class="row mb-3">
