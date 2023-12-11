@@ -62,18 +62,16 @@
 						<th class="col-md-1">닉네임</th>
 						<th class="col-md-1">조회수</th>
 						<th class="col-md-2">작성일</th>
-						<th class="col-md-1">좋아요</th>
 					</tr>
 
 					<c:forEach var="r" items="${searchresult }">
 						<tr>
 							<td>${r.type_name }</td>
-							<td><a href=main> ${r.title } </a></td>
+							<td><a href="detail?type_name=${r.type_name}&post_id=${r.post_id}"> ${r.title } </a></td>
 							<td>${r.nick }</td>
 							<td>${r.read_count }</td>
 							<td><fmt:formatDate pattern="yyyy-MM-dd"
 									value="${r.reg_date }" /></td>
-							<td>${r.likes }</td>
 						</tr>
 					</c:forEach>
 

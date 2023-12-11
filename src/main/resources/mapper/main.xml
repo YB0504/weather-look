@@ -40,7 +40,7 @@
 		select * from (
 		select rownum rnum, boards.* from (
 		select 'daily' as
-		type_name, title, post_id, nick, reg_date from daily
+		type_name, title, post_id, nick, reg_date, READ_COUNT from daily
 		<where>
 			<if test="keyword != null and keyword != ''">
 				AND (nick LIKE '%' || #{keyword} || '%' OR title LIKE '%'
@@ -49,7 +49,7 @@
 			</if>
 		</where>
 		union
-		select 'review' as type_name, title, post_id, nick, reg_date from
+		select 'review' as type_name, title, post_id, nick, reg_date, READ_COUNT from
 		review
 		<where>
 			<if test="keyword != null and keyword != ''">
@@ -59,7 +59,7 @@
 			</if>
 		</where>
 		union
-		select 'community' as type_name, title, post_id, nick, reg_date
+		select 'community' as type_name, title, post_id, nick, reg_date, READ_COUNT
 		from
 		community
 		<where>
