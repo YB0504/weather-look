@@ -18,7 +18,6 @@
 
 <!-- Favicons -->
   <link href="ico/weatherico.png" rel="icon">
-  <link href="ico/weatherico.png" rel="apple-touch-icon"> 
 
 <!-- Google Fonts -->
 <link href="https://fonts.gstatic.com" rel="preconnect">
