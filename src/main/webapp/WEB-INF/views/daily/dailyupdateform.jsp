@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,12 +6,13 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-	<title>Forms / Elements - NiceAdmin Bootstrap Template</title>
+	<title>WeatherLook</title>
+
 	<meta content="" name="description">
 	<meta content="" name="keywords">
 
 	<!-- Favicons -->
-	  <link href="ico/weatherico.png" rel="icon">
+	<link href="ico/weatherico.png" rel="icon">
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.gstatic.com" rel="preconnect">
@@ -132,13 +133,15 @@
 							<div class="row mb-3">
 								<label for="title" class="col-sm-2 col-form-label">제목</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" id="title" name="title" value="${daily.title}" required>
+									<input type="text" class="form-control" id="title" name="title"
+									       value="${daily.title}" required>
 								</div>
 							</div>
 							<div class="row mb-3">
 								<label for="content" class="col-sm-2 col-form-label">내용</label>
 								<div class="col-sm-10">
-									<textarea class="form-control" style="height: 300px" id="content" name="content" requireds>${daily.content}</textarea>
+									<textarea class="form-control" style="height: 300px" id="content" name="content"
+									          requireds>${daily.content}</textarea>
 								</div>
 							</div>
 							<div class="row mb-3">
@@ -160,7 +163,9 @@
 									<button type="submit" class="btn btn-primary" style="width: 100%">수정완료</button>
 								</div>
 								<div class="col-sm-2">
-									<button type="button" class="btn btn btn-outline-primary" style="width: 100%" onclick="history.go(-1)">취소</button>
+									<button type="button" class="btn btn btn-outline-primary" style="width: 100%"
+									        onclick="history.go(-1)">취소
+									</button>
 								</div>
 							</div>
 						</form>
@@ -175,4 +180,5 @@
 
 </body>
 
-</html>s
+</html>
+s

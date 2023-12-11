@@ -8,12 +8,12 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-	<title>Dashboard - NiceAdmin Bootstrap Template</title>
+	<title>WeatherLook</title>
 	<meta content="" name="description">
 	<meta content="" name="keywords">
 
 	<!-- Favicons -->
-	  <link href="ico/weatherico.png" rel="icon">
+	<link href="ico/weatherico.png" rel="icon">
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.gstatic.com" rel="preconnect">
@@ -81,7 +81,7 @@
 							<c:out value="${num}"/>
 							<c:set var="num" value="${num-1}"/>
 						</td>
-						<td><a href="#">${post.title}</a></td>
+						<td><a href="detail?type_name=${post.board_type}&post_id=${post.post_id}">${post.title}</a></td>
 						<td>${post.nick}</td>
 						<td>
 							<c:set var="now" value="<%=new java.util.Date()%>"/>

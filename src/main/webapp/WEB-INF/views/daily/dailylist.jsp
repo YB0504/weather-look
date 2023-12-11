@@ -7,8 +7,9 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>게시판 목록</title>
+	<title>WeatherLook</title>
 
+	<link href="ico/weatherico.png" rel="icon">
 	<meta content="" name="description">
 	<meta content="" name="keywords">
 

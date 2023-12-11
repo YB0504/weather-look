@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 
@@ -6,12 +6,12 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-	<title>Login</title>
+	<title>WeatherLook</title>
 	<meta content="" name="description">
 	<meta content="" name="keywords">
 
 	<!-- Favicons -->
-	  <link href="ico/weatherico.png" rel="icon">
+	<link href="ico/weatherico.png" rel="icon">
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.gstatic.com" rel="preconnect">
@@ -37,60 +37,61 @@
 	* Author: BootstrapMade.com
 	* License: https://bootstrapmade.com/license/
 	======================================================== -->
-<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script>
-Kakao.init('832303dbd469e2e260ff6e85306d6fd8'); //발급받은 키 중 javascript키를 사용해준다.
-console.log(Kakao.isInitialized()); // sdk초기화여부판단
-//카카오로그인
-function kakaoLogin() {
-    Kakao.Auth.login({
-      success: function (response) {
-        Kakao.API.request({
-          url: '/v2/user/me',
-          success: function (response) {
-        	  console.log(response)
-        	  	// 로그인 성공 후 정보에서 닉네임 추출
-        		var nickname = response.properties.nickname;
-				var email = response.kakao_account.email;
-				
-				console.log('이메일 :',email)
-				location.href = "kakaologin?nickname="+nickname+"&email="+email;
-          },
-          fail: function (error) {
-            console.log(error)
-          },
-        })
-      },
-      fail: function (error) {
-        console.log(error)
-      },
-    })
-  }
-//카카오로그아웃  
-function kakaoLogout() {
-    if (Kakao.Auth.getAccessToken()) {
-      Kakao.API.request({
-        url: '/v1/user/unlink',
-        success: function (response) {
-        	console.log(response)
-        },
-        fail: function (error) {
-          console.log(error)
-        },
-      })
-      Kakao.Auth.setAccessToken(undefined)
-    }
-  }  
+	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script>
+        Kakao.init('832303dbd469e2e260ff6e85306d6fd8'); //발급받은 키 중 javascript키를 사용해준다.
+        console.log(Kakao.isInitialized()); // sdk초기화여부판단
+        //카카오로그인
+        function kakaoLogin() {
+            Kakao.Auth.login({
+                success: function (response) {
+                    Kakao.API.request({
+                        url: '/v2/user/me',
+                        success: function (response) {
+                            console.log(response)
+                            // 로그인 성공 후 정보에서 닉네임 추출
+                            var nickname = response.properties.nickname;
+                            var email = response.kakao_account.email;
 
-</script>
+                            console.log('이메일 :', email)
+                            location.href = "kakaologin?nickname=" + nickname + "&email=" + email;
+                        },
+                        fail: function (error) {
+                            console.log(error)
+                        },
+                    })
+                },
+                fail: function (error) {
+                    console.log(error)
+                },
+            })
+        }
+
+        //카카오로그아웃
+        function kakaoLogout() {
+            if (Kakao.Auth.getAccessToken()) {
+                Kakao.API.request({
+                    url: '/v1/user/unlink',
+                    success: function (response) {
+                        console.log(response)
+                    },
+                    fail: function (error) {
+                        console.log(error)
+                    },
+                })
+                Kakao.Auth.setAccessToken(undefined)
+            }
+        }
+
+	</script>
 </head>
 ​
 <body>
 ​
 <main>
 	<div class="container">
-​
+		​
 		<section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
 			<div class="container">
 				<div class="row justify-content-center">
@@ -101,9 +102,9 @@ function kakaoLogout() {
 									<h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
 									<p class="text-center small">Enter your e-mail & password to login</p>
 								</div>
-​
+								​
 								<form class="row g-3 needs-validation" action="login" novalidate>
-​
+									​
 									<div class="col-12">
 										<label for="id" class="form-label">E-mail</label>
 										<div class="input-group has-validation">
@@ -112,7 +113,7 @@ function kakaoLogout() {
 											<div class="invalid-feedback">Please enter your e-mail!</div>
 										</div>
 									</div>
-​
+									​
 									<div class="col-12" style="margin-bottom: 20px">
 										<label for="passwd" class="form-label">Password</label>
 										<input type="password" name="passwd" class="form-control" id="passwd"
@@ -134,19 +135,19 @@ function kakaoLogout() {
 											<a href="pwSearchForm">비밀번호 찾기</a>
 										</p>
 									</div>
-​
+									​
 								</form>
-​
+								​
 							</div>
 						</div>
-​
-​
+						​
+						​
 					</div>
 				</div>
 			</div>
-​
+			​
 		</section>
-​
+		​
 	</div>
 </main><!-- End #main -->
 ​

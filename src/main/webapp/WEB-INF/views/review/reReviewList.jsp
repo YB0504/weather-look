@@ -7,7 +7,8 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<title>Insert title here</title>
+	<title>WeatherLook</title>
+	<link href="ico/weatherico.png" rel="icon">
 	<script type="text/javascript">
         $(function () {
             $('.edit1').click(function () {

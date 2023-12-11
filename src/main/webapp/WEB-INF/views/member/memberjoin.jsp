@@ -6,12 +6,12 @@
 	<meta charset="utf-8">
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-	<title>Dashboard - NiceAdmin Bootstrap Template</title>
+	<title>WeatherLook</title>
 	<meta content="" name="description">
 	<meta content="" name="keywords">
 
 	<!-- Favicons -->
-	  <link href="ico/weatherico.png" rel="icon">
+	<link href="ico/weatherico.png" rel="icon">
 
 	<!-- Google Fonts -->
 	<link href="https://fonts.gstatic.com" rel="preconnect">
@@ -33,7 +33,7 @@
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="./assets/js/member.js"></script>
 	<script>
-        $(function() {
+        $(function () {
             $("#defaultImageButton").click(function () {
                 changeDefaultImage();
             });
@@ -85,27 +85,32 @@
 				<div class="row">
 					<div class="col-md-12 mb-3">
 						<label for="id">ID</label>
-						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="id" name="id" required>
+						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="id" name="id"
+						       required>
 						<input type="button" class="btn btn-primary" value="ID중복검사" onclick="idcheck()">
 						<div id="idcheck"></div>
 					</div>
 					<div class="col-md-12 mb-3">
 						<label for="passwd">PW</label>
-						<input type="password" class="form-control" style="border: 1px solid #ccc;" id="passwd" name="passwd" required>
+						<input type="password" class="form-control" style="border: 1px solid #ccc;" id="passwd"
+						       name="passwd" required>
 					</div>
 					<div class="col-md-12 mb-3">
 						<label for="id">Nick</label>
-						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="nick" name="nick" required>
+						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="nick" name="nick"
+						       required>
 						<input type="button" class="btn btn-primary" value="별명중복검사" onclick="nickcheck()">
 						<div id="nickcheck"></div>
 					</div>
 					<div class="col-md-12 mb-3">
 						<label for="phone">Phone</label>
-						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="phone" name="phone" required>
+						<input type="text" class="form-control" style="border: 1px solid #ccc;" id="phone" name="phone"
+						       required>
 					</div>
 					<div class="col-md-12 mb-3">
 						<label for="address">Address</label>
-						<select class="form-select" id="address" style="border: 1px solid #ccc;" name="address" required>
+						<select class="form-select" id="address" style="border: 1px solid #ccc;" name="address"
+						        required>
 							<%@ include file="../include/address.jsp" %>
 							<option value="">지역선택</option>
 							<c:forEach var="ad" items="${address}">
@@ -115,20 +120,23 @@
 					</div>
 					<div class="col-md-12 mb-3">
 						<label for="previewImg">Profile Image</label><br>
-							<center><img id="previewImg" src="upload/default.jpeg" width="200px" height="auto"></center>
+						<center><img id="previewImg" src="upload/default.jpeg" width="200px" height="auto"></center>
 					</div>
 					<div class="col-md-12 mb-3">
-						<input type="button" class="form-control btn btn-light" style="border: 1px solid #ccc;" id="defaultImageButton" value="기본 이미지 선택">
+						<input type="button" class="form-control btn btn-light" style="border: 1px solid #ccc;"
+						       id="defaultImageButton" value="기본 이미지 선택">
 					</div>
 					<div class="col-md-12 mb-3">
 						<input type="hidden" name="profile_image" id="profile_image">
-						<input type="file" class="form-control" style="border: 1px solid #ccc;" name="profile_image_form" id="profile_image_form">
+						<input type="file" class="form-control" style="border: 1px solid #ccc;"
+						       name="profile_image_form" id="profile_image_form">
 					</div>
 				</div>
 				<hr class="mb-4">
 				<div align="center">
 					<button class="btn btn-primary btn-lg btn-block" type="submit">회원가입</button>
-					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="location.href='loginform'">뒤로 가기
+					<button class="btn btn-primary btn-lg btn-block" type="button" onclick="location.href='loginform'">
+						뒤로 가기
 					</button>
 				</div>
 			</form>
