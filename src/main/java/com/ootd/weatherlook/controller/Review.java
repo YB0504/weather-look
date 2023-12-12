@@ -90,7 +90,7 @@ public class Review {
 		int postCount, page, listSize, maxPage, startPage, endPage;
 
 		page = 1;
-		listSize = 10; // 한 페이지 출력할 수
+		listSize = 9; // 한 페이지 출력할 수
 
 		// 선택된 페이지 번호를 형변환
 		if (request.getParameter("page") != null) {

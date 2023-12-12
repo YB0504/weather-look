@@ -11,7 +11,7 @@
     	<![CDATA[
     	select * from (select rownum rnum, review.* from (
    	 	select * from review order by post_id desc) review)
-    	where rnum >= ((#{page}-1) * 10 + 1) and rnum <= (#{page} * 10)
+    	where rnum >= ((#{page}-1) * 9 + 1) and rnum <= (#{page} * 9)
     	]]>
 	</select>
 
