@@ -127,13 +127,9 @@ public class LoginController {
 			model.addAttribute("member", kakao);
 
 			return "redirect:main";
-		} else if (kakaoCheck.getNick().equals(nick))  // 등록되어 있는 회원
-			System.out.println("카카오 로그인 성공");
-
+		}
 		session.setAttribute("nick", nick);
-		MemberDTO member = service.kakaoLoginCheck(nick);
-		model.addAttribute("member", member);
-		return "redirect:login";
+		return "redirect:main";
 	}
 
 	// 로그인 성공
@@ -180,8 +176,7 @@ public class LoginController {
 
 		MemberDTO member = service.idSearch(mem);
 
-		if (member.getPhone().equals(phone))
-			model.addAttribute("searchId", member.getId());
+		if (member.getPhone().equals(phone)) model.addAttribute("searchId", member.getId());
 
 		return "member/idSearchForm";
 	}
