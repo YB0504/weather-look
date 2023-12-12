@@ -144,10 +144,9 @@
 		<div style="display: flex; justify-content: center;">
 			<ul class="pagination">
 				<c:if test="${startPage > 10}">
-					<li class="page-item disabled"><a class="page-link"
+					<li class="page-item"><a class="page-link"
 					                                  href="dailylist?page=${startpage - 10}&region=${region }&templow=${templow}&temphigh=${temphigh}"
-					                                  tabindex="-1"
-					                                  aria-disabled="true">&laquo;</a></li>
+					                                  tabindex="-1">&laquo;</a></li>
 				</c:if>
 
 				<c:forEach var="i" begin="${startPage}" end="${endPage}">

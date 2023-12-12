@@ -97,8 +97,8 @@
 					<ul class="pagination">
 						<!-- 이전 블럭으로 이동 -->
 						<c:if test="${startPage > 10}">
-							<li class="page-item disabled">
-								<a class="page-link" href="myLikeList?page=${startPage - 10}" tabindex="-1" aria-disabled="true">&laquo;</a>
+							<li class="page-item">
+								<a class="page-link" href="myLikeList?page=${startPage - 10}" tabindex="-1">&laquo;</a>
 							</li>
 						</c:if>
 						<!-- 각 블럭에 10개의 페이지 출력 -->

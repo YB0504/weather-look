@@ -49,7 +49,7 @@ public class MainController {
 		//메인보드 출력물 계산
 		int listcount = mainpageservice.getMainCount(search);
 		int maxpage = listcount / numberset + ((listcount % numberset == 0) ? 0 : 1);
-		int startpage = ((page - 1) / pageset) * numberset + 1;
+		int startpage = ((page - 1) / pageset) * pageset + 1;
 		int endpage = startpage + pageset - 1;
 		if (endpage > maxpage) endpage = maxpage;
 		mainlist = mainpageservice.getMainList(search);
