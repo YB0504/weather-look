@@ -13,7 +13,7 @@
 <br/>
 
 ## 프로젝트 구조
-사진으로 대체
+![Architecture](https://github.com/JunHyeokSeo/weather-look/assets/55777781/89c3b560-40c6-4c23-81b7-a868c6d18276)
 
 <br/>
 
