@@ -8,14 +8,15 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import com.ootd.weatherlook.interceptor.AuthInterceptor;
 
 @Configuration
-public class WebMvcConfig implements WebMvcConfigurer{
-	
+public class WebMvcConfig implements WebMvcConfigurer {
+
 	@Autowired
 	private AuthInterceptor authInterceptor;
-	
+
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(authInterceptor).addPathPatterns("/");
+		registry.addInterceptor(authInterceptor)
+				.addPathPatterns("/**")
+				.excludePathPatterns("/login", "/loginform", "/css/**", "/js/**", "/assets/**", "/ico/**");
 	}
-
 }
