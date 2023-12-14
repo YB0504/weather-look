@@ -13,7 +13,7 @@
 <br/>
 
 ## 프로젝트 구조
-![Architecture](https://github.com/JunHyeokSeo/weather-look/assets/55777781/89c3b560-40c6-4c23-81b7-a868c6d18276)
+<img width="1225" alt="KakaoTalk_Photo_2023-12-14-10-51-19" src="https://github.com/JunHyeokSeo/weather-look/assets/55777781/942b26e3-7af8-4912-9d56-263df1b70e64">
 
 <br/>
 
