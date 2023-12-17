@@ -56,7 +56,7 @@ public class Review {
 			UUID uuid = UUID.randomUUID();
 			newfilename = uuid + extension;
 
-			if (size > 1000000) {
+			if (size > 100000000) {
 				result = 1;
 				model.addAttribute("result", result);
 
