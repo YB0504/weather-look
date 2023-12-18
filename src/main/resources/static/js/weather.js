@@ -12,7 +12,7 @@
 			
 			function getWeather(lat, lon){
 				const apiUrl = 'http://api.openweathermap.org/data/2.5/forecast';
-				const apiKey = '9657c91ee7eafcd506fa727097c899fa';
+				const apiKey = config.realtime_weather_key;
 
 				const apiUrlWithParams = `http://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=9657c91ee7eafcd506fa727097c899fa&units=metric`;
 				

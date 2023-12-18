@@ -1,12 +1,15 @@
 package feature;
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
 public class RegionTemperatureResolver {
-	private static final String apiKey = "IDKmzvhfRoqyps74X5aKrQ";
+	@Value("${past-weather-key}")
+	private static String apiKey;
 
 	public static String getTemperature(String imageDate, String stn) {
 		String temperature = null;

@@ -40,7 +40,7 @@
 	<script src="https://developers.kakao.com/sdk/js/kakao.js"></script>
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script>
-        Kakao.init('832303dbd469e2e260ff6e85306d6fd8'); //발급받은 키 중 javascript키를 사용해준다.
+        Kakao.init(config.kakao_login_key); //발급받은 키 중 javascript키를 사용해준다.
         console.log(Kakao.isInitialized()); // sdk초기화여부판단
         //카카오로그인
         function kakaoLogin() {
