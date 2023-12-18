@@ -1,24 +1,27 @@
-package feature;
+package com.ootd.weatherlook.feature;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.Map;
 
+@Component
 public class RegionSTNResolver {
-	public static Map<String, String> regionMap = Map.ofEntries(Map.entry("서울특별시", "108"), Map.entry("인천광역시", "112"), Map.entry("경기도", "119"), Map.entry("강원특별자치도", "105"), Map.entry("충청북도", "131"), Map.entry("충청남도", "232"), Map.entry("세종특별자치시", "239"), Map.entry("대전광역시", "133"), Map.entry("전라북도", "146"), Map.entry("전라남도", "165"), Map.entry("광주광역시", "156"), Map.entry("경상북도", "155"), Map.entry("경상남도", "138"), Map.entry("대구광역시", "143"), Map.entry("울산광역시", "152"), Map.entry("부산광역시", "159"), Map.entry("제주특별자치도", "184"));
+	public Map<String, String> regionMap = Map.ofEntries(Map.entry("서울특별시", "108"), Map.entry("인천광역시", "112"), Map.entry("경기도", "119"), Map.entry("강원특별자치도", "105"), Map.entry("충청북도", "131"), Map.entry("충청남도", "232"), Map.entry("세종특별자치시", "239"), Map.entry("대전광역시", "133"), Map.entry("전라북도", "146"), Map.entry("전라남도", "165"), Map.entry("광주광역시", "156"), Map.entry("경상북도", "155"), Map.entry("경상남도", "138"), Map.entry("대구광역시", "143"), Map.entry("울산광역시", "152"), Map.entry("부산광역시", "159"), Map.entry("제주특별자치도", "184"));
 
 	@Value("${kakao-region-key}")
-	private static String apiKey;
+	private String apiKey;
 
-	public static String getSTN(String region) {
+	public String getSTN(String region) {
 		return regionMap.get(region);
 	}
 
-	public static String getRegion(Double latitude, Double longitude) {
+	public String getRegion(Double latitude, Double longitude) {
 
 		String region = null;
 		String apiUrl = "https://dapi.kakao.com/v2/local/geo/coord2regioncode.json?input_coord=WGS84&output_coord=WGS84&y=" + latitude + "&x=" + longitude;

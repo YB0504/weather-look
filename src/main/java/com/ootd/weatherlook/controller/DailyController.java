@@ -8,7 +8,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,14 +24,16 @@ import com.ootd.weatherlook.model.Search;
 import com.ootd.weatherlook.model.Weather;
 import com.ootd.weatherlook.service.DailyService;
 
-import feature.RegionSTNResolver;
-import feature.RegionTemperatureResolver;
+import com.ootd.weatherlook.feature.RegionSTNResolver;
+import com.ootd.weatherlook.feature.RegionTemperatureResolver;
 
 @Controller
 @RequiredArgsConstructor
 public class DailyController {
 
 	private final DailyService service;
+	private final RegionSTNResolver regionSTNResolver;
+	private final RegionTemperatureResolver regionTemperatureResolver;
 
 	@RequestMapping("dailyform")
 	public String dailyform(HttpSession session) {
@@ -54,13 +55,13 @@ public class DailyController {
 				double latitude = daily.getLatitude();
 				double longitude = daily.getLongitude();
 
-				String region = RegionSTNResolver.getRegion(latitude, longitude);
+				String region = regionSTNResolver.getRegion(latitude, longitude);
 				daily.setRegion(region);
 
-				String stn = RegionSTNResolver.getSTN(region);
+				String stn = regionSTNResolver.getSTN(region);
 				System.out.println("stn = " + stn);
 
-				double temperature = Double.parseDouble(RegionTemperatureResolver.getTemperature(imageDate, stn));
+				double temperature = Double.parseDouble(regionTemperatureResolver.getTemperature(imageDate, stn));
 				System.out.println("temperature = " + temperature);
 				daily.setTemperature(temperature);
 			}
@@ -207,13 +208,13 @@ public class DailyController {
 				double latitude = daily.getLatitude();
 				double longitude = daily.getLongitude();
 
-				String region = RegionSTNResolver.getRegion(latitude, longitude);
+				String region = regionSTNResolver.getRegion(latitude, longitude);
 				daily.setRegion(region);
 
-				String stn = RegionSTNResolver.getSTN(region);
+				String stn = regionSTNResolver.getSTN(region);
 				System.out.println("stn = " + stn);
 
-				double temperature = Double.parseDouble(RegionTemperatureResolver.getTemperature(imageDate, stn));
+				double temperature = Double.parseDouble(regionTemperatureResolver.getTemperature(imageDate, stn));
 				System.out.println("temperature = " + temperature);
 				daily.setTemperature(temperature);
 			}

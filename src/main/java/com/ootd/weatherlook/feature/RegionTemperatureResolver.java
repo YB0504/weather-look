@@ -1,17 +1,19 @@
-package feature;
+package com.ootd.weatherlook.feature;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@Component
 public class RegionTemperatureResolver {
 	@Value("${past-weather-key}")
-	private static String apiKey;
+	private String apiKey;
 
-	public static String getTemperature(String imageDate, String stn) {
+	public String getTemperature(String imageDate, String stn) {
 		String temperature = null;
 
 		try {
