@@ -32,3 +32,8 @@ build/
 ### VS Code ###
 .vscode/
 /.metadata/
+
+#API-Key Properties
+application.properties
+application-API-KEY.properties
+/js/weather.js
