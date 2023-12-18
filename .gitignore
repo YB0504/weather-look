@@ -36,4 +36,4 @@ build/
 #API-Key Properties
 application.properties
 application-API-KEY.properties
-/js/weather.js
+static/js/apiKey.js
