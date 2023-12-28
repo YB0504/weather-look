@@ -206,6 +206,6 @@ public class LoginController {
 
 		session.invalidate();
 
-		return "redirect:loginform";
+		return "redirect:main";
 	}
 }

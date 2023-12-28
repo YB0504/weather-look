@@ -29,6 +29,12 @@ public class MainController {
 
 	private final MainServiceImpl mainpageservice;
 
+	@RequestMapping("/")
+	public String root() {
+		System.out.println("MainController.root");
+		return "redirect:main";
+	}
+
 	@RequestMapping("main")
 	public String mainpage(@RequestParam(value = "page", defaultValue = "1") int page, Model model) {
 		System.out.println("MainController.mainpage");

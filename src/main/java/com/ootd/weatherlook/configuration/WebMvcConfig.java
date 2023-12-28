@@ -18,6 +18,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 		registry.addInterceptor(authInterceptor)
 				.addPathPatterns("/**")
 				.excludePathPatterns(
+						"/",
 						"/login",
 						"/loginform",
 						"/memberjoin",
@@ -30,6 +31,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
 						"/pwSearchForm",
 						"/pwSearch",
 						"/logOut",
+						"/main",
+						"/dailylist",
+						"/reviewList",
+						"/commlist",
 						"/css/**",
 						"/js/**",
 						"/upload/**",
